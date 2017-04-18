@@ -18,7 +18,10 @@ const list = [
   'node_modules/onsenui/css/ionicons/css/ionicons.min.css',
   'node_modules/onsenui/css/ionicons/fonts/',
   'node_modules/onsenui/css/material-design-iconic-font/css/material-design-iconic-font.min.css',
-  'node_modules/onsenui/css/material-design-iconic-font/fonts/'
+  'node_modules/onsenui/css/material-design-iconic-font/fonts/',
+  'node_modules/leaflet/dist/leaflet.js',
+  'node_modules/leaflet/dist/leaflet.css',
+  'node_modules/leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js'
 ]
 
 builder.build().then(() => {

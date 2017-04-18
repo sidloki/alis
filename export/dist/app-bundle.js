@@ -10,7 +10,7 @@ System.register("alis/app.html!node_modules/systemjs-plugin-text/text.js", [], f
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <ons-splitter>\n    <ons-splitter-side id=\"menu\" side=\"left\" collapse swipeable>\n      <ons-page>\n        TODO\n      </ons-page>\n    </ons-splitter-side>\n    <ons-splitter-content>\n      <ons-navigator></ons-navigator>\n    </ons-splitter-content>\n  </ons-splitter>\n</template>\n");
+      _export("default", "<template>\n  <ons-splitter>\n    <ons-splitter-side id=\"menu\" side=\"left\" collapse>\n      <ons-page>\n        TODO\n      </ons-page>\n    </ons-splitter-side>\n    <ons-splitter-content>\n      <ons-navigator></ons-navigator>\n    </ons-splitter-content>\n  </ons-splitter>\n</template>\n");
     }
   };
 });
@@ -355,7 +355,7 @@ System.register("alis/pages/home.html!node_modules/systemjs-plugin-text/text.js"
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-toolbar-button click.trigger=\"showMenu()\">\n          <ons-icon icon=\"ion-navicon, material:md-menu\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n      <div class=\"center\">${router.title}</div>\n      <div class=\"right\">\n        <ons-toolbar-button>\n          <ons-icon icon=\"ion-search, material:md-search\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n    </ons-toolbar>\n    <ons-bottom-toolbar>\n      <div style=\"line-height:44px;padding:0 8px;\" click.trigger=\"showList()\">Liste anzeigen</div>\n    </ons-bottom-toolbar>\n  </ons-page>\n</template>\n");
+      _export("default", "<template>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-toolbar-button click.trigger=\"showMenu()\">\n          <ons-icon icon=\"ion-navicon, material:md-menu\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n      <div class=\"center\">${router.title}</div>\n      <div class=\"right\">\n        <ons-toolbar-button>\n          <ons-icon icon=\"ion-search, material:md-search\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n    </ons-toolbar>\n    <div ref=\"map\" style=\"width:100%;height:100%;\"></div>\n    <ons-bottom-toolbar>\n      <div style=\"line-height:44px;padding:0 8px;\" click.trigger=\"showList()\">Liste anzeigen</div>\n    </ons-bottom-toolbar>\n  </ons-page>\n</template>\n");
     }
   };
 });
@@ -383,6 +383,15 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
         }
 
         _createClass(Home, [{
+          key: 'attached',
+          value: function attached() {
+            var map = new L.Map(this.map);
+            var roads = L.gridLayer.googleMutant({
+              type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+            }).addTo(map);
+            map.setView([46.801111, 8.226667], 7);
+          }
+        }, {
           key: 'showMenu',
           value: function showMenu() {
             var menu = document.getElementById('menu');

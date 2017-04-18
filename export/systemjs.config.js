@@ -5,6 +5,8 @@ SystemJS.config({
   "map": {
     "aurelia-bootstrapper": "node_modules/aurelia-bootstrapper/dist/commonjs",
     "aurelia-framework": "node_modules/aurelia-framework/dist/commonjs",
+    "leaflet": "node_modules/leaflet/dist",
+    "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "onsenui": "node_modules/onsenui/js",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
@@ -39,6 +41,12 @@ SystemJS.config({
     },
     "node_modules/aurelia-framework/dist/commonjs": {
       "main": "aurelia-framework.js"
+    },
+    "node_modules/leaflet/dist": {
+      "main": "leaflet-src.js"
+    },
+    "node_modules/leaflet.gridlayer.googlemutant": {
+      "main": "Leaflet.GoogleMutant.js"
     },
     "node_modules/onsenui/js": {
       "main": "onsenui.js"

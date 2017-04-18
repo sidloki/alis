@@ -15,6 +15,8 @@
   "dependencies": {
     "aurelia-bootstrapper": "^2.1.1",
     "aurelia-framework": "^1.1.2",
+    "leaflet": "^1.0.3",
+    "leaflet.gridlayer.googlemutant": "^0.6.0",
     "onsenui": "^2.2.4",
     "systemjs": "^0.20.12",
     "systemjs-plugin-css": "^0.1.33",
