@@ -291,30 +291,26 @@ System.register("alis/environment.js", [], function (_export, _context) {
     }
   };
 });
-System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aurelia-event-aggregator', 'aurelia-framework', 'aurelia-dependency-injection', 'aurelia-history-browser', 'aurelia-loader-default', 'aurelia-logging-console', 'aurelia-metadata', 'aurelia-pal-browser', 'aurelia-path', 'aurelia-polyfills', 'aurelia-route-recognizer', 'aurelia-router', 'aurelia-templating', 'aurelia-templating-binding', 'aurelia-templating-resources', 'aurelia-templating-router', 'aurelia-pal', './lib/custom-router', './environment'], function (_export, _context) {
+System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aurelia-event-aggregator', 'aurelia-framework', 'aurelia-dependency-injection', 'aurelia-history-browser', 'aurelia-loader-default', 'aurelia-logging-console', 'aurelia-metadata', 'aurelia-pal-browser', 'aurelia-path', 'aurelia-polyfills', 'aurelia-route-recognizer', 'aurelia-router', 'aurelia-templating', 'aurelia-templating-binding', 'aurelia-templating-resources', 'aurelia-templating-router', './lib/custom-router', './environment'], function (_export, _context) {
   "use strict";
 
-  var PLATFORM, BrowserHistory, CustomRouter, Router, RouteLoader, TemplatingRouteLoader, environment;
+  var BrowserHistory, CustomRouter, Router, RouteLoader, TemplatingRouteLoader, environment;
   function configure(aurelia) {
-    if (PLATFORM.location.pathname !== '/' || PLATFORM.location.hash) {
-      PLATFORM.location.replace('/');
-    } else {
-      aurelia.use.singleton(RouteLoader, TemplatingRouteLoader).singleton(Router, CustomRouter);
-      aurelia.use.container.registerAlias(Router, CustomRouter);
-      aurelia.use.basicConfiguration().history().feature('alis/resources');
+    aurelia.use.singleton(RouteLoader, TemplatingRouteLoader).singleton(Router, CustomRouter);
+    aurelia.use.container.registerAlias(Router, CustomRouter);
+    aurelia.use.basicConfiguration().history().feature('alis/resources');
 
-      if (environment.debug) {
-        aurelia.use.developmentLogging();
-      }
-
-      if (environment.testing) {
-        aurelia.use.plugin('aurelia-testing');
-      }
-
-      aurelia.start().then(function () {
-        return aurelia.setRoot();
-      });
+    if (environment.debug) {
+      aurelia.use.developmentLogging();
     }
+
+    if (environment.testing) {
+      aurelia.use.plugin('aurelia-testing');
+    }
+
+    aurelia.start().then(function () {
+      return aurelia.setRoot();
+    });
   }
 
   _export('configure', configure);
@@ -327,8 +323,6 @@ System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aur
       RouteLoader = _aureliaRouter.RouteLoader;
     }, function (_aureliaTemplating) {}, function (_aureliaTemplatingBinding) {}, function (_aureliaTemplatingResources) {}, function (_aureliaTemplatingRouter) {
       TemplatingRouteLoader = _aureliaTemplatingRouter.TemplatingRouteLoader;
-    }, function (_aureliaPal) {
-      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_libCustomRouter) {
       CustomRouter = _libCustomRouter.CustomRouter;
     }, function (_environment) {
