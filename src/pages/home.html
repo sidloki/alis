@@ -1,0 +1,20 @@
+<template>
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-toolbar-button click.trigger="showMenu()">
+          <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center">${router.title}</div>
+      <div class="right">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-search, material:md-search"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <ons-bottom-toolbar>
+      <div style="line-height:44px;padding:0 8px;" click.trigger="showList()">Liste anzeigen</div>
+    </ons-bottom-toolbar>
+  </ons-page>
+</template>
