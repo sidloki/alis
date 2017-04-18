@@ -16,7 +16,6 @@ import 'aurelia-templating';
 import 'aurelia-templating-binding';
 import 'aurelia-templating-resources';
 import 'aurelia-templating-router';
-import {PLATFORM} from 'aurelia-pal';
 import {BrowserHistory} from 'aurelia-history-browser';
 import {CustomRouter} from './lib/custom-router';
 import {Router, RouteLoader} from 'aurelia-router';
@@ -36,26 +35,22 @@ BrowserHistory.prototype.getState = function(key) {
 };
 
 export function configure(aurelia) {
-  if (PLATFORM.location.pathname !== '/' || PLATFORM.location.hash) {
-    PLATFORM.location.replace('/');
-  } else {
-    aurelia.use
-      .singleton(RouteLoader, TemplatingRouteLoader)
-      .singleton(Router, CustomRouter);
-    aurelia.use.container.registerAlias(Router, CustomRouter);
-    aurelia.use
-      .basicConfiguration()
-      .history()
-      .feature('alis/resources');
+  aurelia.use
+    .singleton(RouteLoader, TemplatingRouteLoader)
+    .singleton(Router, CustomRouter);
+  aurelia.use.container.registerAlias(Router, CustomRouter);
+  aurelia.use
+    .basicConfiguration()
+    .history()
+    .feature('alis/resources');
 
-    if (environment.debug) {
-      aurelia.use.developmentLogging();
-    }
-
-    if (environment.testing) {
-      aurelia.use.plugin('aurelia-testing');
-    }
-
-    aurelia.start().then(() => aurelia.setRoot());
+  if (environment.debug) {
+    aurelia.use.developmentLogging();
   }
+
+  if (environment.testing) {
+    aurelia.use.plugin('aurelia-testing');
+  }
+
+  aurelia.start().then(() => aurelia.setRoot());
 }
