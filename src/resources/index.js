@@ -1,3 +1,6 @@
 export function configure(config) {
-  //config.globalResources([]);
+  config.globalResources([
+    './elements/ons-back-button',
+    './elements/ons-navigator'
+  ]);
 }
