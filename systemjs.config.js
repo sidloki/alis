@@ -5,6 +5,7 @@ SystemJS.config({
   "map": {
     "aurelia-bootstrapper": "node_modules/aurelia-bootstrapper/dist/commonjs",
     "aurelia-framework": "node_modules/aurelia-framework/dist/commonjs",
+    "onsenui": "node_modules/onsenui/js",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
     "aurelia-event-aggregator": "node_modules/aurelia-event-aggregator/dist/commonjs",
@@ -38,6 +39,9 @@ SystemJS.config({
     },
     "node_modules/aurelia-framework/dist/commonjs": {
       "main": "aurelia-framework.js"
+    },
+    "node_modules/onsenui/js": {
+      "main": "onsenui.js"
     },
     "node_modules/systemjs-plugin-css": {
       "main": "css"

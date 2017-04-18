@@ -14,6 +14,7 @@
   "dependencies": {
     "aurelia-bootstrapper": "^2.1.1",
     "aurelia-framework": "^1.1.2",
+    "onsenui": "^2.2.4",
     "systemjs": "^0.20.12",
     "systemjs-plugin-css": "^0.1.33",
     "systemjs-plugin-text": "^0.0.9"
