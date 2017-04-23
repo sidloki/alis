@@ -1,4 +1,16 @@
+import {inject} from 'aurelia-framework';
+import {Database} from './services/db';
+
+@inject(Database)
 export class App {
+
+  constructor(db) {
+    this.db = db;
+  }
+
+  activate() {
+    return this.db.load();
+  }
 
   configureRouter(config, router) {
     config.title = 'Höranlagen';
