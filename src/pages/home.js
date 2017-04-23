@@ -1,18 +1,47 @@
 import {Router} from 'aurelia-router';
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
+import {Database} from '../services/db';
 
-@inject(Router)
+@inject(Router, Database)
 export class Home {
-  constructor (router) {
+  constructor (router, db) {
     this.router = router;
+    this.db = db;
+  }
   }
 
   attached() {
-    let map = new L.Map(this.map);
+    let map = L.map(this.map, {
+      attributionControl: false
+    });
+    let markers = L.markerClusterGroup({
+      maxClusterRadius: 40
+    }).addTo(map);
     let roads = L.gridLayer.googleMutant({
-      type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      styles: [{
+        featureType: "poi",
+        elementType: "labels.icon",
+        stylers: [{ visibility: "off" }]
+      }]
     }).addTo(map);
     map.setView([46.801111, 8.226667], 7);
+
+    markers.on('click', (e) => {
+      this.selection = e.layer.data;
+    });
+
+    this._map = map;
+
+    this.db.data.buildings.forEach(building => {
+      // TODO: marker icons
+      let myIcon = L.divIcon({
+        className: 'leaflet-system-icon fa fa-deaf',
+        iconSize: 22
+      });
+      let marker = L.marker([building.lat, building.lng], {icon: myIcon}).addTo(markers);
+      marker.data = building;
+    });
   }
 
   showMenu() {
