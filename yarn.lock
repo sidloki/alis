@@ -169,6 +169,10 @@ aurelia-event-aggregator@^1.0.0:
   dependencies:
     aurelia-logging "^1.0.0"
 
+aurelia-fetch-client@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/aurelia-fetch-client/-/aurelia-fetch-client-1.1.2.tgz#123a04d8677e15a8feca0553bc8486515a15dd2a"
+
 aurelia-framework@^1.0.0, aurelia-framework@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aurelia-framework/-/aurelia-framework-1.1.2.tgz#54483ac535a88a3d1f4bac9f0ac4abd8cb19d448"
@@ -2039,6 +2043,10 @@ lcid@^1.0.0:
 leaflet.gridlayer.googlemutant@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/leaflet.gridlayer.googlemutant/-/leaflet.gridlayer.googlemutant-0.6.0.tgz#9dc03973c6b886680ad3dab2d8341e1a2fdec935"
+
+leaflet.markercluster@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.0.4.tgz#d3f85fe7412723e2daa27634dc5ed9c45152757c"
 
 leaflet@^1.0.3:
   version "1.0.3"
