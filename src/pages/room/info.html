@@ -8,15 +8,8 @@
           <ons-icon icon="ion-ios-location,material:md-pin" fixed-width="true"></ons-icon>
         </span>
         <span class="center">
-          <span class="list-item__title">
-            ${data.organisation}
-            <br if.bind="data.gebaeude"/>
-            ${data.gebaeude}
-          </span>
-          <span class="list-item__subtitle">
-            ${data.strasse_nr}
-            <br if.bind="data.plz || data.org"/>${data.plz} ${data.ort}
-          </span>
+          ${data.gebaeude}<template if.bind="data.organisation && data.gebaeude">, </template>${data.organisation}<br/>
+          ${data.strasse_nr}, ${data.plz} ${data.ort}
       </ons-list-item>
       <ons-list-item if.bind="data.webadresse" click.trigger="openWebsite()" tappable>
         <span class="left">
@@ -24,6 +17,9 @@
         </span>
         <span class="center">${data.webtext || 'Website'}</span>
       </ons-list-item>
+      <ons-list-header>
+        Höranlage
+      </ons-list-header>
       <ons-list-item>
         <span class="left" style="">
           <img src="${getTechImageUrl()}" alt="" style="width:1.28571429em;"/>
