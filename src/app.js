@@ -32,15 +32,9 @@ export class App {
     }, {
       route: 'room/:id',
       name: 'room',
-      moduleId: './pages/room/info',
+      moduleId: './pages/room/index',
       nav: false,
       title: 'Room'
-    }, {
-      route: 'room/:room_id/:plan_id',
-      name: 'plan',
-      moduleId: './pages/room/plan',
-      nav: false,
-      title: 'Plan'
     }]);
   }
 }

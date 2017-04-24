@@ -10,44 +10,74 @@ export class Plan {
   }
 
   activate(params) {
+    let promises = [];
     this.data = this.db.data.systems.find((item) => {
-      return params.room_id === item.anlageID;
+      return params.id === item.anlageID;
     });
-    let plans = {};
+    this.plans = [];
     if (this.data.plan1_dateiname !== 'transp.png') {
-      plans['plan1'] = {
-        name: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(plans).length + 1}` : 'Raumplan',
+      let plan = {
+        value: this.data.plan1_dateiname,
+        text: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
         url: `//hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
       };
+      promises.push(new Promise((resolve, reject) => {
+        let img = new Image();
+        img.onload = () => {
+          let scale = 256 / img.width;
+          plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
+          resolve();
+        };
+        img.src = plan.url;
+      }));
+      this.plans.push(plan);
     }
     if (this.data.plan2_dateiname !== 'transp.png') {
-      plans['plan2'] = {
-        name: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(plans).length + 1}` : 'Raumplan',
+      let plan = {
+        value: this.data.plan2_dateiname,
+        text: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
         url: `//hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
       };
+      promises.push(new Promise((resolve, reject) => {
+        let img = new Image();
+        img.onload = () => {
+          let scale = 256 / img.width;
+          plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
+          resolve();
+        };
+        img.src = plan.url;
+      }));
+      this.plans.push(plan);
     }
 
-    this.plan = plans[params.plan_id];
-
-    return new Promise((resolve, reject) => {
-      let img = new Image();
-      img.onload = () => {
-        let scale = 256 / img.width;
-        this.plan.layer = L.imageOverlay(this.plan.url, [[0,0], [img.height*scale, img.width*scale]]);
-        resolve();
-      };
-      img.src = this.plan.url;
-    });
+    return Promise.all(promises);
   }
 
   attached() {
-    let map = L.map(this.map, {
-      crs: L.CRS.Simple,
-      attributionControl: false,
-      maxZoom: 4
-    });
-    map.addLayer(this.plan.layer);
-    map.fitBounds(this.plan.layer.getBounds());
-    map.setMaxBounds(this.plan.layer.getBounds())
+    if (this.plans.length > 0) {
+      this.map = L.map(this.planmap, {
+        crs: L.CRS.Simple,
+        attributionControl: false,
+        maxZoom: 4
+      });
+      this.plan = this.plans[0].value;
+    }
+  }
+
+  planChanged(newValue, oldValue) {
+    if (oldValue) {
+      let plan = this.getPlan(oldValue);
+      this.map.removeLayer(plan.layer);
+    }
+    if (newValue) {
+      let plan = this.getPlan(newValue);
+      this.map.addLayer(plan.layer);
+      this.map.fitBounds(plan.layer.getBounds());
+      this.map.setMaxBounds(plan.layer.getBounds())
+    }
+  }
+
+  getPlan(value) {
+    return this.plans.find((plan) => plan.value === value);
   }
 }
