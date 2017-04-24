@@ -76,23 +76,6 @@ export class Database {
         building.organisations = Object.keys(org).map(key => org[key]);
         return building;
       });
-      let stats = {
-        roomsPerBuilding: {},
-        orgsPerBuilding: {}
-      };
-      this.data.buildings.forEach(building => {
-        let roomCount = building.rooms.length;
-        if (!stats.roomsPerBuilding[roomCount]) {
-          stats.roomsPerBuilding[roomCount] = 0;
-        }
-        stats.roomsPerBuilding[roomCount]++;
-        let orgCount = building.organisations.length;
-        if (!stats.orgsPerBuilding[orgCount]) {
-          stats.orgsPerBuilding[orgCount] = 0;
-        }
-        stats.orgsPerBuilding[orgCount]++;
-      })
-      console.log(stats);
       return this.data;
     });
   }
