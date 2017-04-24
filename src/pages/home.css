@@ -1,0 +1,10 @@
+.leaflet-system-icon {
+  background-color: #db4437;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+  line-height: 22px;
+  font-size: 14px;
+  color: #ffffff;
+  text-align: center;
+}
