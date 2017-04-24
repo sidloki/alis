@@ -1,9 +1,11 @@
 import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 import {Database} from '../../services/db';
 
-@inject(Database)
+@inject(Router, Database)
 export class Info {
-  constructor (db) {
+  constructor (router, db) {
+    this.router = router;
     this.db = db;
   }
 
@@ -11,6 +13,22 @@ export class Info {
     this.data = this.db.data.systems.find((item) => {
       return params.id === item.anlageID;
     });
+    this.plans = [];
+    if (this.data.plan1_dateiname !== 'transp.png') {
+      let plan = {};
+      plan.id = 'plan1';
+      plan.name = this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${this.plans.length + 1}` : 'Raumplan';
+
+      this.plans.push(plan);
+
+    }
+    if (this.data.plan2_dateiname !== 'transp.png') {
+      let plan = {};
+      plan.id = 'plan2';
+      plan.name = this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${this.plans.length + 1}` : 'Raumplan';
+
+      this.plans.push(plan);
+    }
   }
 
   getRoomName() {
@@ -52,5 +70,9 @@ export class Info {
       return type.techID === this.data.techID;
     });
     return technology.technologie;
+  }
+
+  showPlan(plan) {
+    this.router.navigateToRoute('plan', {room_id: this.data.anlageID, plan_id: plan.id});
   }
 }

@@ -35,6 +35,12 @@ export class App {
       moduleId: './pages/room/info',
       nav: false,
       title: 'Room'
+    }, {
+      route: 'room/:room_id/:plan_id',
+      name: 'plan',
+      moduleId: './pages/room/plan',
+      nav: false,
+      title: 'Plan'
     }]);
   }
 }
