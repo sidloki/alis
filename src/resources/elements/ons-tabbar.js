@@ -46,7 +46,7 @@ export class OnsTabbar extends RouterView {
     let navModel = this.router.navigation[index];
     if (!navModel.isActive) {
       let route = navModel.config.name;
-      this.router.navigate(navModel.href,/* {replace: true}*/);
+      this.router.navigate(navModel.href, {replace: true});
     }
   }
 
