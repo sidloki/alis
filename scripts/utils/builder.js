@@ -38,9 +38,15 @@ function invalidate(filename) {
 function bundle() {
   console.log("bundle files ...");
   return Promise.all([
-    builder.bundle('[src/**/*.js] + src/**/*.html!text + src/**/*.css!css', 'dist/app-bundle.js', bundleOptions),
-    builder.bundle('text + css + src/**/*.js - [src/**/*.js]', 'dist/vendor-bundle.js', bundleOptions)
-  ]);
+    builder.bundle('[src/**/*.js] + src/**/*.html!text + src/**/*.css!text', 'dist/app-bundle.js', bundleOptions),
+    builder.bundle('text + src/**/*.js - [src/**/*.js]', 'dist/vendor-bundle.js', bundleOptions)
+  ])
+  .then(() => {
+    console.log("bundle complete.")
+  })
+  .catch((error) => {
+    console.error(error.stack);
+  });
 };
 
 function build() {
