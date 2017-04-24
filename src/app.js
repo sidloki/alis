@@ -29,6 +29,12 @@ export class App {
       options: {
         animation: 'lift'
       }
+    }, {
+      route: 'room/:id',
+      name: 'room',
+      moduleId: './pages/room/info',
+      nav: false,
+      title: 'Room'
     }]);
   }
 }

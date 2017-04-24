@@ -78,4 +78,8 @@ export class Home {
   showList() {
     this.router.navigateToRoute('list');
   }
+
+  showRoom(room) {
+    this.router.navigateToRoute('room', {id: room.anlageID});
+  }
 }
