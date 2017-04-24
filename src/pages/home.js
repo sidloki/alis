@@ -4,6 +4,8 @@ import {Database} from '../services/db';
 
 @inject(Router, Database)
 export class Home {
+  @bindable selection;
+
   constructor (router, db) {
     this.router = router;
     this.db = db;
@@ -42,6 +44,30 @@ export class Home {
       let marker = L.marker([building.lat, building.lng], {icon: myIcon}).addTo(markers);
       marker.data = building;
     });
+  }
+
+  deselect() {
+    this.selection = null;
+  }
+
+  selectionChanged(newValue, oldValue) {
+    if (newValue) {
+      this.roomlist.scrollTop = 0;
+    }
+  }
+
+  getRoomName(room) {
+    let name = `${room.raum} ${room.raumnummer}`.trim();
+    if (!name) {
+      name = room.gebaeude;
+    }
+    if (!name) {
+      let type = this.db.data.roomtypes.find((type) => {
+        return type.typID === room.typID;
+      });
+      name = type.typ;
+    }
+    return name;
   }
 
   showMenu() {
