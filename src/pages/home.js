@@ -10,7 +10,6 @@ export class Home {
     this.router = router;
     this.db = db;
   }
-  }
 
   attached() {
     let map = L.map(this.map, {
