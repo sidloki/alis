@@ -10,11 +10,9 @@ export class Info {
   }
 
   activate(params) {
-    this.data = this.db.data.systems.find((item) => {
-      return params.id === item.anlageID;
-    });
+    this.data = params.data;
   }
-  
+
   openWebsite() {
     window.open(this.data.webadresse, '_system');
   }

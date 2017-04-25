@@ -7,39 +7,20 @@ export class Index {
     this.db = db;
   }
 
-  configureRouter(config, router) {
-    config.map([{
-      route: '',
-      name: 'room-info',
-      moduleId: './info',
-      nav: true,
-      title: 'Informationen',
-      // settings: {
-      //   tab: {
-      //     icon: 'ion-ios-information-outline,material:md-info-outline',
-      //     'active-icon': 'ion-ios-information,material:md-info',
-      //   }
-      // }
-    }, {
-      route: 'plan',
-      name: 'room-plan',
-      moduleId: './plan',
-      nav: true,
-      title: 'Raumplan',
-      activationStrategy: 'invokelifecycle'
-      // settings: {
-      //   tab: {
-      //     icon: 'fa-map-o',
-      //     'active-icon': 'fa-map'
-      //   }
-      // }
-    }]);
-  }
-
   activate(params) {
     this.data = this.db.data.systems.find((item) => {
       return params.id === item.anlageID;
     });
+    this.tabs = [{
+      page: './info',
+      label: 'Info',
+      active: true,
+      data: this.data
+    }, {
+      page: './plan',
+      label: 'Raumplan',
+      data: this.data
+    }];
   }
 
   getRoomName() {

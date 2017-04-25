@@ -11,9 +11,7 @@ export class Plan {
 
   activate(params) {
     let promises = [];
-    this.data = this.db.data.systems.find((item) => {
-      return params.id === item.anlageID;
-    });
+    this.data = params.data;
     this.plans = [];
     if (this.data.plan1_dateiname !== 'transp.png') {
       let plan = {

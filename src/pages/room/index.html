@@ -6,6 +6,8 @@
       </div>
       <div class="center">${getRoomName()}</div>
     </ons-toolbar>
-    <ons-tabbar></ons-tabbar>
+    <ons-tabbar>
+      <ons-tab repeat.for="tab of tabs" model.bind="tab"></ons-tab>
+    </ons-tabbar>
   </ons-page>
 </template>
