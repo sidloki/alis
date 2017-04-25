@@ -72,26 +72,8 @@ export class OnsNavigator extends RouterView {
   }
 
   unload(pageElement) {
-    return invokeLifecycle(this.view.controller.viewModel, 'deactivate').then(() => {
-      this.viewSlot.remove(this.view);
-      this.view.unbind();
-      this.view = this.viewStack.pop();
-    });
+    this.viewSlot.remove(this.view);
+    this.view.unbind();
+    this.view = this.viewStack.pop();
   }
-}
-
-function invokeLifecycle(instance, name, model) {
-  if (typeof instance[name] === 'function') {
-    return Promise.resolve().then(() => {
-      return instance[name](model);
-    }).then(function(result) {
-      if (result !== null && result !== undefined) {
-        return result;
-      }
-
-      return true;
-    });
-  }
-
-  return Promise.resolve(true);
 }
