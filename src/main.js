@@ -16,32 +16,14 @@ import 'aurelia-templating';
 import 'aurelia-templating-binding';
 import 'aurelia-templating-resources';
 import 'aurelia-templating-router';
-import {BrowserHistory} from 'aurelia-history-browser';
-import {CustomRouter} from './lib/custom-router';
-import {Router, RouteLoader} from 'aurelia-router';
-import {TemplatingRouteLoader} from 'aurelia-templating-router';
 
 import environment from './environment';
 
-BrowserHistory.prototype.setState = function(key, value) {
-  let state = Object.assign({}, this.history.state);
-  state[key] = value;
-  this.history.replaceState(state, null, null);
-};
-
-BrowserHistory.prototype.getState = function(key) {
- let state = Object.assign({}, this.history.state);
- return state[key];
-};
-
 export function configure(aurelia) {
-  aurelia.use
-    .singleton(RouteLoader, TemplatingRouteLoader)
-    .singleton(Router, CustomRouter);
-  aurelia.use.container.registerAlias(Router, CustomRouter);
   aurelia.use
     .basicConfiguration()
     .history()
+    .plugin('aurelia-onsenui')
     .feature('alis/resources');
 
   if (environment.debug) {

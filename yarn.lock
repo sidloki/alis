@@ -128,7 +128,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-aurelia-binding@^1.0.0, aurelia-binding@^1.0.9, aurelia-binding@^1.1.0:
+aurelia-binding@^1.0.0, aurelia-binding@^1.0.9, aurelia-binding@^1.1.0, aurelia-binding@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/aurelia-binding/-/aurelia-binding-1.2.1.tgz#8dd06d5cd85e72f3f61dc8702eedc97d5182e6b0"
   dependencies:
@@ -156,7 +156,7 @@ aurelia-bootstrapper@^2.1.1:
     aurelia-templating-resources "^1.0.0"
     aurelia-templating-router "^1.0.0"
 
-aurelia-dependency-injection@^1.0.0:
+aurelia-dependency-injection@^1.0.0, aurelia-dependency-injection@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/aurelia-dependency-injection/-/aurelia-dependency-injection-1.3.1.tgz#0dab7016c904efe7ebba45f84673b58f3800d9d7"
   dependencies:
@@ -223,11 +223,23 @@ aurelia-logging@^1.0.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/aurelia-logging/-/aurelia-logging-1.3.1.tgz#b34ae759372ba08740ab12233a89bad15487fe98"
 
-aurelia-metadata@^1.0.0:
+aurelia-metadata@^1.0.0, aurelia-metadata@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/aurelia-metadata/-/aurelia-metadata-1.0.3.tgz#1e8d59da188e2871a8ad749ba42ca85084a3f30e"
   dependencies:
     aurelia-pal "^1.0.0"
+
+aurelia-onsenui@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/aurelia-onsenui/-/aurelia-onsenui-0.2.1.tgz#8c1b155c1bed457bb9451e0eee829e37f2b4aabc"
+  dependencies:
+    aurelia-binding "^1.2.1"
+    aurelia-dependency-injection "^1.3.0"
+    aurelia-metadata "^1.0.3"
+    aurelia-pal "^1.3.0"
+    aurelia-path "^1.1.1"
+    aurelia-templating "^1.4.0"
+    onsenui "^2.2.0"
 
 aurelia-pal-browser@^1.0.0:
   version "1.2.1"
@@ -239,7 +251,7 @@ aurelia-pal@^1.0.0, aurelia-pal@^1.1.0, aurelia-pal@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/aurelia-pal/-/aurelia-pal-1.3.0.tgz#95d2b8da8fb318adb6019d320d1d2f9028f37f17"
 
-aurelia-path@^1.0.0:
+aurelia-path@^1.0.0, aurelia-path@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/aurelia-path/-/aurelia-path-1.1.1.tgz#caa9d20bc8515a5f9f286d9a3b18d81b2c85b0dd"
 
@@ -307,7 +319,7 @@ aurelia-templating-router@^1.0.0:
     aurelia-router "^1.0.1"
     aurelia-templating "^1.3.0"
 
-aurelia-templating@^1.0.0, aurelia-templating@^1.3.0:
+aurelia-templating@^1.0.0, aurelia-templating@^1.3.0, aurelia-templating@^1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/aurelia-templating/-/aurelia-templating-1.4.1.tgz#bc8f1972149e20f1034328bf3a42a9698856cbce"
   dependencies:
@@ -2277,7 +2289,7 @@ once@^1.3.0, once@^1.3.3:
   dependencies:
     wrappy "1"
 
-onsenui@^2.2.4:
+onsenui@^2.2.0, onsenui@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/onsenui/-/onsenui-2.2.4.tgz#cc130bf85da23afa8ade1267d3491098034ddc17"
 
