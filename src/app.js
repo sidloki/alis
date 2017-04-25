@@ -18,14 +18,12 @@ export class App {
       route: ['', 'home'],
       name: 'home',
       moduleId: './pages/home',
-      nav: false,
-      title: 'Home'
+      nav: false
     }, {
       route: 'list',
       name: 'list',
       moduleId: './pages/list',
       nav: false,
-      title: 'List',
       options: {
         animation: 'lift'
       }
@@ -33,8 +31,7 @@ export class App {
       route: 'room/:id',
       name: 'room',
       moduleId: './pages/room/index',
-      nav: false,
-      title: 'Room'
+      nav: false
     }]);
   }
 }
