@@ -9,7 +9,9 @@ export class App {
   }
 
   activate() {
-    return this.db.load();
+    return this.db.load().catch(() => {
+      return;
+    });
   }
 
   configureRouter(config, router) {
