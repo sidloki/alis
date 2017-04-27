@@ -2293,9 +2293,9 @@ once@^1.3.0, once@^1.3.3:
   dependencies:
     wrappy "1"
 
-onsenui@^2.2.0, onsenui@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/onsenui/-/onsenui-2.2.4.tgz#cc130bf85da23afa8ade1267d3491098034ddc17"
+onsenui@^2.2.0, onsenui@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/onsenui/-/onsenui-2.2.5.tgz#ca8c4e1860e867916cff4a38d22726505112b0c9"
 
 openurl@1.1.0:
   version "1.1.0"
