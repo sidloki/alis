@@ -2056,6 +2056,10 @@ leaflet.gridlayer.googlemutant@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/leaflet.gridlayer.googlemutant/-/leaflet.gridlayer.googlemutant-0.6.0.tgz#9dc03973c6b886680ad3dab2d8341e1a2fdec935"
 
+leaflet.locatecontrol@^0.60.0:
+  version "0.60.0"
+  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.60.0.tgz#fc7be657ca9b7e8b8ba7263e52b0bb902b7cd965"
+
 leaflet.markercluster@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.0.4.tgz#d3f85fe7412723e2daa27634dc5ed9c45152757c"

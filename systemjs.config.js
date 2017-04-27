@@ -9,6 +9,7 @@ SystemJS.config({
     "aurelia-onsenui": "node_modules/aurelia-onsenui/dist/commonjs",
     "leaflet": "node_modules/leaflet/dist",
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
+    "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
     "onsenui": "node_modules/onsenui/js",
     "css": "node_modules/systemjs-plugin-css",
@@ -56,6 +57,9 @@ SystemJS.config({
     },
     "node_modules/leaflet.gridlayer.googlemutant": {
       "main": "Leaflet.GoogleMutant.js"
+    },
+    "node_modules/leaflet.locatecontrol/src": {
+      "main": "L.Control.Locate.js"
     },
     "node_modules/leaflet.markercluster/dist": {
       "main": "leaflet.markercluster.js"

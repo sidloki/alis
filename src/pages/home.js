@@ -26,6 +26,8 @@ export class Home {
         stylers: [{ visibility: "off" }]
       }]
     }).addTo(map);
+    
+    L.control.locate().addTo(map);
     map.setView([46.801111, 8.226667], 7);
 
     markers.on('click', (e) => {
