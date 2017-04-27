@@ -25,6 +25,8 @@ const list = [
   'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
   'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
   'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+  'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
+  'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
   'resources/'
 ]
 
