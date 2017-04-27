@@ -16,6 +16,7 @@ import 'aurelia-templating';
 import 'aurelia-templating-binding';
 import 'aurelia-templating-resources';
 import 'aurelia-templating-router';
+import 'aurelia-onsenui';
 
 import environment from './environment';
 
