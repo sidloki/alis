@@ -6,6 +6,7 @@ function start() {
       online: false,
       open: false,
       port: 9000,
+      https: true,
       server: {
         baseDir: ['.'],
         middleware: (req, res, next) => {
