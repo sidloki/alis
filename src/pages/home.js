@@ -26,9 +26,10 @@ export class Home {
         stylers: [{ visibility: "off" }]
       }]
     }).addTo(this.map);
-    this.markers = L.markerClusterGroup({
+    this.buildings = L.markerClusterGroup({
       maxClusterRadius: 40
     }).addTo(this.map);
+    this.markers = L.featureGroup().addTo(this.map);
     this.locateControl = L.control.locate({
       showPopup: false,
       locateControl: {}
@@ -53,9 +54,7 @@ export class Home {
 
     this.map.on('moveend', this.updateMapView, this);
 
-    this.markers.on('click', (e) => {
-      this.selection = e.layer.data;
-    });
+    this.buildings.on('click', this.onBuildingClick, this);
 
     this.db.data.buildings.forEach(building => {
       // TODO: marker icons
@@ -63,9 +62,13 @@ export class Home {
         className: 'leaflet-system-icon fa fa-deaf',
         iconSize: 22
       });
-      let marker = L.marker([building.lat, building.lng], {icon: myIcon}).addTo(this.markers);
+      let marker = L.marker([building.lat, building.lng], {icon: myIcon}).addTo(this.buildings);
       marker.data = building;
     });
+  }
+
+  onBuildingClick(e) {
+    this.selection = e.layer.data;
   }
 
   deselect() {
@@ -73,7 +76,10 @@ export class Home {
   }
 
   selectionChanged(newValue, oldValue) {
+    this.markers.clearLayers();
     if (newValue) {
+      let marker = L.marker([newValue.lat, newValue.lng]);
+      this.markers.addLayer(marker);
       this.roomlist.scrollTop = 0;
     }
   }
