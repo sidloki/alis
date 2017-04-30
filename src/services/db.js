@@ -33,7 +33,13 @@ export class Database {
     return Promise.all(
       tables.map(table => this.http
         .fetch(`table=${table}`)
-        .then(response => response.json()))
+        .then(response => response.json())
+        .catch(error => {
+          console.error(error);
+          return {
+            results: []
+          };
+        }))
     ).then(data => {
       tables.forEach((table, index) => {
         this.data[table] = data[index].results;
