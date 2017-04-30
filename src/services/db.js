@@ -1,5 +1,7 @@
 import {HttpClient} from 'aurelia-fetch-client';
 
+const tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
+
 export class Database {
 
   constructor() {
@@ -28,7 +30,6 @@ export class Database {
   }
 
   load() {
-    let tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
     return Promise.all(
       tables.map(table => this.http
         .fetch(`table=${table}`)
