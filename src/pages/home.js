@@ -182,6 +182,17 @@ export class Home {
     this.searchText = this.currentSearchText = item.typ;
     this.buildings = this.db.queryBuildingsByRoomType(item);
     this.selection = null;
+    this.zoomToNearest();
+  }
+
+  zoomToNearest() {
+    let center = this.map.getCenter();
+    let closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
+    let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
+    this.map.fitBounds(bounds, {
+      maxZoom: this.map.getZoom(),
+      padding: [40, 40]
+    });
   }
 
   clearCurrentSearch() {
