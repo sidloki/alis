@@ -2,27 +2,14 @@
   background-color: #db4437;
   border-radius: 50%;
   border: 1.5px solid #ffffff;
-  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
   line-height: 22px;
   font-size: 14px;
   color: #ffffff;
   text-align: center;
 }
 
-.leaflet-container .leaflet-control-container .leaflet-top {
-  top: 54px;
-}
-
 .toolbar.searchbar {
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  width: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  height: 44px;
-  line-height: 44px;
+  padding: 5px 10px 0;
 }
 
 .toolbar.searchbar.floating + .page__background + .page__content {
@@ -30,9 +17,16 @@
     top: 0;
 }
 
+.toolbar.searchbar.toolbar--transparent .center {
+  box-shadow: 0 1px 5px rgba(0,0,0,.3);
+  border-color: transparent;
+}
+
 .toolbar.searchbar .toolbar-button {
   color: #666;
   margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .toolbar.searchbar.toolbar--material .toolbar-button--material {
   color: #666;
@@ -49,13 +43,19 @@
 .toolbar.searchbar .left, .toolbar.searchbar .right {
   min-width: auto;
   width: auto;
-  height: auto;
-  line-height: inherit;
 }
 .toolbar.searchbar .center {
   flex: 1;
-  height: auto;
-  line-height: inherit;
+  display: flex;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 4px;
+  background-color: #fff;
+  max-width: 100%;
+}
+.toolbar.searchbar.toolbar--material .center {
+  height: 46px;
+  line-height: 46px;
 }
 .toolbar.searchbar .search-input {
   width: 100%;
@@ -69,10 +69,11 @@
 
 .card {
   margin: 10px;
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
   border-radius: 4px;
   background-color: #fff;
   padding: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.3);
 }
 
 .category-item {

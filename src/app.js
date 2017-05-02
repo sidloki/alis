@@ -30,19 +30,6 @@ export class App {
         animation: 'lift'
       }
     }, {
-      route: 'search',
-      name: 'search',
-      moduleId: './pages/search',
-      nav: false,
-      settings: {
-        navigator: {
-          animation: 'fade-ios',
-          animationOptions: {
-            duration: 0.1
-          }
-        }
-      }
-    }, {
       route: 'room/:id',
       name: 'room',
       moduleId: './pages/room/index',

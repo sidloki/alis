@@ -1,22 +1,22 @@
 import ons from 'onsenui';
 import {Router} from 'aurelia-router';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../services/db';
 import {Storage} from '../services/storage';
 
-@inject(Router, EventAggregator, Database, Storage)
+@inject(Router, Database, Storage)
 export class Home {
   @bindable selection;
-  @bindable search;
+  @bindable buildings;
 
-  constructor(router, events, db, storage) {
+  constructor(router, db, storage) {
     this.router = router;
-    this.events = events;
     this.db = db;
     this.storage = storage;
+  }
 
-    this.events.subscribe('search', this.onSearch.bind(this));
+  activate(params) {
+
   }
 
   attached() {
@@ -35,10 +35,13 @@ export class Home {
         stylers: [{ visibility: "off" }]
       }]
     }).addTo(this.map);
-    this.buildings = L.markerClusterGroup({
+
+    this.buildingsLayer = L.markerClusterGroup({
       maxClusterRadius: 40
     }).addTo(this.map);
+
     this.markers = L.featureGroup().addTo(this.map);
+
     this.locateControl = L.control.locate({
       showPopup: false,
       locateControl: {}
@@ -63,17 +66,8 @@ export class Home {
 
     this.map.on('moveend', this.updateMapView, this);
 
-    this.buildings.on('click', this.onBuildingClick, this);
-
-    this.db.data.buildings.forEach(building => {
-      // TODO: marker icons
-      let myIcon = L.divIcon({
-        className: 'leaflet-system-icon fa fa-deaf',
-        iconSize: 22
-      });
-      let marker = L.marker([building.lat, building.lng], {icon: myIcon}).addTo(this.buildings);
-      marker.data = building;
-    });
+    this.buildingsLayer.on('click', this.onBuildingClick, this);
+    this.buildings = this.db.data.buildings;
   }
 
   onBuildingClick(e) {
@@ -91,6 +85,20 @@ export class Home {
       this.markers.addLayer(marker);
       this.roomlist.scrollTop = 0;
     }
+  }
+
+  buildingsChanged(newValue, oldValue) {
+    this.buildingsLayer.clearLayers();
+    newValue.forEach(building => {
+      // TODO: marker icons
+      let myIcon = L.divIcon({
+        className: 'leaflet-system-icon fa fa-deaf',
+        iconSize: 22
+      });
+      let marker = L.marker([building.lat, building.lng], {icon: myIcon});
+      marker.data = building;
+      this.buildingsLayer.addLayer(marker);
+    });
   }
 
   updateMapView(evt) {
@@ -145,11 +153,21 @@ export class Home {
   }
 
   showSearch() {
-    this.router.navigateToRoute('search');
+    this._search.show();
+    this._searchinput.focus();
+    this.isSearching = true;
+  }
+
+  cancelSearch() {
+    this._search.hide();
+    this.currentSearchText = '';
+    this.isSearching = false;
   }
 
   clearSearch() {
-    this.searchText = null;
+    this.searchText = this.currentSearchText = '';
+    this.buildings = this.db.data.buildings;
+    this.selection = null;
   }
 
   showList() {
@@ -160,7 +178,15 @@ export class Home {
     this.router.navigateToRoute('room', {id: room.anlageID});
   }
 
-  onSearch(search) {
-    this.searchText = search.text;
+  searchCategory(item) {
+    this._search.hide();
+    this.searchText = this.currentSearchText = item.typ;
+    this.buildings = this.db.queryBuildingsByRoomType(item);
+    this.selection = null;
+  }
+
+  clearCurrentSearch() {
+    this.currentSearchText = '';
+    this._searchinput.focus();
   }
 }

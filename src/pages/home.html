@@ -1,19 +1,21 @@
 <template>
   <require from="./home.css"></require>
   <ons-page>
-    <ons-toolbar modifier="inline transparent" class="searchbar floating">
+    <ons-toolbar modifier="" class="searchbar">
       <div class="left">
+      </div>
+      <div class="center">
         <ons-toolbar-button click.delegate="showMenu()">
           <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
         </ons-toolbar-button>
-      </div>
-      <div class="center" click.delegate="showSearch()">
-        <input type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" />
-      </div>
-      <div class="right">
+        <div style="flex:1" click.delegate="showSearch()">
+          <input type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" />
+        </div>
         <ons-toolbar-button if.bind="searchText" click.delegate="clearSearch()">
           <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
         </ons-toolbar-button>
+      </div>
+      <div class="right">
       </div>
     </ons-toolbar>
     <div style="display:flex;flex-direction:column;height:100%;">
@@ -65,4 +67,37 @@
       </ons-bottom-toolbar> -->
     </div>
   </ons-page>
+    <ons-modal ref="_search">
+      <ons-page>
+        <ons-toolbar modifier="transparent" class="searchbar">
+          <div class="left">
+          </div>
+          <div class="center">
+            <ons-toolbar-button click.delegate="cancelSearch()">
+              <ons-icon icon="ion-ios-arrow-back, material:md-arrow-left"></ons-icon>
+            </ons-toolbar-button>
+            <div style="flex:1;">
+              <input ref="_searchinput" type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="currentSearchText" />
+            </div>
+            <ons-toolbar-button show.bind="currentSearchText" click.delegate="clearCurrentSearch()">
+              <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+          <div class="right">
+          </div>
+        </ons-toolbar>
+        <div class="card" if.bind="!currentSearchText">
+          <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
+            <div class="category-item" repeat.for="category of db.data.roomtypes">
+              <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
+                <ons-button style="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;">
+                  <ons-icon icon="ion-help" size="24px"></ons-icon>
+                </ons-button>
+                <div class="category-label">${category.typ}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ons-page>
+    </ons-modal>
 </template>

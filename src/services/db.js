@@ -86,4 +86,15 @@ export class Database {
       return this.data;
     });
   }
+
+  queryBuildingsByRoomType(roomType) {
+    return this.data.buildings.slice().reduce((acc, building) => {
+      let rooms = building.rooms.slice().filter(room => room.typID === roomType.typID);
+      if (rooms.length > 0) {
+        building.rooms = rooms;
+        acc.push(building);
+      }
+      return acc;
+    }, []);
+  }
 }
