@@ -8,6 +8,13 @@
   text-align: center;
 }
 
+.leaflet-container .leaflet-google-mutant .gmnoprint {
+  display: none;
+}
+.leaflet-container .leaflet-google-mutant .gmnoprint.gm-style-cc {
+  display: inherit;
+}
+
 .toolbar.searchbar {
   padding: 5px 10px 0;
 }
