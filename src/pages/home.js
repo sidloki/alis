@@ -91,6 +91,7 @@ export class Home {
           pan: false
         });
         if (!this.map.getBounds().contains(marker.getLatLng())) {
+          this.locateControl._onDrag();
           this.map.setView(marker.getLatLng(), this.map.getZoom());
           marker._bringToFront();
         }
@@ -220,6 +221,7 @@ export class Home {
     let closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
     if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
       let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
+      this.locateControl._onDrag();
       this.map.fitBounds(bounds, {
         maxZoom: this.map.getZoom(),
         padding: [40, 40]
@@ -247,6 +249,7 @@ export class Home {
     this.map.once('moveend', () => {
       this.selection = building;
     });
+    this.locateControl._onDrag();
     this.map.setView([building.lat, building.lng], 17);
   }
 
@@ -258,6 +261,7 @@ export class Home {
     this.results = this.currentResults;
     this.selection = null;
     this._search.hide();
+    this.locateControl._onDrag();
     this.map.fitBounds(location.bounds);
   }
 
