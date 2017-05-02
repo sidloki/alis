@@ -7,7 +7,6 @@ import {Storage} from '../services/storage';
 @inject(Router, Database, Storage)
 export class Home {
   @bindable selection;
-  @bindable buildings;
 
   constructor(router, db, storage) {
     this.router = router;
@@ -87,9 +86,9 @@ export class Home {
     }
   }
 
-  buildingsChanged(newValue, oldValue) {
+  set buildings(value) {
     this.buildingsLayer.clearLayers();
-    newValue.forEach(building => {
+    value.forEach(building => {
       // TODO: marker icons
       let myIcon = L.divIcon({
         className: 'leaflet-system-icon fa fa-deaf',
