@@ -21,6 +21,7 @@ const list = [
   'node_modules/onsenui/css/material-design-iconic-font/fonts/',
   'node_modules/leaflet/dist/leaflet.js',
   'node_modules/leaflet/dist/leaflet.css',
+  'node_modules/leaflet/dist/images/',
   'node_modules/leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js',
   'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
   'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
