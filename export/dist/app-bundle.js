@@ -840,7 +840,7 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
           this.data = {};
           this.http = new HttpClient();
           this.http.configure(function (config) {
-            config.useStandardConfiguration().withBaseUrl('//zeta.hoeranlagenverzeichnis.ch/query.php?').withDefaults({
+            config.useStandardConfiguration().withBaseUrl('//www.zeta.hoeranlagenverzeichnis.ch/query.php?').withDefaults({
               headers: {
                 // 'X-Requested-With': 'Fetch'
               }
