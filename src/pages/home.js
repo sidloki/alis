@@ -115,6 +115,10 @@ export class Home {
     });
   }
 
+  get buildings() {
+    return this.buildingsLayer.getLayers().map(layer => layer.data);
+  }
+
   updateMapView(evt) {
     let bounds = evt.target.getBounds();
     this.storage.setItem('mapbounds', [
