@@ -22,7 +22,7 @@ export class Info {
     if (!url || url === 'transp.png') {
       return null;
     } else {
-      return `//hoeranlagenverzeichnis.ch/admin/images/image_front/${url}`;
+      return `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_front/${url}`;
     }
   }
 

@@ -17,7 +17,7 @@ export class Plan {
       let plan = {
         value: this.data.plan1_dateiname,
         text: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-        url: `//hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
+        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
       };
       promises.push(new Promise((resolve, reject) => {
         let img = new Image();
@@ -34,7 +34,7 @@ export class Plan {
       let plan = {
         value: this.data.plan2_dateiname,
         text: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-        url: `//hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
+        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
       };
       promises.push(new Promise((resolve, reject) => {
         let img = new Image();
