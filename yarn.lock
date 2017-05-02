@@ -2052,6 +2052,12 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-geometryutil@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/leaflet-geometryutil/-/leaflet-geometryutil-0.8.0.tgz#c09c0fc37628f402846ad5723c80ef95b3d2057c"
+  dependencies:
+    leaflet ">=0.7.0"
+
 leaflet.gridlayer.googlemutant@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/leaflet.gridlayer.googlemutant/-/leaflet.gridlayer.googlemutant-0.6.0.tgz#9dc03973c6b886680ad3dab2d8341e1a2fdec935"
@@ -2064,7 +2070,7 @@ leaflet.markercluster@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.0.4.tgz#d3f85fe7412723e2daa27634dc5ed9c45152757c"
 
-leaflet@^1.0.3:
+leaflet@>=0.7.0, leaflet@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
 
