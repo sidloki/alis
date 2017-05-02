@@ -536,7 +536,7 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
           key: 'onSearchInput',
           value: function onSearchInput() {
             this.isFiltered = false;
-            this.currentResults = this.db.search(this.currentSearchText, 10);
+            this.currentResults = this.db.search(this._searchinput.value, 10);
           }
         }, {
           key: 'buildings',
@@ -979,12 +979,14 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
               locations: [],
               buildings: []
             };
+
+            text = text.trim();
+
             if (text.length < 3) {
               return results;
             }
-            text = text.toLowerCase();
-            text = text.split(' ');
-            text = text.filter(function (word) {
+
+            text = text.toLowerCase().split(' ').filter(function (word) {
               return word !== '';
             });
 
