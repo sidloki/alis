@@ -753,7 +753,7 @@ System.register('alis/pages/room/info.js', ['node_modules/systemjs-plugin-babel/
             if (!url || url === 'transp.png') {
               return null;
             } else {
-              return '//hoeranlagenverzeichnis.ch/admin/images/image_front/' + url;
+              return '//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_front/' + url;
             }
           }
         }, {
@@ -1129,7 +1129,7 @@ System.register('alis/pages/room/plan.js', ['node_modules/systemjs-plugin-babel/
                 var plan = {
                   value: _this.data.plan1_dateiname,
                   text: _this.data.plan2_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(_this.plans).length + 1) : 'Raumplan',
-                  url: '//hoeranlagenverzeichnis.ch/admin/images/image_room1/' + _this.data.plan1_dateiname
+                  url: '//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room1/' + _this.data.plan1_dateiname
                 };
                 promises.push(new Promise(function (resolve, reject) {
                   var img = new Image();
@@ -1148,7 +1148,7 @@ System.register('alis/pages/room/plan.js', ['node_modules/systemjs-plugin-babel/
                 var plan = {
                   value: _this.data.plan2_dateiname,
                   text: _this.data.plan1_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(_this.plans).length + 1) : 'Raumplan',
-                  url: '//hoeranlagenverzeichnis.ch/admin/images/image_room2/' + _this.data.plan2_dateiname
+                  url: '//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room2/' + _this.data.plan2_dateiname
                 };
                 promises.push(new Promise(function (resolve, reject) {
                   var img = new Image();
