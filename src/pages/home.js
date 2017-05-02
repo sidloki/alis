@@ -1,19 +1,28 @@
+import ons from 'onsenui';
 import {Router} from 'aurelia-router';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../services/db';
 import {Storage} from '../services/storage';
 
-@inject(Router, Database, Storage)
+@inject(Router, EventAggregator, Database, Storage)
 export class Home {
   @bindable selection;
+  @bindable search;
 
-  constructor (router, db, storage) {
+  constructor(router, events, db, storage) {
     this.router = router;
+    this.events = events;
     this.db = db;
     this.storage = storage;
+
+    this.events.subscribe('search', this.onSearch.bind(this));
   }
 
   attached() {
+    if (ons.platform.isAndroid()) {
+      this._map.classList.add('map--material');
+    }
     this.map = L.map(this._map, {
       attributionControl: false
     });
@@ -135,11 +144,23 @@ export class Home {
     menu.open();
   }
 
+  showSearch() {
+    this.router.navigateToRoute('search');
+  }
+
+  clearSearch() {
+    this.searchText = null;
+  }
+
   showList() {
     this.router.navigateToRoute('list');
   }
 
   showRoom(room) {
     this.router.navigateToRoute('room', {id: room.anlageID});
+  }
+
+  onSearch(search) {
+    this.searchText = search.text;
   }
 }

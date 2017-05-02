@@ -1,0 +1,30 @@
+<template>
+  <require from="./search.css"></require>
+  <ons-page>
+    <ons-toolbar modifier="transparent" class="searchbar">
+      <div class="left">
+        <ons-back-button ref="_backbutton"></ons-back-button>
+      </div>
+      <div class="center">
+        <input ref="_searchinput" type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" />
+      </div>
+      <div class="right">
+        <ons-toolbar-button if.bind="searchText">
+          <ons-icon icon="ion-ios-close-empty, material:md-close" click.trigger="clearSearch()"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <div class="card" if.bind="!searchText">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
+        <div class="category-item" repeat.for="category of db.data.roomtypes">
+          <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
+            <ons-button style="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;">
+              <ons-icon icon="ion-help" size="24px"></ons-icon>
+            </ons-button>
+            <div class="category-label">${category.typ}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ons-page>
+</template>

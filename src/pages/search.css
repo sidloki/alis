@@ -1,15 +1,8 @@
-.leaflet-system-icon {
-  background-color: #db4437;
-  border-radius: 50%;
-  border: 1.5px solid #ffffff;
-  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
-  line-height: 22px;
-  font-size: 14px;
-  color: #ffffff;
-  text-align: center;
+.page--material__background {
+  background-color: #f9f9f9;
 }
 
-.leaflet-container .leaflet-control-container .leaflet-top {
+.toolbar.searchbar + .page__background + .page__content {
   top: 54px;
 }
 
@@ -25,11 +18,6 @@
   line-height: 44px;
 }
 
-.toolbar.searchbar.floating + .page__background + .page__content {
-    margin-top: -1px;
-    top: 0;
-}
-
 .toolbar.searchbar .toolbar-button {
   color: #666;
   margin: 0;
@@ -38,12 +26,34 @@
   color: #666;
   margin: 0;
 }
-.toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon {
-  width: 22px;
-  font-size: 22px;
-}
 .toolbar.searchbar .toolbar-button .ons-icon {
   width: 17px;
+}
+.toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon {
+  font-size: 22px;
+  width: 22px;
+}
+.toolbar.searchbar .back-button {
+  color: #666;
+  line-height: inherit;
+  padding: 0 11px;
+}
+.toolbar.searchbar .back-button__icon {
+  color: #666;
+  margin: 0;
+  text-align: center;
+  width: 17px;
+}
+.toolbar.searchbar.toolbar--material .back-button--material {
+  color: #666;
+  margin: 0;
+  padding: 0 12px;
+}
+.toolbar.searchbar.toolbar--material .back-button--material__icon {
+  color: #666;
+  margin: 0;
+  font-size: 22px;
+  width: 22px;
 }
 
 .toolbar.searchbar .left, .toolbar.searchbar .right {

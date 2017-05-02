@@ -1,17 +1,19 @@
 <template>
   <require from="./home.css"></require>
   <ons-page>
-    <ons-toolbar>
+    <ons-toolbar modifier="inline transparent" class="searchbar floating">
       <div class="left">
-        <ons-toolbar-button click.trigger="showMenu()">
+        <ons-toolbar-button click.delegate="showMenu()">
           <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
         </ons-toolbar-button>
       </div>
-      <div class="center">${router.title}</div>
+      <div class="center" click.delegate="showSearch()">
+        <input type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" />
+      </div>
       <div class="right">
-        <!-- <ons-toolbar-button click.trigger="test()">
-          <ons-icon icon="ion-search, material:md-search"></ons-icon>
-        </ons-toolbar-button> -->
+        <ons-toolbar-button if.bind="searchText" click.delegate="clearSearch()">
+          <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
+        </ons-toolbar-button>
       </div>
     </ons-toolbar>
     <div style="display:flex;flex-direction:column;height:100%;">
