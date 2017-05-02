@@ -126,12 +126,14 @@ export class Database {
       locations: [],
       buildings: []
     }
+
+    text = text.trim();
+
     if (text.length < 3) {
       return results;
     }
-    text = text.toLowerCase();
-    text = text.split(' ');
-    text = text.filter(word => word !== '');
+
+    text = text.toLowerCase().split(' ').filter(word => word !== '');
 
     for (let i = 0; i < this.data.locations.length; i++) {
       let location = this.data.locations[i];
