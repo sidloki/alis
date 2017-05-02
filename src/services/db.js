@@ -91,7 +91,19 @@ export class Database {
     return this.data.buildings.slice().reduce((acc, building) => {
       let rooms = building.rooms.slice().filter(room => room.typID === roomType.typID);
       if (rooms.length > 0) {
+        let org = {};
         building.rooms = rooms;
+        building.rooms.forEach((room) => {
+          let orgId = room.organisation;
+          if (!org[orgId]) {
+            org[orgId] = {
+              name: room.organisation,
+              rooms: []
+            }
+          }
+          org[orgId].rooms.push(room);
+        });
+        building.organisations = Object.keys(org).map(key => org[key]);
         acc.push(building);
       }
       return acc;
