@@ -356,6 +356,7 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
                     pan: false
                   });
                   if (!_this.map.getBounds().contains(marker.getLatLng())) {
+                    _this.locateControl._onDrag();
                     _this.map.setView(marker.getLatLng(), _this.map.getZoom());
                     marker._bringToFront();
                   }
@@ -478,6 +479,7 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
             var closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
             if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
               var bounds = L.latLngBounds(closest.layer.getLatLng(), center);
+              this.locateControl._onDrag();
               this.map.fitBounds(bounds, {
                 maxZoom: this.map.getZoom(),
                 padding: [40, 40]
@@ -509,6 +511,7 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
             this.map.once('moveend', function () {
               _this2.selection = building;
             });
+            this.locateControl._onDrag();
             this.map.setView([building.lat, building.lng], 17);
           }
         }, {
@@ -521,6 +524,7 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
             this.results = this.currentResults;
             this.selection = null;
             this._search.hide();
+            this.locateControl._onDrag();
             this.map.fitBounds(location.bounds);
           }
         }, {
