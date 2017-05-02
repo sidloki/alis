@@ -188,11 +188,13 @@ export class Home {
   zoomToNearest() {
     let center = this.map.getCenter();
     let closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
-    let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
-    this.map.fitBounds(bounds, {
-      maxZoom: this.map.getZoom(),
-      padding: [40, 40]
-    });
+    if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
+      let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
+      this.map.fitBounds(bounds, {
+        maxZoom: this.map.getZoom(),
+        padding: [40, 40]
+      });
+    }
   }
 
   clearCurrentSearch() {
