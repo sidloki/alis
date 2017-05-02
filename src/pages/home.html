@@ -98,6 +98,23 @@
             </div>
           </div>
         </div>
+        <div class="card" style="padding:0;" if.bind="currentSearchText">
+          <ons-list>
+            <template repeat.for="building of currentResults.buildings">
+              <ons-list-item repeat.for="org of building.organisations" tappable modifier="longdivider" click.delegate="onBuildingResultClick(building)">
+                <div class="left"></div>
+                <div class="center">
+                  <span class="list-item__title" style="order:0;">${building.name || org.name}</span>
+                  <span class="list-item__subtitle">
+                    <span if.bind="building.name">${org.name}</span>
+                    <br if.bind="building.name"/>
+                    <span>${building.strasse_nr}, ${building.plz} ${building.ort}</span>
+                  </span>
+                </div>
+              </ons-list-item>
+            </template>
+          </ons-list>
+        </div>
       </ons-page>
     </ons-modal>
 </template>

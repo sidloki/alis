@@ -7,6 +7,8 @@ import {Storage} from '../services/storage';
 @inject(Router, Database, Storage)
 export class Home {
   @bindable selection;
+  @bindable currentResults;
+  results;
 
   constructor(router, db, storage) {
     this.router = router;
@@ -174,11 +176,14 @@ export class Home {
     this._search.show();
     this._searchinput.focus();
     this.isSearching = true;
+    this.currentSearchText = this.searchText;
+    this.currentResults = this.results;
   }
 
   cancelSearch() {
     this._search.hide();
     this.currentSearchText = '';
+    this.currentResults = {};
     this.isSearching = false;
   }
 
@@ -200,6 +205,10 @@ export class Home {
     this._search.hide();
     this.searchText = this.currentSearchText = item.typ;
     this.buildings = this.db.queryBuildingsByRoomType(item);
+    this.results = this.currentResults = {
+      buildings: this.buildings,
+      locations: []
+    };
     this.selection = null;
     this.zoomToNearest();
   }
@@ -218,6 +227,16 @@ export class Home {
 
   clearCurrentSearch() {
     this.currentSearchText = '';
+    this.currentResults = {
+      buildings: [],
+      locations: []
+    };
     this._searchinput.focus();
+  }
+
+  onBuildingResultClick(building) {
+    this.selection = null;
+    this._search.hide();
+    this.selection = building;
   }
 }
