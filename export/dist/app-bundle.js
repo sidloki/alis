@@ -40,7 +40,9 @@ System.register('alis/app.js', ['node_modules/systemjs-plugin-babel/babel-helper
         _createClass(App, [{
           key: 'activate',
           value: function activate() {
-            return this.db.load();
+            return this.db.load().catch(function () {
+              return;
+            });
           }
         }, {
           key: 'configureRouter',
@@ -50,29 +52,20 @@ System.register('alis/app.js', ['node_modules/systemjs-plugin-babel/babel-helper
               route: ['', 'home'],
               name: 'home',
               moduleId: './pages/home',
-              nav: false,
-              title: 'Home'
+              nav: false
             }, {
               route: 'list',
               name: 'list',
               moduleId: './pages/list',
               nav: false,
-              title: 'List',
               options: {
                 animation: 'lift'
               }
             }, {
               route: 'room/:id',
               name: 'room',
-              moduleId: './pages/room/info',
-              nav: false,
-              title: 'Room'
-            }, {
-              route: 'room/:room_id/:plan_id',
-              name: 'plan',
-              moduleId: './pages/room/plan',
-              nav: false,
-              title: 'Plan'
+              moduleId: './pages/room/index',
+              nav: false
             }]);
           }
         }]);
@@ -81,223 +74,6 @@ System.register('alis/app.js', ['node_modules/systemjs-plugin-babel/babel-helper
       }()) || _class));
 
       _export('App', App);
-    }
-  };
-});
-System.register('alis/lib/custom-router.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'node_modules/systemjs-plugin-babel/babel-helpers/possibleConstructorReturn.js', 'node_modules/systemjs-plugin-babel/babel-helpers/get.js', 'node_modules/systemjs-plugin-babel/babel-helpers/inherits.js', 'aurelia-logging', 'aurelia-dependency-injection', 'aurelia-history', 'aurelia-router', 'aurelia-route-recognizer', 'aurelia-event-aggregator'], function (_export, _context) {
-  "use strict";
-
-  var _classCallCheck, _createClass, _possibleConstructorReturn, _get, _inherits, LogManager, Container, inject, History, Router, PipelineProvider, AppRouter, isNavigationCommand, RouteRecognizer, EventAggregator, _dec, _class, CustomRouter;
-
-  function processResult(instruction, result, instructionCount, router) {
-    if (!(result && 'completed' in result && 'output' in result)) {
-      result = result || {};
-      result.output = new Error('Expected router pipeline to return a navigation result, but got [' + JSON.stringify(result) + '] instead.');
-    }
-
-    var finalResult = null;
-    if (isNavigationCommand(result.output)) {
-      result.output.navigate(router);
-    } else {
-      finalResult = result;
-
-      if (!result.completed) {
-        if (result.output instanceof Error) {
-          logger.error(result.output);
-        }
-
-        restorePreviousLocation(router);
-      }
-    }
-
-    return router._dequeueInstruction(instructionCount + 1).then(function (innerResult) {
-      return finalResult || innerResult || result;
-    });
-  }
-
-  function resolveInstruction(instruction, result, isInnerInstruction, router) {
-    instruction.resolve(result);
-
-    var eventArgs = { instruction: instruction, result: result };
-    if (!isInnerInstruction) {
-      router.isNavigating = false;
-      router.isExplicitNavigation = false;
-      router.isExplicitNavigationBack = false;
-      router.isNavigatingFirst = false;
-      router.isNavigatingNew = false;
-      router.isNavigatingRefresh = false;
-      router.isNavigatingForward = false;
-      router.isNavigatingBack = false;
-
-      var eventName = void 0;
-
-      if (result.output instanceof Error) {
-        eventName = 'error';
-      } else if (!result.completed) {
-        eventName = 'canceled';
-      } else {
-        var queryString = instruction.queryString ? '?' + instruction.queryString : '';
-        router.history.previousLocation = instruction.fragment + queryString;
-        eventName = 'success';
-      }
-
-      router.events.publish('router:navigation:' + eventName, eventArgs);
-      router.events.publish('router:navigation:complete', eventArgs);
-    } else {
-      router.events.publish('router:navigation:child:complete', eventArgs);
-    }
-
-    return result;
-  }
-
-  function restorePreviousLocation(router) {
-    var previousLocation = router.history.previousLocation;
-    if (previousLocation) {
-      router.navigate(router.history.previousLocation, { trigger: false, replace: true });
-    } else if (router.fallbackRoute) {
-      router.navigate(router.fallbackRoute, { trigger: true, replace: true });
-    } else {
-      logger.error('Router navigation failed, and no previous location or fallbackRoute could be restored.');
-    }
-  }
-  return {
-    setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
-      _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
-      _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersPossibleConstructorReturnJs) {
-      _possibleConstructorReturn = _node_modulesSystemjsPluginBabelBabelHelpersPossibleConstructorReturnJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersGetJs) {
-      _get = _node_modulesSystemjsPluginBabelBabelHelpersGetJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersInheritsJs) {
-      _inherits = _node_modulesSystemjsPluginBabelBabelHelpersInheritsJs.default;
-    }, function (_aureliaLogging) {
-      LogManager = _aureliaLogging;
-    }, function (_aureliaDependencyInjection) {
-      Container = _aureliaDependencyInjection.Container;
-      inject = _aureliaDependencyInjection.inject;
-    }, function (_aureliaHistory) {
-      History = _aureliaHistory.History;
-    }, function (_aureliaRouter) {
-      Router = _aureliaRouter.Router;
-      PipelineProvider = _aureliaRouter.PipelineProvider;
-      AppRouter = _aureliaRouter.AppRouter;
-      isNavigationCommand = _aureliaRouter.isNavigationCommand;
-    }, function (_aureliaRouteRecognizer) {
-      RouteRecognizer = _aureliaRouteRecognizer.RouteRecognizer;
-    }, function (_aureliaEventAggregator) {
-      EventAggregator = _aureliaEventAggregator.EventAggregator;
-    }],
-    execute: function () {
-      _export('CustomRouter', CustomRouter = (_dec = inject(Container, History, PipelineProvider, EventAggregator), _dec(_class = function (_AppRouter) {
-        _inherits(CustomRouter, _AppRouter);
-
-        /**
-        * True if the [[Router]] is navigating due to a browser refresh.
-        */
-
-        /**
-        * True if the [[Router]] is navigating forward in the browser session history.
-        */
-
-        /**
-        * True if the [[Router]] is navigating into the app for the first time in the browser session.
-        */
-        function CustomRouter(container, history, piplineProvider, events) {
-          _classCallCheck(this, CustomRouter);
-
-          return _possibleConstructorReturn(this, (CustomRouter.__proto__ || Object.getPrototypeOf(CustomRouter)).call(this, container, history, piplineProvider, events));
-        }
-
-        /**
-        * The currently active navigation tracker.
-        */
-
-        /**
-        * True if the [[Router]] is navigating back in the browser session history.
-        */
-
-        /**
-        * True if the [[Router]] is navigating to a page instance not in the browser session history.
-        */
-
-        _createClass(CustomRouter, [{
-          key: 'reset',
-          value: function reset() {
-            _get(CustomRouter.prototype.__proto__ || Object.getPrototypeOf(CustomRouter.prototype), 'reset', this).call(this);
-            this.isNavigatingFirst = false;
-            this.isNavigatingNew = false;
-            this.isNavigatingRefresh = false;
-            this.isNavigatingForward = false;
-            this.isNavigatingBack = false;
-          }
-        }, {
-          key: '_dequeueInstruction',
-          value: function _dequeueInstruction(instructionCount) {
-            var _this2 = this;
-
-            return Promise.resolve().then(function () {
-              if (_this2.isNavigating && !instructionCount) {
-                return undefined;
-              }
-
-              var instruction = _this2._queue.shift();
-              _this2._queue.length = 0;
-
-              if (!instruction) {
-                return undefined;
-              }
-
-              _this2.isNavigating = true;
-
-              var navtracker = _this2.history.getState('NavigationTracker');
-              if (!navtracker && !_this2.currentNavigationTracker) {
-                _this2.isNavigatingFirst = true;
-                _this2.isNavigatingNew = true;
-              } else if (!navtracker) {
-                _this2.isNavigatingNew = true;
-              } else if (!_this2.currentNavigationTracker) {
-                _this2.isNavigatingRefresh = true;
-              } else if (_this2.currentNavigationTracker < navtracker) {
-                _this2.isNavigatingForward = true;
-              } else if (_this2.currentNavigationTracker > navtracker) {
-                _this2.isNavigatingBack = true;
-              }
-              if (!navtracker) {
-                navtracker = Date.now();
-                _this2.history.setState('NavigationTracker', navtracker);
-              }
-              _this2.currentNavigationTracker = navtracker;
-
-              instruction.previousInstruction = _this2.currentInstruction;
-
-              if (!instructionCount) {
-                _this2.events.publish('router:navigation:processing', { instruction: instruction });
-              } else if (instructionCount === _this2.maxInstructionCount - 1) {
-                logger.error(instructionCount + 1 + ' navigation instructions have been attempted without success. Restoring last known good location.');
-                restorePreviousLocation(_this2);
-                return _this2._dequeueInstruction(instructionCount + 1);
-              } else if (instructionCount > _this2.maxInstructionCount) {
-                throw new Error('Maximum navigation attempts exceeded. Giving up.');
-              }
-
-              var pipeline = _this2.pipelineProvider.createPipeline();
-
-              return pipeline.run(instruction).then(function (result) {
-                return processResult(instruction, result, instructionCount, _this2);
-              }).catch(function (error) {
-                return { output: error instanceof Error ? error : new Error(error) };
-              }).then(function (result) {
-                return resolveInstruction(instruction, result, !!instructionCount, _this2);
-              });
-            });
-          }
-        }]);
-
-        return CustomRouter;
-      }(AppRouter)) || _class));
-
-      _export('CustomRouter', CustomRouter);
     }
   };
 });
@@ -314,14 +90,12 @@ System.register("alis/environment.js", [], function (_export, _context) {
     }
   };
 });
-System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aurelia-event-aggregator', 'aurelia-framework', 'aurelia-dependency-injection', 'aurelia-history-browser', 'aurelia-loader-default', 'aurelia-logging-console', 'aurelia-metadata', 'aurelia-pal-browser', 'aurelia-path', 'aurelia-polyfills', 'aurelia-route-recognizer', 'aurelia-router', 'aurelia-templating', 'aurelia-templating-binding', 'aurelia-templating-resources', 'aurelia-templating-router', './lib/custom-router', './environment'], function (_export, _context) {
+System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aurelia-event-aggregator', 'aurelia-framework', 'aurelia-dependency-injection', 'aurelia-history-browser', 'aurelia-loader-default', 'aurelia-logging-console', 'aurelia-metadata', 'aurelia-pal-browser', 'aurelia-path', 'aurelia-polyfills', 'aurelia-route-recognizer', 'aurelia-router', 'aurelia-templating', 'aurelia-templating-binding', 'aurelia-templating-resources', 'aurelia-templating-router', 'aurelia-onsenui', './environment'], function (_export, _context) {
   "use strict";
 
-  var BrowserHistory, CustomRouter, Router, RouteLoader, TemplatingRouteLoader, environment;
+  var environment;
   function configure(aurelia) {
-    aurelia.use.singleton(RouteLoader, TemplatingRouteLoader).singleton(Router, CustomRouter);
-    aurelia.use.container.registerAlias(Router, CustomRouter);
-    aurelia.use.basicConfiguration().history().feature('alis/resources');
+    aurelia.use.basicConfiguration().history().plugin('aurelia-onsenui').feature('alis/resources');
 
     if (environment.debug) {
       aurelia.use.developmentLogging();
@@ -339,31 +113,10 @@ System.register('alis/main.js', ['aurelia-binding', 'aurelia-bootstrapper', 'aur
   _export('configure', configure);
 
   return {
-    setters: [function (_aureliaBinding) {}, function (_aureliaBootstrapper) {}, function (_aureliaEventAggregator) {}, function (_aureliaFramework) {}, function (_aureliaDependencyInjection) {}, function (_aureliaHistoryBrowser) {
-      BrowserHistory = _aureliaHistoryBrowser.BrowserHistory;
-    }, function (_aureliaLoaderDefault) {}, function (_aureliaLoggingConsole) {}, function (_aureliaMetadata) {}, function (_aureliaPalBrowser) {}, function (_aureliaPath) {}, function (_aureliaPolyfills) {}, function (_aureliaRouteRecognizer) {}, function (_aureliaRouter) {
-      Router = _aureliaRouter.Router;
-      RouteLoader = _aureliaRouter.RouteLoader;
-    }, function (_aureliaTemplating) {}, function (_aureliaTemplatingBinding) {}, function (_aureliaTemplatingResources) {}, function (_aureliaTemplatingRouter) {
-      TemplatingRouteLoader = _aureliaTemplatingRouter.TemplatingRouteLoader;
-    }, function (_libCustomRouter) {
-      CustomRouter = _libCustomRouter.CustomRouter;
-    }, function (_environment) {
+    setters: [function (_aureliaBinding) {}, function (_aureliaBootstrapper) {}, function (_aureliaEventAggregator) {}, function (_aureliaFramework) {}, function (_aureliaDependencyInjection) {}, function (_aureliaHistoryBrowser) {}, function (_aureliaLoaderDefault) {}, function (_aureliaLoggingConsole) {}, function (_aureliaMetadata) {}, function (_aureliaPalBrowser) {}, function (_aureliaPath) {}, function (_aureliaPolyfills) {}, function (_aureliaRouteRecognizer) {}, function (_aureliaRouter) {}, function (_aureliaTemplating) {}, function (_aureliaTemplatingBinding) {}, function (_aureliaTemplatingResources) {}, function (_aureliaTemplatingRouter) {}, function (_aureliaOnsenui) {}, function (_environment) {
       environment = _environment.default;
     }],
-    execute: function () {
-
-      BrowserHistory.prototype.setState = function (key, value) {
-        var state = Object.assign({}, this.history.state);
-        state[key] = value;
-        this.history.replaceState(state, null, null);
-      };
-
-      BrowserHistory.prototype.getState = function (key) {
-        var state = Object.assign({}, this.history.state);
-        return state[key];
-      };
-    }
+    execute: function () {}
   };
 });
 System.register("alis/pages/home.css!node_modules/systemjs-plugin-text/text.js", [], function (_export, _context) {
@@ -378,7 +131,7 @@ System.register("alis/pages/home.css!node_modules/systemjs-plugin-text/text.js",
 
       _export("__useDefault", __useDefault);
 
-      _export("default", ".leaflet-system-icon {\n  background-color: #db4437;\n  border-radius: 50%;\n  border: 1.5px solid #ffffff;\n  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);\n  line-height: 22px;\n  font-size: 14px;\n  color: #ffffff;\n  text-align: center;\n}\n");
+      _export("default", ".leaflet-system-icon {\n  background-color: #db4437;\n  border-radius: 50%;\n  border: 1.5px solid #ffffff;\n  line-height: 22px;\n  font-size: 14px;\n  color: #ffffff;\n  text-align: center;\n}\n\n.leaflet-container .leaflet-google-mutant .gmnoprint {\n  display: none;\n}\n.leaflet-container .leaflet-google-mutant .gmnoprint.gm-style-cc {\n  display: inherit;\n}\n\n.toolbar.searchbar {\n  padding: 5px 10px 0;\n}\n\n.toolbar.searchbar.floating + .page__background + .page__content {\n    margin-top: -1px;\n    top: 0;\n}\n\n.toolbar.searchbar.toolbar--transparent .center {\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n  border-color: transparent;\n}\n\n.toolbar.searchbar .toolbar-button {\n  color: #666;\n  margin: 0;\n  padding-top: 0;\n  padding-bottom: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material {\n  color: #666;\n  margin: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon {\n  width: 22px;\n  font-size: 22px;\n}\n.toolbar.searchbar .toolbar-button .ons-icon {\n  width: 17px;\n}\n\n.toolbar.searchbar .left, .toolbar.searchbar .right {\n  min-width: auto;\n  width: auto;\n}\n.toolbar.searchbar .center {\n  flex: 1;\n  display: flex;\n  height: 34px;\n  line-height: 34px;\n  border-radius: 4px;\n  background-color: #fff;\n  max-width: 100%;\n}\n.toolbar.searchbar.toolbar--material .center {\n  height: 46px;\n  line-height: 46px;\n}\n.toolbar.searchbar .search-input {\n  width: 100%;\n  height: 100%;\n  background-image: none;\n  background-color: transparent;\n  border: none;\n  font-size: 17px;\n  padding: 0 8px;\n}\n\n.card {\n  margin: 10px;\n  /*border: 1px solid #ccc;*/\n  border-radius: 4px;\n  background-color: #fff;\n  padding: 10px;\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n}\n\n.category-item {\n  width: 25%;\n  text-align:center;\n}\n.category-item .category-label {\n  padding-top:5px;\n  font-size:12px;\n  max-width:100%;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: #666;\n}\n\n@media (max-width: 320px) {\n  .category-item {\n    width: 33%;\n    text-align:center;\n  }\n}\n");
     }
   };
 });
@@ -394,14 +147,59 @@ System.register("alis/pages/home.html!node_modules/systemjs-plugin-text/text.js"
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <require from=\"./home.css\"></require>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-toolbar-button click.trigger=\"showMenu()\">\n          <ons-icon icon=\"ion-navicon, material:md-menu\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n      <div class=\"center\">${router.title}</div>\n      <div class=\"right\">\n        <!-- <ons-toolbar-button click.trigger=\"test()\">\n          <ons-icon icon=\"ion-search, material:md-search\"></ons-icon>\n        </ons-toolbar-button> -->\n      </div>\n    </ons-toolbar>\n    <div style=\"display:flex;flex-direction:column;height:100%;\">\n      <div ref=\"map\" style=\"flex:1;width:100%;\"></div>\n      <div show.bind=\"selection\" style=\"position:relative;max-height:60%;height:auto;overflow:overlay;z-index:10000\" ref=\"roomlist\">\n        <ons-button style=\"position:fixed;right:0;left:auto;margin-top:-16px;z-index:10000;\" modifier=\"quiet\">\n          <ons-icon icon=\"ion-record,material:md-circle\" size=\"2x\" style=\"color:#fff;\"></ons-icon>\n        </ons-button>\n        <ons-button click.trigger=\"deselect()\" style=\"position:fixed;right:0;left:auto;margin-top:-16px;z-index:10001;\" modifier=\"quiet\">\n          <ons-icon icon=\"ion-ios-close,material:md-close-circle\" size=\"2x\"></ons-icon>\n        </ons-button>\n        <ons-list>\n          <template if.bind=\"selection.rooms.length === 1\">\n            <ons-list-header if.bind=\"selection.name && selection.name !== getRoomName(selection.rooms[0])\">\n              <span>${selection.name}</span>\n            </ons-list-header>\n            <template repeat.for=\"org of selection.organisations\">\n              <ons-list-item repeat.for=\"room of org.rooms\" tappable click.trigger=\"showRoom(room)\">\n                <span class=\"list-item__title\">\n                  <span>${getRoomName(room)}</span>\n                </span>\n                <span class=\"list-item__subtitle\" if.bind=\"room.organisation\">\n                  <span>${room.organisation}</span>\n                </span>\n              </ons-list-item>\n            </template>\n          </template>\n          <template if.bind=\"selection.rooms.length > 1\">\n            <ons-list-header if.bind=\"selection.name\">\n              <span>${selection.name}</span>\n            </ons-list-header>\n              <template repeat.for=\"org of selection.organisations\">\n                <ons-list-item repeat.for=\"room of org.rooms\" tappable click.trigger=\"showRoom(room)\">\n                  <span class=\"list-item__title\">\n                    <span>${getRoomName(room)}</span>\n                  </span>\n                  <span class=\"list-item__subtitle\" if.bind=\"room.organisation\">\n                    <span>${room.organisation}</span>\n                  </span>\n                </ons-list-item>\n              </template>\n          </template>\n        </ons-list>\n      </div>\n      <!-- <ons-bottom-toolbar show.bind=\"!selection\" style=\"position:relative;\">\n        <div style=\"line-height:44px;padding:0 16px;\" click.trigger=\"showList()\">\n            Liste anzeigen\n        </div>\n      </ons-bottom-toolbar> -->\n    </div>\n  </ons-page>\n</template>\n");
+      _export("default", "<template>\n  <require from=\"./home.css\"></require>\n  <ons-page>\n    <ons-toolbar modifier=\"\" class=\"searchbar\">\n      <div class=\"left\">\n      </div>\n      <div class=\"center\">\n        <ons-toolbar-button click.delegate=\"showMenu()\">\n          <ons-icon icon=\"ion-navicon, material:md-menu\"></ons-icon>\n        </ons-toolbar-button>\n        <div style=\"flex:1\" click.delegate=\"showSearch()\">\n          <input type=\"search\" class=\"search-input\" placeholder=\"Höranlage suchen...\" value.bind=\"searchText\" />\n        </div>\n        <ons-toolbar-button if.bind=\"searchText\" click.delegate=\"clearSearch()\">\n          <ons-icon icon=\"ion-ios-close-empty, material:md-close\"></ons-icon>\n        </ons-toolbar-button>\n      </div>\n      <div class=\"right\">\n      </div>\n    </ons-toolbar>\n    <div style=\"display:flex;flex-direction:column;height:100%;\">\n      <div ref=\"_map\" style=\"flex:1;width:100%;\"></div>\n      <div show.bind=\"selection\" style=\"position:relative;max-height:60%;height:auto;overflow:overlay;z-index:10000\" ref=\"roomlist\">\n        <ons-button style=\"position:fixed;right:0;left:auto;margin-top:-16px;z-index:10000;\" modifier=\"quiet\">\n          <ons-icon icon=\"ion-record,material:md-circle\" size=\"2x\" style=\"color:#fff;\"></ons-icon>\n        </ons-button>\n        <ons-button click.trigger=\"deselect()\" style=\"position:fixed;right:0;left:auto;margin-top:-16px;z-index:10001;\" modifier=\"quiet\">\n          <ons-icon icon=\"ion-ios-close,material:md-close-circle\" size=\"2x\"></ons-icon>\n        </ons-button>\n        <ons-list>\n          <template if.bind=\"selection.rooms.length === 1\">\n            <ons-list-header if.bind=\"selection.name && selection.name !== getRoomName(selection.rooms[0])\">\n              <span>${selection.name}</span>\n            </ons-list-header>\n            <template repeat.for=\"org of selection.organisations\">\n              <ons-list-item repeat.for=\"room of org.rooms\" tappable click.trigger=\"showRoom(room)\">\n                <span class=\"list-item__title\">\n                  <span>${getRoomName(room)}</span>\n                </span>\n                <span class=\"list-item__subtitle\" if.bind=\"room.organisation\">\n                  <span>${room.organisation}</span>\n                </span>\n              </ons-list-item>\n            </template>\n          </template>\n          <template if.bind=\"selection.rooms.length > 1\">\n            <ons-list-header if.bind=\"selection.name\">\n              <span>${selection.name}</span>\n            </ons-list-header>\n              <template repeat.for=\"org of selection.organisations\">\n                <ons-list-item repeat.for=\"room of org.rooms\" tappable click.trigger=\"showRoom(room)\">\n                  <span class=\"list-item__title\">\n                    <span>${getRoomName(room)}</span>\n                  </span>\n                  <span class=\"list-item__subtitle\" if.bind=\"room.organisation\">\n                    <span>${room.organisation}</span>\n                  </span>\n                </ons-list-item>\n              </template>\n          </template>\n        </ons-list>\n      </div>\n      <!-- <ons-bottom-toolbar show.bind=\"!selection\" style=\"position:relative;\">\n        <div style=\"line-height:44px;padding:0 16px;\" click.trigger=\"showList()\">\n            Liste anzeigen\n        </div>\n      </ons-bottom-toolbar> -->\n    </div>\n  </ons-page>\n    <ons-modal ref=\"_search\">\n      <ons-page>\n        <ons-toolbar modifier=\"transparent\" class=\"searchbar\">\n          <div class=\"left\">\n          </div>\n          <div class=\"center\">\n            <ons-toolbar-button click.delegate=\"cancelSearch()\">\n              <ons-icon icon=\"ion-ios-arrow-back, material:md-arrow-left\"></ons-icon>\n            </ons-toolbar-button>\n            <form style=\"flex:1;\" submit.delegate=\"onSearch()\">\n              <input ref=\"_searchinput\" type=\"search\" class=\"search-input\" placeholder=\"Höranlage suchen...\" value.bind=\"currentSearchText\" input.trigger=\"onSearchInput()\" />\n            </form>\n            <ons-toolbar-button show.bind=\"currentSearchText\" click.delegate=\"clearCurrentSearch()\">\n              <ons-icon icon=\"ion-ios-close-empty, material:md-close\"></ons-icon>\n            </ons-toolbar-button>\n          </div>\n          <div class=\"right\">\n          </div>\n        </ons-toolbar>\n        <div class=\"card\" if.bind=\"!currentSearchText\">\n          <div style=\"display:flex;flex-wrap:wrap;align-items:flex-start;\">\n            <div class=\"category-item\" repeat.for=\"category of db.data.roomtypes\">\n              <div style=\"padding:10px 5px;\" click.delegate=\"searchCategory(category)\">\n                <ons-button style=\"width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;\">\n                  <ons-icon icon=\"fa-deaf\" size=\"24px\"></ons-icon>\n                </ons-button>\n                <div class=\"category-label\">${category.typ}</div>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div class=\"card\" style=\"padding:0;\" if.bind=\"currentSearchText\">\n          <ons-list>\n            <ons-list-item repeat.for=\"location of currentResults.locations\" tappable modifier=\"longdivider\" click.delegate=\"onLocationResultClick(location)\">\n              <div class=\"left\"></div>\n              <div class=\"center\">\n                <span class=\"list-item__title\">${location.name}</span>\n              </div>\n            </ons-list-item>\n            <template repeat.for=\"building of currentResults.buildings\">\n              <ons-list-item repeat.for=\"org of building.organisations\" tappable modifier=\"longdivider\" click.delegate=\"onBuildingResultClick(building)\">\n                <div class=\"left\"></div>\n                <div class=\"center\">\n                  <span class=\"list-item__title\">${building.name || org.name}</span>\n                  <span class=\"list-item__subtitle\">\n                    <span if.bind=\"building.name\">${org.name}</span>\n                    <br if.bind=\"building.name\"/>\n                    <span>${building.strasse_nr}, ${building.plz} ${building.ort}</span>\n                  </span>\n                </div>\n              </ons-list-item>\n            </template>\n          </ons-list>\n        </div>\n      </ons-page>\n    </ons-modal>\n</template>\n");
     }
   };
 });
-System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'aurelia-router', 'aurelia-framework', '../services/db'], function (_export, _context) {
+System.register('alis/services/storage.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js'], function (_export, _context) {
   "use strict";
 
-  var _classCallCheck, _createClass, Router, inject, bindable, Database, _dec, _class, _desc, _value, _class2, _descriptor, Home;
+  var _classCallCheck, _createClass, Storage;
+
+  return {
+    setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
+      _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
+    }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
+      _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
+    }],
+    execute: function () {
+      _export('Storage', Storage = function () {
+        function Storage() {
+          _classCallCheck(this, Storage);
+
+          this.stores = {
+            local: localStorage,
+            session: sessionStorage
+          };
+        }
+
+        _createClass(Storage, [{
+          key: 'getItem',
+          value: function getItem(name) {
+            var store = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'local';
+
+            return JSON.parse(this.stores[store].getItem(name));
+          }
+        }, {
+          key: 'setItem',
+          value: function setItem(name, value) {
+            var store = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'local';
+
+            this.stores[store].setItem(name, JSON.stringify(value));
+          }
+        }]);
+
+        return Storage;
+      }());
+
+      _export('Storage', Storage);
+    }
+  };
+});
+System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'onsenui', 'aurelia-router', 'aurelia-framework', '../services/db', '../services/storage'], function (_export, _context) {
+  "use strict";
+
+  var _classCallCheck, _createClass, ons, Router, inject, bindable, Database, Storage, _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, Home;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -451,6 +249,8 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
       _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
     }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
       _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
+    }, function (_onsenui) {
+      ons = _onsenui.default;
     }, function (_aureliaRouter) {
       Router = _aureliaRouter.Router;
     }, function (_aureliaFramework) {
@@ -458,54 +258,82 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
       bindable = _aureliaFramework.bindable;
     }, function (_servicesDb) {
       Database = _servicesDb.Database;
+    }, function (_servicesStorage) {
+      Storage = _servicesStorage.Storage;
     }],
     execute: function () {
-      _export('Home', Home = (_dec = inject(Router, Database), _dec(_class = (_class2 = function () {
-        function Home(router, db) {
+      _export('Home', Home = (_dec = inject(Router, Database, Storage), _dec(_class = (_class2 = function () {
+        function Home(router, db, storage) {
           _classCallCheck(this, Home);
 
           _initDefineProp(this, 'selection', _descriptor, this);
 
+          _initDefineProp(this, 'currentResults', _descriptor2, this);
+
           this.router = router;
           this.db = db;
+          this.storage = storage;
         }
 
         _createClass(Home, [{
+          key: 'activate',
+          value: function activate(params) {}
+        }, {
           key: 'attached',
           value: function attached() {
-            var _this = this;
-
-            var map = L.map(this.map, {
+            if (ons.platform.isAndroid()) {
+              this._map.classList.add('map--material');
+            }
+            this.map = L.map(this._map, {
               attributionControl: false
             });
-            var markers = L.markerClusterGroup({
-              maxClusterRadius: 40
-            }).addTo(map);
-            var roads = L.gridLayer.googleMutant({
+
+            this.basemap = L.gridLayer.googleMutant({
               type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
               styles: [{
                 featureType: "poi",
                 elementType: "labels.icon",
                 stylers: [{ visibility: "off" }]
               }]
-            }).addTo(map);
-            map.setView([46.801111, 8.226667], 7);
+            }).addTo(this.map);
 
-            markers.on('click', function (e) {
-              _this.selection = e.layer.data;
-            });
+            this.buildingsLayer = L.markerClusterGroup({
+              maxClusterRadius: 40
+            }).addTo(this.map);
 
-            this._map = map;
+            this.markers = L.featureGroup().addTo(this.map);
 
-            this.db.data.buildings.forEach(function (building) {
-              // TODO: marker icons
-              var myIcon = L.divIcon({
-                className: 'leaflet-system-icon fa fa-deaf',
-                iconSize: 22
-              });
-              var marker = L.marker([building.lat, building.lng], { icon: myIcon }).addTo(markers);
-              marker.data = building;
-            });
+            this.locateControl = L.control.locate({
+              showPopup: false,
+              locateControl: {}
+            }).addTo(this.map);
+            this.locateControl._start = this.locateControl.start.bind(this.locateControl);
+            this.locateControl._stop = this.locateControl.stop.bind(this.locateControl);
+            this.locateControl._setView = this.locateControl.setView.bind(this.locateControl);
+            this.locateControl.stop = this.onLocateControlStop.bind(this);
+            this.locateControl.start = this.onLocateControlStart.bind(this);
+            this.locateControl.setView = this.onLocateControlSetView.bind(this);
+
+            var mapbounds = this.storage.getItem('mapbounds');
+            if (mapbounds) {
+              this.map.fitBounds(mapbounds);
+            } else {
+              this.map.setView([46.801111, 8.226667], 7);
+            }
+
+            if (this.storage.getItem('geolocation')) {
+              this.locateControl.start();
+            }
+
+            this.map.on('moveend', this.updateMapView, this);
+
+            this.buildingsLayer.on('click', this.onBuildingClick, this);
+            this.buildings = this.db.data.buildings;
+          }
+        }, {
+          key: 'onBuildingClick',
+          value: function onBuildingClick(e) {
+            this.selection = e.layer.data;
           }
         }, {
           key: 'deselect',
@@ -515,8 +343,63 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
         }, {
           key: 'selectionChanged',
           value: function selectionChanged(newValue, oldValue) {
+            var _this = this;
+
+            this.markers.clearLayers();
             if (newValue) {
-              this.roomlist.scrollTop = 0;
+              (function () {
+                var marker = L.marker([newValue.lat, newValue.lng]);
+                _this.markers.addLayer(marker);
+                _this.roomlist.scrollTop = 0;
+                setTimeout(function () {
+                  _this.map.invalidateSize({
+                    pan: false
+                  });
+                  if (!_this.map.getBounds().contains(marker.getLatLng())) {
+                    _this.map.setView(marker.getLatLng(), _this.map.getZoom());
+                    marker._bringToFront();
+                  }
+                }, 50);
+              })();
+            } else {
+              setTimeout(function () {
+                _this.map.invalidateSize({
+                  pan: false
+                });
+              }, 50);
+            }
+          }
+        }, {
+          key: 'updateMapView',
+          value: function updateMapView(evt) {
+            var bounds = evt.target.getBounds();
+            this.storage.setItem('mapbounds', [[bounds.getSouth(), bounds.getWest()], [bounds.getNorth(), bounds.getEast()]]);
+          }
+        }, {
+          key: 'onLocateControlStart',
+          value: function onLocateControlStart() {
+            this.storage.setItem('geolocation', true);
+            this.locateControl.isLocatingStart = true;
+            this.locateControl._start();
+          }
+        }, {
+          key: 'onLocateControlStop',
+          value: function onLocateControlStop() {
+            this.storage.setItem('geolocation', false);
+            this.locateControl._stop();
+          }
+        }, {
+          key: 'onLocateControlSetView',
+          value: function onLocateControlSetView() {
+            if (this.locateControl.isLocatingStart) {
+              this.locateControl.isLocatingStart = false;
+              this.locateControl.options.keepCurrentZoomLevel = false;
+              this.locateControl.options.locateOptions.maxZoom = this.map.getZoom() < 15 ? 15 : this.map.getZoom();
+              this.locateControl._setView();
+              this.locateControl.options.keepCurrentZoomLevel = true;
+              this.locateControl.options.locateOptions.maxZoom = Infinity;
+            } else {
+              this.locateControl._setView();
             }
           }
         }, {
@@ -541,6 +424,30 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
             menu.open();
           }
         }, {
+          key: 'showSearch',
+          value: function showSearch() {
+            this._search.show();
+            this._searchinput.focus();
+            this.isSearching = true;
+            this.currentSearchText = this.searchText;
+            this.currentResults = this.results;
+          }
+        }, {
+          key: 'cancelSearch',
+          value: function cancelSearch() {
+            this._search.hide();
+            this.currentSearchText = '';
+            this.currentResults = {};
+            this.isSearching = false;
+          }
+        }, {
+          key: 'clearSearch',
+          value: function clearSearch() {
+            this.searchText = this.currentSearchText = '';
+            this.buildings = this.db.data.buildings;
+            this.selection = null;
+          }
+        }, {
           key: 'showList',
           value: function showList() {
             this.router.navigateToRoute('list');
@@ -550,13 +457,115 @@ System.register('alis/pages/home.js', ['node_modules/systemjs-plugin-babel/babel
           value: function showRoom(room) {
             this.router.navigateToRoute('room', { id: room.anlageID });
           }
+        }, {
+          key: 'searchCategory',
+          value: function searchCategory(item) {
+            this.isFiltered = true;
+            this._search.hide();
+            this.searchText = this.currentSearchText = item.typ;
+            this.buildings = this.db.queryBuildingsByRoomType(item);
+            this.results = this.currentResults = {
+              buildings: this.buildings,
+              locations: []
+            };
+            this.selection = null;
+            this.zoomToNearest();
+          }
+        }, {
+          key: 'zoomToNearest',
+          value: function zoomToNearest() {
+            var center = this.map.getCenter();
+            var closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
+            if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
+              var bounds = L.latLngBounds(closest.layer.getLatLng(), center);
+              this.map.fitBounds(bounds, {
+                maxZoom: this.map.getZoom(),
+                padding: [40, 40]
+              });
+            }
+          }
+        }, {
+          key: 'clearCurrentSearch',
+          value: function clearCurrentSearch() {
+            this.currentSearchText = '';
+            this.currentResults = {
+              buildings: [],
+              locations: []
+            };
+            this._searchinput.focus();
+          }
+        }, {
+          key: 'onBuildingResultClick',
+          value: function onBuildingResultClick(building) {
+            var _this2 = this;
+
+            if (!this.isFiltered) {
+              this.buildings = this.db.data.buildings;
+            }
+            this.searchText = this.currentSearchText;
+            this.results = this.currentResults;
+            this.selection = null;
+            this._search.hide();
+            this.map.once('moveend', function () {
+              _this2.selection = building;
+            });
+            this.map.setView([building.lat, building.lng], 17);
+          }
+        }, {
+          key: 'onLocationResultClick',
+          value: function onLocationResultClick(location) {
+            if (!this.isFiltered) {
+              this.buildings = this.db.data.buildings;
+            }
+            this.searchText = this.currentSearchText;
+            this.results = this.currentResults;
+            this.selection = null;
+            this._search.hide();
+            this.map.fitBounds(location.bounds);
+          }
+        }, {
+          key: 'onSearch',
+          value: function onSearch() {
+            this.currentResults = this.db.search(this.currentSearchText, 20);
+          }
+        }, {
+          key: 'onSearchInput',
+          value: function onSearchInput() {
+            this.isFiltered = false;
+            this.currentResults = this.db.search(this.currentSearchText, 10);
+          }
+        }, {
+          key: 'buildings',
+          set: function set(value) {
+            var _this3 = this;
+
+            this.buildingsLayer.clearLayers();
+            value.forEach(function (building) {
+              // TODO: marker icons
+              var myIcon = L.divIcon({
+                className: 'leaflet-system-icon fa fa-deaf',
+                iconSize: 22
+              });
+              var marker = L.marker([building.lat, building.lng], { icon: myIcon });
+              marker.data = building;
+              _this3.buildingsLayer.addLayer(marker);
+            });
+          },
+          get: function get() {
+            return this.buildingsLayer.getLayers().map(function (layer) {
+              return layer.data;
+            });
+          }
         }]);
 
         return Home;
-      }(), _descriptor = _applyDecoratedDescriptor(_class2.prototype, 'selection', [bindable], {
+      }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'selection', [bindable], {
         enumerable: true,
         initializer: null
-      }), _class2)) || _class));
+      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'currentResults', [bindable], {
+        enumerable: true,
+        initializer: null
+      })), _class2)) || _class));
 
       _export('Home', Home);
     }
@@ -603,6 +612,88 @@ System.register('alis/pages/list.js', ['node_modules/systemjs-plugin-babel/babel
     }
   };
 });
+System.register("alis/pages/room/index.html!node_modules/systemjs-plugin-text/text.js", [], function (_export, _context) {
+  "use strict";
+
+  var __useDefault;
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("__useDefault", __useDefault = true);
+
+      _export("__useDefault", __useDefault);
+
+      _export("default", "<template>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-back-button></ons-back-button>\n      </div>\n      <div class=\"center\">${getRoomName()}</div>\n    </ons-toolbar>\n    <ons-tabbar>\n      <ons-tab repeat.for=\"tab of tabs\" model.bind=\"tab\"></ons-tab>\n    </ons-tabbar>\n  </ons-page>\n</template>\n");
+    }
+  };
+});
+System.register('alis/pages/room/index.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'aurelia-framework', '../../services/db'], function (_export, _context) {
+  "use strict";
+
+  var _classCallCheck, _createClass, inject, Database, _dec, _class, Index;
+
+  return {
+    setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
+      _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
+    }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
+      _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
+    }, function (_aureliaFramework) {
+      inject = _aureliaFramework.inject;
+    }, function (_servicesDb) {
+      Database = _servicesDb.Database;
+    }],
+    execute: function () {
+      _export('Index', Index = (_dec = inject(Database), _dec(_class = function () {
+        function Index(db) {
+          _classCallCheck(this, Index);
+
+          this.db = db;
+        }
+
+        _createClass(Index, [{
+          key: 'activate',
+          value: function activate(params) {
+            this.data = this.db.data.systems.find(function (item) {
+              return params.id === item.anlageID;
+            });
+            this.tabs = [{
+              page: './info',
+              label: 'Info',
+              active: true,
+              data: this.data
+            }, {
+              page: './plan',
+              label: 'Raumplan',
+              data: this.data
+            }];
+          }
+        }, {
+          key: 'getRoomName',
+          value: function getRoomName() {
+            var _this = this;
+
+            var name = (this.data.raum + ' ' + this.data.raumnummer).trim();
+            if (!name) {
+              name = this.data.gebaeude;
+            }
+            if (!name) {
+              var type = this.db.data.roomtypes.find(function (type) {
+                return type.typID === _this.data.typID;
+              });
+              name = type.typ;
+            }
+            return name;
+          }
+        }]);
+
+        return Index;
+      }()) || _class));
+
+      _export('Index', Index);
+    }
+  };
+});
 System.register("alis/pages/room/info.html!node_modules/systemjs-plugin-text/text.js", [], function (_export, _context) {
   "use strict";
 
@@ -615,7 +706,7 @@ System.register("alis/pages/room/info.html!node_modules/systemjs-plugin-text/tex
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-back-button></ons-back-button>\n      </div>\n      <div class=\"center\">${getRoomName()}</div>\n    </ons-toolbar>\n    <div if.bind=\"getPhotoUrl()\" style=\"background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;\">\n    </div>\n    <ons-list>\n      <ons-list-item if.bind=\"data.strasse_nr || data.plz || data.org\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"ion-ios-location,material:md-pin\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">\n          <span class=\"list-item__title\">\n            ${data.organisation}\n            <br if.bind=\"data.gebaeude\"/>\n            ${data.gebaeude}\n          </span>\n          <span class=\"list-item__subtitle\">\n            ${data.strasse_nr}\n            <br if.bind=\"data.plz || data.org\"/>${data.plz} ${data.ort}\n          </span>\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.webadresse\" click.trigger=\"openWebsite()\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"md-globe\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">${data.webtext || 'Website'}</span>\n      </ons-list-item>\n      <ons-list-item>\n        <span class=\"left\" style=\"\">\n          <img src=\"${getTechImageUrl()}\" alt=\"\" style=\"width:1.28571429em;\"/>\n        </span>\n        <span class=\"center\">\n          ${getTechName()}\n        </span>\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.bemerkung\">\n        ${data.bemerkung}\n      </ons-list-item>\n      <ons-list-header if.bind=\"plans.length > 0\">${plans.length === 1 ? 'Raumplan': 'Raumpläne'}</ons-list-header>\n      <ons-list-item repeat.for=\"plan of plans\" click.trigger=\"showPlan(plan)\" tappable modifier=\"chevron\">\n          ${plan.name}\n      </ons-list-item>\n    </ons-list>\n  </ons-page>\n</template>\n");
+      _export("default", "<template>\n  <ons-page>\n    <div if.bind=\"getPhotoUrl()\" style=\"background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;\">\n    </div>\n    <ons-list>\n      <ons-list-item if.bind=\"data.strasse_nr || data.plz || data.org\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"ion-ios-location,material:md-pin\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">\n          ${data.gebaeude}<template if.bind=\"data.organisation && data.gebaeude\">, </template>${data.organisation}<br/>\n          ${data.strasse_nr}, ${data.plz} ${data.ort}\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.webadresse\" click.trigger=\"openWebsite()\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"md-globe\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">Website</span>\n      </ons-list-item>\n      <ons-list-header>\n        Höranlage\n      </ons-list-header>\n      <ons-list-item>\n        <span class=\"left\" style=\"\">\n          <img src=\"${getTechImageUrl()}\" alt=\"\" style=\"width:1.28571429em;\"/>\n        </span>\n        <span class=\"center\">\n          ${getTechName()}\n        </span>\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.bemerkung\">\n        ${data.bemerkung}\n      </ons-list-item>\n    </ons-list>\n  </ons-page>\n</template>\n");
     }
   };
 });
@@ -648,41 +739,7 @@ System.register('alis/pages/room/info.js', ['node_modules/systemjs-plugin-babel/
         _createClass(Info, [{
           key: 'activate',
           value: function activate(params) {
-            this.data = this.db.data.systems.find(function (item) {
-              return params.id === item.anlageID;
-            });
-            this.plans = [];
-            if (this.data.plan1_dateiname !== 'transp.png') {
-              var plan = {};
-              plan.id = 'plan1';
-              plan.name = this.data.plan2_dateiname !== 'transp.png' ? 'Raumplan ' + (this.plans.length + 1) : 'Raumplan';
-
-              this.plans.push(plan);
-            }
-            if (this.data.plan2_dateiname !== 'transp.png') {
-              var _plan = {};
-              _plan.id = 'plan2';
-              _plan.name = this.data.plan1_dateiname !== 'transp.png' ? 'Raumplan ' + (this.plans.length + 1) : 'Raumplan';
-
-              this.plans.push(_plan);
-            }
-          }
-        }, {
-          key: 'getRoomName',
-          value: function getRoomName() {
-            var _this = this;
-
-            var name = (this.data.raum + ' ' + this.data.raumnummer).trim();
-            if (!name) {
-              name = this.data.gebaeude;
-            }
-            if (!name) {
-              var type = this.db.data.roomtypes.find(function (type) {
-                return type.typID === _this.data.typID;
-              });
-              name = type.typ;
-            }
-            return name;
+            this.data = params.data;
           }
         }, {
           key: 'openWebsite',
@@ -702,27 +759,22 @@ System.register('alis/pages/room/info.js', ['node_modules/systemjs-plugin-babel/
         }, {
           key: 'getTechImageUrl',
           value: function getTechImageUrl() {
-            var _this2 = this;
+            var _this = this;
 
             var technology = this.db.data.technologies.find(function (type) {
-              return type.techID === _this2.data.techID;
+              return type.techID === _this.data.techID;
             });
             return 'resources/symbols/' + technology.technologie + '.png';
           }
         }, {
           key: 'getTechName',
           value: function getTechName() {
-            var _this3 = this;
+            var _this2 = this;
 
             var technology = this.db.data.technologies.find(function (type) {
-              return type.techID === _this3.data.techID;
+              return type.techID === _this2.data.techID;
             });
             return technology.technologie;
-          }
-        }, {
-          key: 'showPlan',
-          value: function showPlan(plan) {
-            this.router.navigateToRoute('plan', { room_id: this.data.anlageID, plan_id: plan.id });
           }
         }]);
 
@@ -730,6 +782,22 @@ System.register('alis/pages/room/info.js', ['node_modules/systemjs-plugin-babel/
       }()) || _class));
 
       _export('Info', Info);
+    }
+  };
+});
+System.register("alis/pages/room/plan.css!node_modules/systemjs-plugin-text/text.js", [], function (_export, _context) {
+  "use strict";
+
+  var __useDefault;
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("__useDefault", __useDefault = true);
+
+      _export("__useDefault", __useDefault);
+
+      _export("default", "ons-select.no-underbar select.select-input--material {\n  background-image: none;\n  padding: 0;\n}\n");
     }
   };
 });
@@ -745,14 +813,14 @@ System.register("alis/pages/room/plan.html!node_modules/systemjs-plugin-text/tex
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <ons-page>\n    <ons-toolbar>\n      <div class=\"left\">\n        <ons-back-button></ons-back-button>\n      </div>\n      <div class=\"center\">${plan.name}</div>\n    </ons-toolbar>\n    <div ref=\"map\" style=\"height:100%;width:100%;\"></div>\n  </ons-page>\n</template>\n");
+      _export("default", "<template>\n  <require from=\"./plan.css\"></require>\n  <ons-page>\n    <ons-list if.bind=\"plans.length > 0\" style=\"display:flex;flex-direction:column;height:100%;\">\n      <ons-list-item modifier=\"longdivider\" if.bind=\"plans.length > 1\">\n        <ons-select style=\"width:100%;\" value.bind=\"plan\" class=\"no-underbar\">\n          <option repeat.for=\"plan of plans\" value.bind=\"plan.value\">${plan.text}</option>\n        </ons-select>\n      </ons-list-item>\n      <ons-list-item style=\"flex:1;padding:0 0 0 0;\">\n        <div class=\"center\" style=\"min-height:auto;padding:1px 0 0 0\"><div ref=\"planmap\" style=\"width:100%;height:100%;\"></div></div>\n      </ons-list-item>\n    </ons-list>\n    <div if.bind=\"plans.length === 0\" style=\"padding:0 12px;\">\n      <p>\n        Für diesen Raum wurden keine Pläne gefunden.\n      </p>\n    </div>\n  </ons-page>\n</template>\n");
     }
   };
 });
 System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'aurelia-fetch-client'], function (_export, _context) {
   "use strict";
 
-  var _classCallCheck, _createClass, HttpClient, Database;
+  var _classCallCheck, _createClass, HttpClient, tables, Database;
 
   return {
     setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
@@ -763,6 +831,8 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
       HttpClient = _aureliaFetchClient.HttpClient;
     }],
     execute: function () {
+      tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
+
       _export('Database', Database = function () {
         function Database() {
           _classCallCheck(this, Database);
@@ -770,7 +840,7 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
           this.data = {};
           this.http = new HttpClient();
           this.http.configure(function (config) {
-            config.useStandardConfiguration().withBaseUrl('http://zeta.hoeranlagenverzeichnis.ch/query.php?').withDefaults({
+            config.useStandardConfiguration().withBaseUrl('//zeta.hoeranlagenverzeichnis.ch/query.php?').withDefaults({
               headers: {
                 // 'X-Requested-With': 'Fetch'
               }
@@ -792,15 +862,20 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
           value: function load() {
             var _this = this;
 
-            var tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
             return Promise.all(tables.map(function (table) {
               return _this.http.fetch('table=' + table).then(function (response) {
                 return response.json();
+              }).catch(function (error) {
+                console.error(error);
+                return {
+                  results: []
+                };
               });
             })).then(function (data) {
               tables.forEach(function (table, index) {
                 _this.data[table] = data[index].results;
               });
+              var locations = {};
               var buildingCounter = 0;
               var buildings = _this.data.systems.reduce(function (data, system) {
                 var buildingId = system.plz + '-' + system.strasse_nr + '-' + system.gebaeude;
@@ -815,12 +890,23 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
                     strasse_nr: system.strasse_nr,
                     plz: system.plz,
                     ort: system.ort,
-                    kantonID: system.kantonID,
+                    kanton: _this.data.cantons.find(function (item) {
+                      return item.kantonID === system.kantonID;
+                    }),
                     rooms: []
                   };
                 }
                 system.gebaeudeID = data[buildingId].id;
                 data[buildingId].rooms.push(system);
+                var locationId = system.ort.trim();
+                if (!locations[locationId]) {
+                  locations[locationId] = {
+                    name: locationId,
+                    plz: system.plz,
+                    bounds: L.latLngBounds()
+                  };
+                }
+                locations[locationId].bounds.extend(L.latLng(system.lat, system.lng));
                 return data;
               }, {});
               _this.data.buildings = Object.keys(buildings).map(function (key) {
@@ -842,25 +928,115 @@ System.register('alis/services/db.js', ['node_modules/systemjs-plugin-babel/babe
                 });
                 return building;
               });
-              var stats = {
-                roomsPerBuilding: {},
-                orgsPerBuilding: {}
-              };
-              _this.data.buildings.forEach(function (building) {
-                var roomCount = building.rooms.length;
-                if (!stats.roomsPerBuilding[roomCount]) {
-                  stats.roomsPerBuilding[roomCount] = 0;
-                }
-                stats.roomsPerBuilding[roomCount]++;
-                var orgCount = building.organisations.length;
-                if (!stats.orgsPerBuilding[orgCount]) {
-                  stats.orgsPerBuilding[orgCount] = 0;
-                }
-                stats.orgsPerBuilding[orgCount]++;
+              _this.data.locations = Object.keys(locations).map(function (key) {
+                return locations[key];
               });
-              console.log(stats);
               return _this.data;
             });
+          }
+        }, {
+          key: 'queryBuildingsByRoomType',
+          value: function queryBuildingsByRoomType(roomType) {
+            return this.data.buildings.slice().reduce(function (acc, building) {
+              var rooms = building.rooms.slice().filter(function (room) {
+                return room.typID === roomType.typID;
+              });
+              if (rooms.length > 0) {
+                (function () {
+                  var org = {};
+                  building.rooms = rooms;
+                  building.rooms.forEach(function (room) {
+                    var orgId = room.organisation;
+                    if (!org[orgId]) {
+                      org[orgId] = {
+                        name: room.organisation,
+                        rooms: []
+                      };
+                    }
+                    org[orgId].rooms.push(room);
+                  });
+                  building.organisations = Object.keys(org).map(function (key) {
+                    return org[key];
+                  });
+                  acc.push(building);
+                })();
+              }
+              return acc;
+            }, []);
+          }
+        }, {
+          key: 'search',
+          value: function search(text) {
+            var _this2 = this;
+
+            var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+
+            var results = {
+              locations: [],
+              buildings: []
+            };
+            if (text.length < 3) {
+              return results;
+            }
+            text = text.toLowerCase();
+            text = text.split(' ');
+            text = text.filter(function (word) {
+              return word !== '';
+            });
+
+            for (var i = 0; i < this.data.locations.length; i++) {
+              var location = this.data.locations[i];
+              var searchString = (location.name + ' ' + location.plz).toLowerCase();
+              var matches = 0;
+              for (var _i = 0; _i < text.length; _i++) {
+                var word = text[_i];
+                if (searchString.indexOf(word) > -1) {
+                  matches++;
+                }
+              }
+              if (matches === text.length) {
+                results.locations.push(location);
+              }
+              if (results.locations.length === 3) {
+                break;
+              }
+            }
+
+            var _loop = function _loop(_i2) {
+              var building = _this2.data.buildings[_i2];
+              var searchString = building.name + ' ' + building.strasse_nr + ' ' + building.ort + ' ' + building.plz + ' ' + building.kanton.kantonkuerzel;
+              building.organisations.forEach(function (org) {
+                searchString = searchString + ' ' + org.name;
+              });
+              building.rooms.forEach(function (room) {
+                var roomType = _this2.data.roomtypes.find(function (item) {
+                  return item.typID === room.typID;
+                });
+                searchString = searchString + ' ' + roomType.typ;
+              });
+              searchString = searchString.toLowerCase();
+              var matches = 0;
+              for (var _i3 = 0; _i3 < text.length; _i3++) {
+                var _word = text[_i3];
+                if (searchString.indexOf(_word) > -1) {
+                  matches++;
+                }
+              }
+              if (matches === text.length) {
+                results.buildings.push(building);
+              }
+              if (results.buildings.length === count) {
+                return 'break';
+              }
+            };
+
+            for (var _i2 = 0; _i2 < this.data.buildings.length; _i2++) {
+              var _ret2 = _loop(_i2);
+
+              if (_ret2 === 'break') break;
+            }
+
+            return results;
           }
         }]);
 
@@ -945,46 +1121,82 @@ System.register('alis/pages/room/plan.js', ['node_modules/systemjs-plugin-babel/
           value: function activate(params) {
             var _this = this;
 
-            this.data = this.db.data.systems.find(function (item) {
-              return params.room_id === item.anlageID;
-            });
-            var plans = {};
+            var promises = [];
+            this.data = params.data;
+            this.plans = [];
             if (this.data.plan1_dateiname !== 'transp.png') {
-              plans['plan1'] = {
-                name: this.data.plan2_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(plans).length + 1) : 'Raumplan',
-                url: '//hoeranlagenverzeichnis.ch/admin/images/image_room1/' + this.data.plan1_dateiname
-              };
+              (function () {
+                var plan = {
+                  value: _this.data.plan1_dateiname,
+                  text: _this.data.plan2_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(_this.plans).length + 1) : 'Raumplan',
+                  url: '//hoeranlagenverzeichnis.ch/admin/images/image_room1/' + _this.data.plan1_dateiname
+                };
+                promises.push(new Promise(function (resolve, reject) {
+                  var img = new Image();
+                  img.onload = function () {
+                    var scale = 256 / img.width;
+                    plan.layer = L.imageOverlay(plan.url, [[0, 0], [img.height * scale, img.width * scale]]);
+                    resolve();
+                  };
+                  img.src = plan.url;
+                }));
+                _this.plans.push(plan);
+              })();
             }
             if (this.data.plan2_dateiname !== 'transp.png') {
-              plans['plan2'] = {
-                name: this.data.plan1_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(plans).length + 1) : 'Raumplan',
-                url: '//hoeranlagenverzeichnis.ch/admin/images/image_room2/' + this.data.plan2_dateiname
-              };
+              (function () {
+                var plan = {
+                  value: _this.data.plan2_dateiname,
+                  text: _this.data.plan1_dateiname !== 'transp.png' ? 'Raumplan ' + (Object.keys(_this.plans).length + 1) : 'Raumplan',
+                  url: '//hoeranlagenverzeichnis.ch/admin/images/image_room2/' + _this.data.plan2_dateiname
+                };
+                promises.push(new Promise(function (resolve, reject) {
+                  var img = new Image();
+                  img.onload = function () {
+                    var scale = 256 / img.width;
+                    plan.layer = L.imageOverlay(plan.url, [[0, 0], [img.height * scale, img.width * scale]]);
+                    resolve();
+                  };
+                  img.src = plan.url;
+                }));
+                _this.plans.push(plan);
+              })();
             }
 
-            this.plan = plans[params.plan_id];
-
-            return new Promise(function (resolve, reject) {
-              var img = new Image();
-              img.onload = function () {
-                var scale = 256 / img.width;
-                _this.plan.layer = L.imageOverlay(_this.plan.url, [[0, 0], [img.height * scale, img.width * scale]]);
-                resolve();
-              };
-              img.src = _this.plan.url;
-            });
+            return Promise.all(promises);
           }
         }, {
           key: 'attached',
           value: function attached() {
-            var map = L.map(this.map, {
-              crs: L.CRS.Simple,
-              attributionControl: false,
-              maxZoom: 4
+            if (this.plans.length > 0) {
+              this.map = L.map(this.planmap, {
+                crs: L.CRS.Simple,
+                attributionControl: false,
+                maxZoom: 4
+              });
+              this.plan = this.plans[0].value;
+            }
+          }
+        }, {
+          key: 'planChanged',
+          value: function planChanged(newValue, oldValue) {
+            if (oldValue) {
+              var plan = this.getPlan(oldValue);
+              this.map.removeLayer(plan.layer);
+            }
+            if (newValue) {
+              var _plan = this.getPlan(newValue);
+              this.map.addLayer(_plan.layer);
+              this.map.fitBounds(_plan.layer.getBounds());
+              this.map.setMaxBounds(_plan.layer.getBounds());
+            }
+          }
+        }, {
+          key: 'getPlan',
+          value: function getPlan(value) {
+            return this.plans.find(function (plan) {
+              return plan.value === value;
             });
-            map.addLayer(this.plan.layer);
-            map.fitBounds(this.plan.layer.getBounds());
-            map.setMaxBounds(this.plan.layer.getBounds());
           }
         }]);
 
@@ -998,260 +1210,14 @@ System.register('alis/pages/room/plan.js', ['node_modules/systemjs-plugin-babel/
     }
   };
 });
-System.register('alis/resources/elements/ons-back-button.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-templating', 'aurelia-router'], function (_export, _context) {
-  "use strict";
-
-  var _classCallCheck, _createClass, inject, DOM, customElement, noView, bindable, Router, _dec, _dec2, _class, OnsBackButton;
-
-  return {
-    setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
-      _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
-      _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
-    }, function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.inject;
-    }, function (_aureliaPal) {
-      DOM = _aureliaPal.DOM;
-    }, function (_aureliaTemplating) {
-      customElement = _aureliaTemplating.customElement;
-      noView = _aureliaTemplating.noView;
-      bindable = _aureliaTemplating.bindable;
-    }, function (_aureliaRouter) {
-      Router = _aureliaRouter.Router;
-    }],
-    execute: function () {
-      _export('OnsBackButton', OnsBackButton = (_dec = customElement('ons-back-button'), _dec2 = inject(DOM.Element, Router), _dec(_class = noView(_class = _dec2(_class = function () {
-        function OnsBackButton(element, router) {
-          _classCallCheck(this, OnsBackButton);
-
-          this.router = router;
-          this.element = element;
-          this.element.onClick = this.onClick.bind(this);
-        }
-
-        _createClass(OnsBackButton, [{
-          key: 'onClick',
-          value: function onClick() {
-            this.router.navigateBack();
-          }
-        }]);
-
-        return OnsBackButton;
-      }()) || _class) || _class) || _class));
-
-      _export('OnsBackButton', OnsBackButton);
-    }
-  };
-});
-System.register('alis/resources/elements/ons-navigator.js', ['node_modules/systemjs-plugin-babel/babel-helpers/classCallCheck.js', 'node_modules/systemjs-plugin-babel/babel-helpers/createClass.js', 'node_modules/systemjs-plugin-babel/babel-helpers/possibleConstructorReturn.js', 'node_modules/systemjs-plugin-babel/babel-helpers/inherits.js', 'onsenui', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-templating', 'aurelia-router', 'aurelia-templating-router'], function (_export, _context) {
-  "use strict";
-
-  var _classCallCheck, _createClass, _possibleConstructorReturn, _inherits, ons, Container, inject, DOM, bindable, CompositionEngine, CompositionTransaction, customElement, noView, ShadowDOM, SwapStrategies, ViewSlot, ViewLocator, Router, RouterView, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, OnsNavigator;
-
-  function _initDefineProp(target, property, descriptor, context) {
-    if (!descriptor) return;
-    Object.defineProperty(target, property, {
-      enumerable: descriptor.enumerable,
-      configurable: descriptor.configurable,
-      writable: descriptor.writable,
-      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-    });
-  }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  function _initializerWarningHelper(descriptor, context) {
-    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-  }
-
-  function invokeLifecycle(instance, name, model) {
-    if (typeof instance[name] === 'function') {
-      return Promise.resolve().then(function () {
-        return instance[name](model);
-      }).then(function (result) {
-        if (result !== null && result !== undefined) {
-          return result;
-        }
-
-        return true;
-      });
-    }
-
-    return Promise.resolve(true);
-  }
-  return {
-    setters: [function (_node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs) {
-      _classCallCheck = _node_modulesSystemjsPluginBabelBabelHelpersClassCallCheckJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs) {
-      _createClass = _node_modulesSystemjsPluginBabelBabelHelpersCreateClassJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersPossibleConstructorReturnJs) {
-      _possibleConstructorReturn = _node_modulesSystemjsPluginBabelBabelHelpersPossibleConstructorReturnJs.default;
-    }, function (_node_modulesSystemjsPluginBabelBabelHelpersInheritsJs) {
-      _inherits = _node_modulesSystemjsPluginBabelBabelHelpersInheritsJs.default;
-    }, function (_onsenui) {
-      ons = _onsenui.default;
-    }, function (_aureliaDependencyInjection) {
-      Container = _aureliaDependencyInjection.Container;
-      inject = _aureliaDependencyInjection.inject;
-    }, function (_aureliaPal) {
-      DOM = _aureliaPal.DOM;
-    }, function (_aureliaTemplating) {
-      bindable = _aureliaTemplating.bindable;
-      CompositionEngine = _aureliaTemplating.CompositionEngine;
-      CompositionTransaction = _aureliaTemplating.CompositionTransaction;
-      customElement = _aureliaTemplating.customElement;
-      noView = _aureliaTemplating.noView;
-      ShadowDOM = _aureliaTemplating.ShadowDOM;
-      SwapStrategies = _aureliaTemplating.SwapStrategies;
-      ViewSlot = _aureliaTemplating.ViewSlot;
-      ViewLocator = _aureliaTemplating.ViewLocator;
-    }, function (_aureliaRouter) {
-      Router = _aureliaRouter.Router;
-    }, function (_aureliaTemplatingRouter) {
-      RouterView = _aureliaTemplatingRouter.RouterView;
-    }],
-    execute: function () {
-      _export('OnsNavigator', OnsNavigator = (_dec = customElement('ons-navigator'), _dec2 = inject(DOM.Element, Container, ViewSlot, Router, ViewLocator, CompositionTransaction, CompositionEngine), _dec(_class = noView(_class = _dec2(_class = (_class2 = function (_RouterView) {
-        _inherits(OnsNavigator, _RouterView);
-
-        function OnsNavigator(element, container, viewSlot, router, viewLocator, compositionTransaction, compositionEngine) {
-          _classCallCheck(this, OnsNavigator);
-
-          var _this = _possibleConstructorReturn(this, (OnsNavigator.__proto__ || Object.getPrototypeOf(OnsNavigator)).call(this, element, container, viewSlot, router, viewLocator, compositionTransaction, compositionEngine));
-
-          _initDefineProp(_this, 'swapOrder', _descriptor, _this);
-
-          _initDefineProp(_this, 'layoutView', _descriptor2, _this);
-
-          _initDefineProp(_this, 'layoutViewModel', _descriptor3, _this);
-
-          _initDefineProp(_this, 'layoutModel', _descriptor4, _this);
-
-          _this.element.pageLoader = new ons.PageLoader(_this.load.bind(_this), _this.unload.bind(_this));
-
-          _this.view;
-          _this.viewStack = [];
-          return _this;
-        }
-
-        _createClass(OnsNavigator, [{
-          key: 'swap',
-          value: function swap(viewPortInstruction) {
-            if (viewPortInstruction.component.router.isNavigatingBack) {
-              var options = viewPortInstruction.component.router.currentInstruction.previousInstruction.config.options || {};
-              options.data = viewPortInstruction;
-              return this.element.popPage(options);
-            } else {
-              var _options = viewPortInstruction.component.router.currentInstruction.config.options || {};
-              _options.data = viewPortInstruction;
-              return this.element.pushPage(viewPortInstruction.moduleId, _options);
-            }
-          }
-        }, {
-          key: 'load',
-          value: function load(_ref, done) {
-            var _this2 = this;
-
-            var page = _ref.page,
-                parent = _ref.parent,
-                params = _ref.params;
-
-            var viewPortInstruction = params;
-            var previousView = this.view;
-
-            var work = function work() {
-              var pageElement = _this2.view.fragment.firstElementChild;
-              _this2.viewSlot.add(_this2.view);
-              if (previousView) {
-                _this2.viewStack.push(previousView);
-              }
-              _this2._notify();
-              return done(pageElement);
-            };
-
-            var ready = function ready(owningView) {
-              viewPortInstruction.controller.automate(_this2.overrideContext, owningView);
-              if (_this2.compositionTransactionOwnershipToken) {
-                return _this2.compositionTransactionOwnershipToken.waitForCompositionComplete().then(function () {
-                  _this2.compositionTransactionOwnershipToken = null;
-                  return work();
-                });
-              }
-
-              return work();
-            };
-
-            this.view = viewPortInstruction.controller.view;
-
-            return ready(this.owningView);
-          }
-        }, {
-          key: 'unload',
-          value: function unload(pageElement) {
-            var _this3 = this;
-
-            return invokeLifecycle(this.view.controller.viewModel, 'deactivate').then(function () {
-              _this3.viewSlot.remove(_this3.view);
-              _this3.view.unbind();
-              _this3.view = _this3.viewStack.pop();
-            });
-          }
-        }]);
-
-        return OnsNavigator;
-      }(RouterView), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'swapOrder', [bindable], {
-        enumerable: true,
-        initializer: null
-      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'layoutView', [bindable], {
-        enumerable: true,
-        initializer: null
-      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'layoutViewModel', [bindable], {
-        enumerable: true,
-        initializer: null
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, 'layoutModel', [bindable], {
-        enumerable: true,
-        initializer: null
-      })), _class2)) || _class) || _class) || _class));
-
-      _export('OnsNavigator', OnsNavigator);
-    }
-  };
-});
-System.register('alis/resources/index.js', [], function (_export, _context) {
+System.register("alis/resources/index.js", [], function (_export, _context) {
   "use strict";
 
   function configure(config) {
-    config.globalResources(['./elements/ons-back-button', './elements/ons-navigator']);
+    // config.globalResources([]);
   }
 
-  _export('configure', configure);
+  _export("configure", configure);
 
   return {
     setters: [],
