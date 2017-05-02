@@ -32,9 +32,8 @@
             <ons-list-header if.bind="selection.name && selection.name !== getRoomName(selection.rooms[0])">
               <span>${selection.name}</span>
             </ons-list-header>
-            <!-- <template repeat.for="org of selection.organisations">
-              <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)"> -->
-              <ons-list-item repeat.for="room of selection.rooms" tappable click.trigger="showRoom(room)">
+            <template repeat.for="org of selection.organisations">
+              <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)">
                 <span class="list-item__title">
                   <span>${getRoomName(room)}</span>
                 </span>
@@ -42,15 +41,14 @@
                   <span>${room.organisation}</span>
                 </span>
               </ons-list-item>
-            <!--</template> -->
+            </template>
           </template>
           <template if.bind="selection.rooms.length > 1">
             <ons-list-header if.bind="selection.name">
               <span>${selection.name}</span>
             </ons-list-header>
-              <!-- <template repeat.for="org of selection.organisations">
-                <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)"> -->
-                <ons-list-item repeat.for="room of selection.rooms" tappable click.trigger="showRoom(room)">
+              <template repeat.for="org of selection.organisations">
+                <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)">
                   <span class="list-item__title">
                     <span>${getRoomName(room)}</span>
                   </span>
@@ -58,7 +56,7 @@
                     <span>${room.organisation}</span>
                   </span>
                 </ons-list-item>
-              <!-- </template> -->
+              </template>
           </template>
         </ons-list>
       </div>
