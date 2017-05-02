@@ -83,6 +83,21 @@ export class Home {
       let marker = L.marker([newValue.lat, newValue.lng]);
       this.markers.addLayer(marker);
       this.roomlist.scrollTop = 0;
+      setTimeout(() => {
+        this.map.invalidateSize({
+          pan: false
+        });
+        if (!this.map.getBounds().contains(marker.getLatLng())) {
+          this.map.setView(marker.getLatLng(), this.map.getZoom());
+          marker._bringToFront();
+        }
+      }, 50);
+    } else {
+      setTimeout(() => {
+        this.map.invalidateSize({
+          pan: false
+        });
+      }, 50);
     }
   }
 
