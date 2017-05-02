@@ -9,6 +9,7 @@ export class Home {
   @bindable selection;
   @bindable currentResults;
   results;
+  isFiltered;
 
   constructor(router, db, storage) {
     this.router = router;
@@ -202,6 +203,7 @@ export class Home {
   }
 
   searchCategory(item) {
+    this.isFiltered = true;
     this._search.hide();
     this.searchText = this.currentSearchText = item.typ;
     this.buildings = this.db.queryBuildingsByRoomType(item);
@@ -235,8 +237,36 @@ export class Home {
   }
 
   onBuildingResultClick(building) {
+    if (!this.isFiltered) {
+      this.buildings = this.db.data.buildings;
+    }
+    this.searchText = this.currentSearchText;
+    this.results = this.currentResults;
     this.selection = null;
     this._search.hide();
-    this.selection = building;
+    this.map.once('moveend', () => {
+      this.selection = building;
+    });
+    this.map.setView([building.lat, building.lng], 17);
+  }
+
+  onLocationResultClick(location) {
+    if (!this.isFiltered) {
+      this.buildings = this.db.data.buildings;
+    }
+    this.searchText = this.currentSearchText;
+    this.results = this.currentResults;
+    this.selection = null;
+    this._search.hide();
+    this.map.fitBounds(location.bounds);
+  }
+
+  onSearch() {
+    this.currentResults = this.db.search(this.currentSearchText, 20);
+  }
+
+  onSearchInput() {
+    this.isFiltered = false;
+    this.currentResults = this.db.search(this.currentSearchText, 10);
   }
 }
