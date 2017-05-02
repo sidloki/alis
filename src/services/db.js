@@ -10,7 +10,7 @@ export class Database {
     this.http.configure(config => {
       config
         .useStandardConfiguration()
-        .withBaseUrl('//zeta.hoeranlagenverzeichnis.ch/query.php?')
+        .withBaseUrl('//www.zeta.hoeranlagenverzeichnis.ch/query.php?')
         .withDefaults({
           headers: {
             // 'X-Requested-With': 'Fetch'
