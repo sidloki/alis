@@ -271,6 +271,6 @@ export class Home {
 
   onSearchInput() {
     this.isFiltered = false;
-    this.currentResults = this.db.search(this.currentSearchText, 10);
+    this.currentResults = this.db.search(this._searchinput.value, 10);
   }
 }
