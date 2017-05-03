@@ -28,6 +28,14 @@
           ${getTechName()}
         </span>
       </ons-list-item>
+      <ons-list-item>
+        <span class="left" style="">
+          <img src="${getRatingImageUrl()}" alt="" style="width:1.28571429em;"/>
+        </span>
+        <span class="center">
+          ${getRatingName()}
+        </span>
+      </ons-list-item>
       <ons-list-item if.bind="data.bemerkung">
         ${data.bemerkung}
       </ons-list-item>
