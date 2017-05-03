@@ -131,7 +131,7 @@ System.register("alis/pages/home.css!node_modules/systemjs-plugin-text/text.js",
 
       _export("__useDefault", __useDefault);
 
-      _export("default", ".leaflet-system-icon {\n  background-color: #db4437;\n  border-radius: 50%;\n  border: 1.5px solid #ffffff;\n  line-height: 22px;\n  font-size: 14px;\n  color: #ffffff;\n  text-align: center;\n}\n\n.leaflet-container .leaflet-google-mutant .gmnoprint {\n  display: none;\n}\n.leaflet-container .leaflet-google-mutant .gmnoprint.gm-style-cc {\n  display: inherit;\n}\n\n.toolbar.searchbar {\n  padding: 5px 10px 0;\n}\n\n.toolbar.searchbar.floating + .page__background + .page__content {\n    margin-top: -1px;\n    top: 0;\n}\n\n.toolbar.searchbar.toolbar--transparent .center {\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n  border-color: transparent;\n}\n\n.toolbar.searchbar .toolbar-button {\n  color: #666;\n  margin: 0;\n  padding-top: 0;\n  padding-bottom: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material {\n  color: #666;\n  margin: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon {\n  width: 22px;\n  font-size: 22px;\n}\n.toolbar.searchbar .toolbar-button .ons-icon {\n  width: 17px;\n}\n\n.toolbar.searchbar .left, .toolbar.searchbar .right {\n  min-width: auto;\n  width: auto;\n}\n.toolbar.searchbar .center {\n  flex: 1;\n  display: flex;\n  height: 34px;\n  line-height: 34px;\n  border-radius: 4px;\n  background-color: #fff;\n  max-width: 100%;\n}\n.toolbar.searchbar.toolbar--material .center {\n  height: 46px;\n  line-height: 46px;\n}\n.toolbar.searchbar .search-input {\n  width: 100%;\n  height: 100%;\n  background-image: none;\n  background-color: transparent;\n  border: none;\n  font-size: 17px;\n  padding: 0 8px;\n}\n\n.card {\n  margin: 10px;\n  /*border: 1px solid #ccc;*/\n  border-radius: 4px;\n  background-color: #fff;\n  padding: 10px;\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n}\n\n.category-item {\n  width: 25%;\n  text-align:center;\n}\n.category-item .category-label {\n  padding-top:5px;\n  font-size:12px;\n  max-width:100%;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: #666;\n}\n\n@media (max-width: 320px) {\n  .category-item {\n    width: 33%;\n    text-align:center;\n  }\n}\n");
+      _export("default", ".leaflet-system-icon {\n  background-color: #2B2C5A;\n  border-radius: 50%;\n  border: 1.5px solid #ffffff;\n  line-height: 22px;\n  font-size: 14px;\n  color: #ffffff;\n  text-align: center;\n}\n\n.leaflet-container .leaflet-google-mutant .gmnoprint {\n  display: none;\n}\n.leaflet-container .leaflet-google-mutant .gmnoprint.gm-style-cc {\n  display: inherit;\n}\n\n.toolbar.searchbar {\n  padding: 5px 10px 0;\n}\n\n.toolbar.searchbar.floating + .page__background + .page__content {\n    margin-top: -1px;\n    top: 0;\n}\n\n.toolbar.searchbar.toolbar--transparent .center {\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n  border-color: transparent;\n}\n\n.toolbar.searchbar .toolbar-button {\n  color: #666;\n  margin: 0;\n  padding-top: 0;\n  padding-bottom: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material {\n  color: #666;\n  margin: 0;\n}\n.toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon {\n  width: 22px;\n  font-size: 22px;\n}\n.toolbar.searchbar .toolbar-button .ons-icon {\n  width: 17px;\n}\n\n.toolbar.searchbar .left, .toolbar.searchbar .right {\n  min-width: auto;\n  width: auto;\n}\n.toolbar.searchbar .center {\n  flex: 1;\n  display: flex;\n  height: 34px;\n  line-height: 34px;\n  border-radius: 4px;\n  background-color: #fff;\n  max-width: 100%;\n}\n.toolbar.searchbar.toolbar--material .center {\n  height: 46px;\n  line-height: 46px;\n}\n.toolbar.searchbar .search-input {\n  width: 100%;\n  height: 100%;\n  background-image: none;\n  background-color: transparent;\n  border: none;\n  font-size: 17px;\n  padding: 0 8px;\n}\n\n.card {\n  margin: 10px;\n  /*border: 1px solid #ccc;*/\n  border-radius: 4px;\n  background-color: #fff;\n  padding: 10px;\n  box-shadow: 0 1px 5px rgba(0,0,0,.3);\n}\n\n.category-item {\n  width: 25%;\n  text-align:center;\n}\n.category-item .category-label {\n  padding-top:5px;\n  font-size:12px;\n  max-width:100%;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: #666;\n}\n\n@media (max-width: 320px) {\n  .category-item {\n    width: 33%;\n    text-align:center;\n  }\n}\n");
     }
   };
 });
@@ -710,7 +710,7 @@ System.register("alis/pages/room/info.html!node_modules/systemjs-plugin-text/tex
 
       _export("__useDefault", __useDefault);
 
-      _export("default", "<template>\n  <ons-page>\n    <div if.bind=\"getPhotoUrl()\" style=\"background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;\">\n    </div>\n    <ons-list>\n      <ons-list-item if.bind=\"data.strasse_nr || data.plz || data.org\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"ion-ios-location,material:md-pin\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">\n          ${data.gebaeude}<template if.bind=\"data.organisation && data.gebaeude\">, </template>${data.organisation}<br/>\n          ${data.strasse_nr}, ${data.plz} ${data.ort}\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.webadresse\" click.trigger=\"openWebsite()\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"md-globe\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">Website</span>\n      </ons-list-item>\n      <ons-list-header>\n        Höranlage\n      </ons-list-header>\n      <ons-list-item>\n        <span class=\"left\" style=\"\">\n          <img src=\"${getTechImageUrl()}\" alt=\"\" style=\"width:1.28571429em;\"/>\n        </span>\n        <span class=\"center\">\n          ${getTechName()}\n        </span>\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.bemerkung\">\n        ${data.bemerkung}\n      </ons-list-item>\n    </ons-list>\n  </ons-page>\n</template>\n");
+      _export("default", "<template>\n  <ons-page>\n    <div if.bind=\"getPhotoUrl()\" style=\"background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;\">\n    </div>\n    <ons-list>\n      <ons-list-item if.bind=\"data.strasse_nr || data.plz || data.org\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"ion-ios-location,material:md-pin\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">\n          ${data.gebaeude}<template if.bind=\"data.organisation && data.gebaeude\">, </template>${data.organisation}<br/>\n          ${data.strasse_nr}, ${data.plz} ${data.ort}\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.webadresse\" click.trigger=\"openWebsite()\" tappable>\n        <span class=\"left\">\n          <ons-icon icon=\"md-globe\" fixed-width=\"true\"></ons-icon>\n        </span>\n        <span class=\"center\">Website</span>\n      </ons-list-item>\n      <ons-list-header>\n        Höranlage\n      </ons-list-header>\n      <ons-list-item>\n        <span class=\"left\" style=\"\">\n          <img src=\"${getTechImageUrl()}\" alt=\"\" style=\"width:1.28571429em;\"/>\n        </span>\n        <span class=\"center\">\n          ${getTechName()}\n        </span>\n      </ons-list-item>\n      <ons-list-item>\n        <span class=\"left\" style=\"\">\n          <img src=\"${getRatingImageUrl()}\" alt=\"\" style=\"width:1.28571429em;\"/>\n        </span>\n        <span class=\"center\">\n          ${getRatingName()}\n        </span>\n      </ons-list-item>\n      <ons-list-item if.bind=\"data.bemerkung\">\n        ${data.bemerkung}\n      </ons-list-item>\n    </ons-list>\n  </ons-page>\n</template>\n");
     }
   };
 });
@@ -779,6 +779,40 @@ System.register('alis/pages/room/info.js', ['node_modules/systemjs-plugin-babel/
               return type.techID === _this2.data.techID;
             });
             return technology.technologie;
+          }
+        }, {
+          key: 'getRatingImageUrl',
+          value: function getRatingImageUrl() {
+            var name = 'resources/symbols/';
+            switch (this.data.bewertung) {
+              case "1":
+                name += 'r32_green.png';
+                break;
+              case "2":
+                name += 'r32_yellow.png';
+                break;
+              default:
+                name += 'r32_white.png';
+                break;
+            }
+            return name;
+          }
+        }, {
+          key: 'getRatingName',
+          value: function getRatingName() {
+            var name = '';
+            switch (this.data.bewertung) {
+              case "1":
+                name = 'Geprüfte Höranlage gemäss Norm';
+                break;
+              case "2":
+                name = 'Geprüfte Höranlage nicht nach Norm';
+                break;
+              default:
+                name = 'Nicht überprüfte Höranlage';
+                break;
+            }
+            return name;
           }
         }]);
 
