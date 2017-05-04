@@ -49918,4 +49918,3 @@ System.registerDynamic('node_modules/systemjs-plugin-text/text.js', [], true, fu
     return 'def' + 'ine(function() {\nreturn ' + JSON.stringify(load.source) + ';\n});';
   };
 });
-//# sourceMappingURL=vendor-bundle.js.map

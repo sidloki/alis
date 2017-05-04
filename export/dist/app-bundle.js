@@ -1264,4 +1264,3 @@ System.register("alis/resources/index.js", [], function (_export, _context) {
     execute: function () {}
   };
 });
-//# sourceMappingURL=app-bundle.js.map
