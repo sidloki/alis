@@ -1,3 +1,4 @@
+const fs = require('fs-extra-promise')
 const Builder = require('systemjs-builder');
 const toFileURL = require('systemjs-builder/lib/utils').toFileURL;
 const Configurator = require('systemjs-configurator');
@@ -25,6 +26,11 @@ function configure() {
   let config = Configurator.buildConfig({ outfile: 'systemjs.config.js' });
   builder.config(config);
 };
+
+function clean() {
+  console.log("clean...");
+  fs.emptyDir('dist');
+}
 
 function reset() {
   builder.reset();
@@ -58,6 +64,7 @@ function build() {
 module.exports = {
   build: build,
   bundle: bundle,
+  clean: clean,
   configure: configure,
   invalidate: invalidate,
   reset: reset

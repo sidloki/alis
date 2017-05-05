@@ -7,6 +7,7 @@
   "author": "Marco Strobel <mail@strobel.ch>",
   "license": "MPL-2.0",
   "scripts": {
+    "clean": "scripts/clean.js",
     "build": "scripts/build.js",
     "export": "scripts/export.js",
     "serve": "scripts/serve.js",
