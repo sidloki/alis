@@ -32,7 +32,12 @@ const list = [
   'resources/'
 ]
 
-builder.build().then(() => {
+let bundleOptions = {
+  minify: false,
+  sourceMaps: false
+};
+
+builder.build(bundleOptions).then(() => {
   fs.emptyDirAsync(dest).then(() => {
     return Promise.all(list.map((item) => {
       return fs.copyAsync(item, path.join(dest, item));
