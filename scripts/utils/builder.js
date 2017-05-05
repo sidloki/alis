@@ -16,7 +16,7 @@ let builder = new Builder('', {
   }
 });
 
-let bundleOptions = {
+let defaultBundleOptions = {
   minify: false,
   sourceMaps: true
 };
@@ -41,11 +41,12 @@ function invalidate(filename) {
   builder.invalidate(`${toFileURL(filename)}!*`);
 };
 
-function bundle() {
+function bundle(bundleOptions) {
   console.log("bundle files ...");
+  let options = bundleOptions || defaultBundleOptions;
   return Promise.all([
-    builder.bundle('[src/**/*.js] + src/**/*.html!text + src/**/*.css!text', 'dist/app-bundle.js', bundleOptions),
-    builder.bundle('text + src/**/*.js - [src/**/*.js]', 'dist/vendor-bundle.js', bundleOptions)
+    builder.bundle('[src/**/*.js] + src/**/*.html!text + src/**/*.css!text', 'dist/app-bundle.js', options),
+    builder.bundle('text + src/**/*.js - [src/**/*.js]', 'dist/vendor-bundle.js', options)
   ])
   .then(() => {
     console.log("bundle complete.")
@@ -55,11 +56,11 @@ function bundle() {
   });
 };
 
-function build() {
+function build(bundleOptions) {
   clean();
   reset();
   configure();
-  return bundle();
+  return bundle(bundleOptions);
 };
 
 module.exports = {
