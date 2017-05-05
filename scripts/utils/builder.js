@@ -56,6 +56,7 @@ function bundle() {
 };
 
 function build() {
+  clean();
   reset();
   configure();
   return bundle();
