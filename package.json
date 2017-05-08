@@ -23,7 +23,7 @@
     "leaflet.gridlayer.googlemutant": "^0.6.0",
     "leaflet.locatecontrol": "^0.60.0",
     "leaflet.markercluster": "^1.0.4",
-    "onsenui": "^2.2.5",
+    "onsenui": "^2.2.6",
     "systemjs": "^0.20.12",
     "systemjs-plugin-css": "^0.1.33",
     "systemjs-plugin-text": "^0.0.9"
