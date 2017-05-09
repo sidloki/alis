@@ -7,6 +7,7 @@ SystemJS.config({
     "aurelia-fetch-client": "node_modules/aurelia-fetch-client/dist/commonjs",
     "aurelia-framework": "node_modules/aurelia-framework/dist/commonjs",
     "aurelia-onsenui": "node_modules/aurelia-onsenui/dist/commonjs",
+    "es6-promise": "node_modules/es6-promise/lib",
     "leaflet": "node_modules/leaflet/dist",
     "leaflet-geometryutil": "node_modules/leaflet-geometryutil/src",
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
@@ -52,6 +53,9 @@ SystemJS.config({
     },
     "node_modules/aurelia-onsenui/dist/commonjs": {
       "main": "aurelia-onsenui.js"
+    },
+    "node_modules/es6-promise/lib": {
+      "main": "dist/es6-promise.js"
     },
     "node_modules/leaflet/dist": {
       "main": "leaflet-src.js"
