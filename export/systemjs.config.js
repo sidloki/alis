@@ -7,14 +7,15 @@ SystemJS.config({
     "aurelia-fetch-client": "node_modules/aurelia-fetch-client/dist/commonjs",
     "aurelia-framework": "node_modules/aurelia-framework/dist/commonjs",
     "aurelia-onsenui": "node_modules/aurelia-onsenui/dist/commonjs",
+    "es6-promise": "node_modules/es6-promise/lib",
     "leaflet": "node_modules/leaflet/dist",
     "leaflet-geometryutil": "node_modules/leaflet-geometryutil/src",
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
-    "onsenui": "node_modules/onsenui/js",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
+    "whatwg-fetch": "node_modules/whatwg-fetch",
     "aurelia-event-aggregator": "node_modules/aurelia-event-aggregator/dist/commonjs",
     "aurelia-history": "node_modules/aurelia-history/dist/commonjs",
     "aurelia-history-browser": "node_modules/aurelia-history-browser/dist/commonjs",
@@ -35,7 +36,8 @@ SystemJS.config({
     "aurelia-dependency-injection": "node_modules/aurelia-dependency-injection/dist/commonjs",
     "aurelia-route-recognizer": "node_modules/aurelia-route-recognizer/dist/commonjs",
     "aurelia-binding": "node_modules/aurelia-binding/dist/commonjs",
-    "aurelia-task-queue": "node_modules/aurelia-task-queue/dist/commonjs"
+    "aurelia-task-queue": "node_modules/aurelia-task-queue/dist/commonjs",
+    "onsenui": "node_modules/onsenui/js"
   },
   "packages": {
     "alis": {
@@ -53,6 +55,9 @@ SystemJS.config({
     "node_modules/aurelia-onsenui/dist/commonjs": {
       "main": "aurelia-onsenui.js"
     },
+    "node_modules/es6-promise/lib": {
+      "main": "dist/es6-promise.js"
+    },
     "node_modules/leaflet/dist": {
       "main": "leaflet-src.js"
     },
@@ -68,14 +73,14 @@ SystemJS.config({
     "node_modules/leaflet.markercluster/dist": {
       "main": "leaflet.markercluster.js"
     },
-    "node_modules/onsenui/js": {
-      "main": "onsenui.js"
-    },
     "node_modules/systemjs-plugin-css": {
       "main": "css"
     },
     "node_modules/systemjs-plugin-text": {
       "main": "text"
+    },
+    "node_modules/whatwg-fetch": {
+      "main": "fetch.js"
     },
     "node_modules/aurelia-event-aggregator/dist/commonjs": {
       "main": "aurelia-event-aggregator.js"
@@ -139,6 +144,9 @@ SystemJS.config({
     },
     "node_modules/aurelia-task-queue/dist/commonjs": {
       "main": "aurelia-task-queue.js"
+    },
+    "node_modules/onsenui/js": {
+      "main": "onsenui.js"
     }
   }
 });

@@ -2490,7 +2490,7 @@ System.registerDynamic('node_modules/aurelia-onsenui/dist/commonjs/ons-navigator
       var previousView = this.view;
 
       var work = function work() {
-        var pageElement = _this2.view.fragment.firstElementChild;
+        var pageElement = _this2.view.fragment.querySelector('ons-page');
         _this2.viewSlot.add(_this2.view);
         if (previousView) {
           _this2.viewStack.push(previousView);
@@ -2802,7 +2802,7 @@ System.registerDynamic('node_modules/aurelia-onsenui/dist/commonjs/ons-switch.js
     initializer: null
   }), _class2)) || _class) || _class) || _class);
 });
-/*! onsenui v2.2.5 - 2017-04-25 */
+/*! onsenui v2.2.6 - 2017-05-01 */
 if (!window.CustomEvent) {
   (function () {
     var CustomEvent;
@@ -12711,30 +12711,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           };
 
           if (!HandlerRepository.has(tree.element)) {
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = tree.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var subTree = _step.value;
-
-                if (HandlerRepository.has(subTree.element)) {
-                  return subTree;
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
+            for (var i = 0; i < tree.children.length; i++) {
+              var subTree = tree.children[i];
+              if (HandlerRepository.has(subTree.element)) {
+                return subTree;
               }
             }
           }
@@ -26462,9 +26442,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }, {
       key: 'clearTransition',
       value: function clearTransition() {
-        this._side.style.transform = this._side.style.transition = this._side.style.webkitTransition = '';
-        this._mask.style.transform = this._mask.style.transition = this._mask.style.webkitTransition = '';
-        this._content.style.transform = this._content.style.transition = this._content.style.webkitTransition = '';
+        this._side && (this._side.style.transform = this._side.style.transition = this._side.style.webkitTransition = '');
+        this._mask && (this._mask.style.transform = this._mask.style.transition = this._mask.style.webkitTransition = '');
+        this._content && (this._content.style.transform = this._content.style.transition = this._content.style.webkitTransition = '');
       }
     }, {
       key: 'clearMask',
@@ -26740,7 +26720,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       key: 'activate',
       value: function activate(sideElement) {
         get$1(RevealSplitterAnimator.prototype.__proto__ || Object.getPrototypeOf(RevealSplitterAnimator.prototype), 'activate', this).call(this, sideElement);
-        this.maxWidth = sideElement.offsetWidth;
+        this.maxWidth = this._getMaxWidth();
         if (sideElement.mode === 'collapse') {
           this._setStyles(sideElement);
         }
@@ -26760,9 +26740,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         sideElement.style.opacity = 0.9;
         sideElement.style.visibility = 'hidden';
 
-        sideElement.parentElement.style.backgroundColor = 'black';
-        contentReady(sideElement.parentElement, function () {
-          sideElement.parentElement.content.style.boxShadow = '0 0 12px 0 rgba(0, 0, 0, 0.2)';
+        var splitter = sideElement.parentElement;
+        splitter.style.backgroundColor = 'black';
+        contentReady(splitter, function () {
+          if (splitter.content) {
+            splitter.content.style.boxShadow = '0 0 12px 0 rgba(0, 0, 0, 0.2)';
+          }
         });
       }
     }, {
@@ -26773,7 +26756,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         // Check if the other side needs the common styles
         if (!this._oppositeSide || this._oppositeSide.mode === 'split' || !this._oppositeSide.isOpen) {
           sideElement.parentElement.style.backgroundColor = '';
-          sideElement.parentElement.content.style.boxShadow = '';
+          if (sideElement.parentElement.content) {
+            sideElement.parentElement.content.style.boxShadow = '';
+          }
         }
       }
     }, {
@@ -26795,8 +26780,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }, {
       key: 'translate',
       value: function translate(distance) {
-        var max = this.maxWidth;
-        var menuStyle = this._generateBehindPageStyle(Math.min(distance, max));
+        this.maxWidth = this.maxWidth || this._getMaxWidth();
+        var menuStyle = this._generateBehindPageStyle(Math.min(distance, this.maxWidth));
         this._side.style.visibility = 'visible';
 
         if (!this._slidingElements) {
@@ -26817,13 +26802,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       value: function open(done) {
         var _this2 = this;
 
-        var max = this.maxWidth;
-        var menuStyle = this._generateBehindPageStyle(max);
+        this.maxWidth = this.maxWidth || this._getMaxWidth();
+        var menuStyle = this._generateBehindPageStyle(this.maxWidth);
         this._slidingElements = this._getSlidingElements();
         this._side.style.visibility = 'visible';
 
         Animit.runAll(Animit(this._slidingElements).wait(this.delay).queue({
-          transform: 'translate3d(' + (this.minus + max) + 'px, 0px, 0px)'
+          transform: 'translate3d(' + (this.minus + this.maxWidth) + 'px, 0px, 0px)'
         }, {
           duration: this.duration,
           timing: this.timing
@@ -26869,6 +26854,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           done && done();
           callback();
         }));
+      }
+    }, {
+      key: '_getMaxWidth',
+      value: function _getMaxWidth() {
+        return this._side.offsetWidth;
       }
     }]);
     return RevealSplitterAnimator;
@@ -28877,8 +28867,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           contentReady(page, function () {
             _this4.style.top = top ? window.getComputedStyle(page._getContentElement(), null).getPropertyValue('padding-top') : '';
 
-            if (util.match(page.firstChild, 'ons-toolbar')) {
-              action(page.firstChild, 'noshadow');
+            if (page.children[0] && util.match(page.children[0], 'ons-toolbar')) {
+              action(page.children[0], 'noshadow');
             }
           });
         }
@@ -30360,7 +30350,7 @@ System.registerDynamic('node_modules/aurelia-onsenui/dist/commonjs/ons-tab.js', 
         instruction.viewModel = page;
       }
       this.compositionEngine.createController(instruction).then(function (controller) {
-        var pageElement = controller.view.fragment.firstElementChild;
+        var pageElement = controller.view.fragment.querySelector('ons-page');
         controller.automate(_this2.overrideContext, _this2.owningView);
         pageElement.view = controller.view;
         done(pageElement);
@@ -34072,6 +34062,20 @@ System.registerDynamic('node_modules/aurelia-onsenui/dist/commonjs/aurelia-onsen
     });
   };
 
+  var routeStripper = /^#?\/*|\s+$/g;
+  var rootStripper = /^\/+|\/+$/g;
+  var trailingSlash = /\/$/;
+  var absoluteUrl = /^([a-z][a-z0-9+\-.]*:)?\/\//i;
+
+  function updateHash(location, fragment, replace) {
+    if (replace) {
+      var href = location.href.replace(/(javascript:|#).*$/, '');
+      location.replace(href + '#' + fragment);
+    } else {
+      location.hash = '#' + fragment;
+    }
+  }
+
   _aureliaHistoryBrowser.BrowserHistory.prototype.setState = function (key, value) {
     var state = Object.assign({}, this.history.state);
     state[key] = value;
@@ -34081,6 +34085,132 @@ System.registerDynamic('node_modules/aurelia-onsenui/dist/commonjs/aurelia-onsen
   _aureliaHistoryBrowser.BrowserHistory.prototype.getState = function (key) {
     var state = Object.assign({}, this.history.state);
     return state[key];
+  };
+
+  _aureliaHistoryBrowser.BrowserHistory.prototype.activate = function (options) {
+    if (this._isActive) {
+      throw new Error('History has already been activated.');
+    }
+
+    var wantsPushState = !!options.pushState;
+
+    this._isActive = true;
+    this.options = Object.assign({}, { root: '/' }, this.options, options);
+
+    this.root = ('/' + this.options.root + '/').replace(rootStripper, '/');
+
+    this._wantsHashChange = this.options.hashChange !== false;
+    this._hasPushState = !!(this.history && this.history.pushState);
+    this._usePushState = !!(this._hasPushState && this.options.pushState);
+
+    var eventName = void 0;
+    if (this._hasPushState) {
+      eventName = 'popstate';
+    } else if (this._wantsHashChange) {
+      eventName = 'hashchange';
+    }
+
+    _aureliaPal.PLATFORM.addEventListener(eventName, this._checkUrlCallback);
+
+    if (this._wantsHashChange && wantsPushState) {
+      var loc = this.location;
+      var atRoot = loc.pathname.replace(/[^\/]$/, '$&/') === this.root;
+
+      if (!this._usePushState && !atRoot) {
+        this.fragment = this._getFragment(null, true);
+        this.location.replace(this.root + this.location.search + '#' + this.fragment);
+
+        return true;
+      } else if (this._usePushState && atRoot && loc.hash) {
+        this.fragment = this._getHash().replace(routeStripper, '');
+        this.history.replaceState({}, _aureliaPal.DOM.title, this.root + this.fragment + loc.search);
+      }
+    }
+
+    if (!this.fragment) {
+      this.fragment = this._getFragment();
+    }
+
+    this.linkHandler.activate(this);
+
+    if (!this.options.silent) {
+      return this._loadUrl();
+    }
+  };
+
+  _aureliaHistoryBrowser.BrowserHistory.prototype.navigate = function (fragment) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref$trigger = _ref.trigger,
+        trigger = _ref$trigger === undefined ? true : _ref$trigger,
+        _ref$replace = _ref.replace,
+        replace = _ref$replace === undefined ? false : _ref$replace;
+
+    if (fragment && absoluteUrl.test(fragment)) {
+      this.location.href = fragment;
+      return true;
+    }
+
+    if (!this._isActive) {
+      return false;
+    }
+
+    fragment = this._getFragment(fragment || '');
+
+    if (this.fragment === fragment && !replace) {
+      return false;
+    }
+
+    this.fragment = fragment;
+
+    var url = this.root + fragment;
+
+    if (fragment === '' && url !== '/') {
+      url = url.slice(0, -1);
+    }
+
+    if (this._hasPushState) {
+      url = url.replace('//', '/');
+      if (!this._usePushState) {
+        url = '#' + url;
+      }
+      this.history[replace ? 'replaceState' : 'pushState']({}, _aureliaPal.DOM.title, url);
+    } else if (this._wantsHashChange) {
+      updateHash(this.location, fragment, replace);
+    } else {
+      return this.location.assign(url);
+    }
+
+    if (trigger) {
+      return this._loadUrl(fragment);
+    }
+  };
+
+  _aureliaHistoryBrowser.BrowserHistory.prototype._getFragment = function (fragment, forcePushState) {
+    var root = void 0;
+
+    if (!fragment) {
+      if (this._usePushState || !this._wantsHashChange || forcePushState) {
+        fragment = this.location.pathname + this.location.search;
+        root = this.root.replace(trailingSlash, '');
+        if (!fragment.indexOf(root)) {
+          fragment = fragment.substr(root.length);
+        }
+      } else {
+        fragment = this._getHash();
+      }
+    }
+
+    return '/' + fragment.replace(routeStripper, '');
+  };
+
+  _aureliaHistoryBrowser.BrowserHistory.prototype._checkUrl = function (event) {
+    var current = this._getFragment();
+    if (current !== this.fragment) {
+      if (event.type === 'popstate') {
+        this.history.replaceState(event.state, null);
+      }
+      this._loadUrl();
+    }
   };
 
   function configure(config) {
@@ -49917,4 +50047,469 @@ System.registerDynamic('node_modules/systemjs-plugin-text/text.js', [], true, fu
     load.metadata.format = 'amd';
     return 'def' + 'ine(function() {\nreturn ' + JSON.stringify(load.source) + ';\n});';
   };
+});
+System.registerDynamic('node_modules/whatwg-fetch/fetch.js', [], false, function ($__require, $__exports, $__module) {
+  var _retrieveGlobal = System.registry.get("@@global-helpers").prepareGlobal($__module.id, null, null);
+
+  (function ($__global) {
+    (function (self) {
+      'use strict';
+
+      if (self.fetch) {
+        return;
+      }
+
+      var support = {
+        searchParams: 'URLSearchParams' in self,
+        iterable: 'Symbol' in self && 'iterator' in Symbol,
+        blob: 'FileReader' in self && 'Blob' in self && function () {
+          try {
+            new Blob();
+            return true;
+          } catch (e) {
+            return false;
+          }
+        }(),
+        formData: 'FormData' in self,
+        arrayBuffer: 'ArrayBuffer' in self
+      };
+
+      if (support.arrayBuffer) {
+        var viewClasses = ['[object Int8Array]', '[object Uint8Array]', '[object Uint8ClampedArray]', '[object Int16Array]', '[object Uint16Array]', '[object Int32Array]', '[object Uint32Array]', '[object Float32Array]', '[object Float64Array]'];
+
+        var isDataView = function (obj) {
+          return obj && DataView.prototype.isPrototypeOf(obj);
+        };
+
+        var isArrayBufferView = ArrayBuffer.isView || function (obj) {
+          return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1;
+        };
+      }
+
+      function normalizeName(name) {
+        if (typeof name !== 'string') {
+          name = String(name);
+        }
+        if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+          throw new TypeError('Invalid character in header field name');
+        }
+        return name.toLowerCase();
+      }
+
+      function normalizeValue(value) {
+        if (typeof value !== 'string') {
+          value = String(value);
+        }
+        return value;
+      }
+
+      // Build a destructive iterator for the value list
+      function iteratorFor(items) {
+        var iterator = {
+          next: function () {
+            var value = items.shift();
+            return { done: value === undefined, value: value };
+          }
+        };
+
+        if (support.iterable) {
+          iterator[Symbol.iterator] = function () {
+            return iterator;
+          };
+        }
+
+        return iterator;
+      }
+
+      function Headers(headers) {
+        this.map = {};
+
+        if (headers instanceof Headers) {
+          headers.forEach(function (value, name) {
+            this.append(name, value);
+          }, this);
+        } else if (Array.isArray(headers)) {
+          headers.forEach(function (header) {
+            this.append(header[0], header[1]);
+          }, this);
+        } else if (headers) {
+          Object.getOwnPropertyNames(headers).forEach(function (name) {
+            this.append(name, headers[name]);
+          }, this);
+        }
+      }
+
+      Headers.prototype.append = function (name, value) {
+        name = normalizeName(name);
+        value = normalizeValue(value);
+        var oldValue = this.map[name];
+        this.map[name] = oldValue ? oldValue + ',' + value : value;
+      };
+
+      Headers.prototype['delete'] = function (name) {
+        delete this.map[normalizeName(name)];
+      };
+
+      Headers.prototype.get = function (name) {
+        name = normalizeName(name);
+        return this.has(name) ? this.map[name] : null;
+      };
+
+      Headers.prototype.has = function (name) {
+        return this.map.hasOwnProperty(normalizeName(name));
+      };
+
+      Headers.prototype.set = function (name, value) {
+        this.map[normalizeName(name)] = normalizeValue(value);
+      };
+
+      Headers.prototype.forEach = function (callback, thisArg) {
+        for (var name in this.map) {
+          if (this.map.hasOwnProperty(name)) {
+            callback.call(thisArg, this.map[name], name, this);
+          }
+        }
+      };
+
+      Headers.prototype.keys = function () {
+        var items = [];
+        this.forEach(function (value, name) {
+          items.push(name);
+        });
+        return iteratorFor(items);
+      };
+
+      Headers.prototype.values = function () {
+        var items = [];
+        this.forEach(function (value) {
+          items.push(value);
+        });
+        return iteratorFor(items);
+      };
+
+      Headers.prototype.entries = function () {
+        var items = [];
+        this.forEach(function (value, name) {
+          items.push([name, value]);
+        });
+        return iteratorFor(items);
+      };
+
+      if (support.iterable) {
+        Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
+      }
+
+      function consumed(body) {
+        if (body.bodyUsed) {
+          return Promise.reject(new TypeError('Already read'));
+        }
+        body.bodyUsed = true;
+      }
+
+      function fileReaderReady(reader) {
+        return new Promise(function (resolve, reject) {
+          reader.onload = function () {
+            resolve(reader.result);
+          };
+          reader.onerror = function () {
+            reject(reader.error);
+          };
+        });
+      }
+
+      function readBlobAsArrayBuffer(blob) {
+        var reader = new FileReader();
+        var promise = fileReaderReady(reader);
+        reader.readAsArrayBuffer(blob);
+        return promise;
+      }
+
+      function readBlobAsText(blob) {
+        var reader = new FileReader();
+        var promise = fileReaderReady(reader);
+        reader.readAsText(blob);
+        return promise;
+      }
+
+      function readArrayBufferAsText(buf) {
+        var view = new Uint8Array(buf);
+        var chars = new Array(view.length);
+
+        for (var i = 0; i < view.length; i++) {
+          chars[i] = String.fromCharCode(view[i]);
+        }
+        return chars.join('');
+      }
+
+      function bufferClone(buf) {
+        if (buf.slice) {
+          return buf.slice(0);
+        } else {
+          var view = new Uint8Array(buf.byteLength);
+          view.set(new Uint8Array(buf));
+          return view.buffer;
+        }
+      }
+
+      function Body() {
+        this.bodyUsed = false;
+
+        this._initBody = function (body) {
+          this._bodyInit = body;
+          if (!body) {
+            this._bodyText = '';
+          } else if (typeof body === 'string') {
+            this._bodyText = body;
+          } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+            this._bodyBlob = body;
+          } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+            this._bodyFormData = body;
+          } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+            this._bodyText = body.toString();
+          } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+            this._bodyArrayBuffer = bufferClone(body.buffer);
+            // IE 10-11 can't handle a DataView body.
+            this._bodyInit = new Blob([this._bodyArrayBuffer]);
+          } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+            this._bodyArrayBuffer = bufferClone(body);
+          } else {
+            throw new Error('unsupported BodyInit type');
+          }
+
+          if (!this.headers.get('content-type')) {
+            if (typeof body === 'string') {
+              this.headers.set('content-type', 'text/plain;charset=UTF-8');
+            } else if (this._bodyBlob && this._bodyBlob.type) {
+              this.headers.set('content-type', this._bodyBlob.type);
+            } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+              this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            }
+          }
+        };
+
+        if (support.blob) {
+          this.blob = function () {
+            var rejected = consumed(this);
+            if (rejected) {
+              return rejected;
+            }
+
+            if (this._bodyBlob) {
+              return Promise.resolve(this._bodyBlob);
+            } else if (this._bodyArrayBuffer) {
+              return Promise.resolve(new Blob([this._bodyArrayBuffer]));
+            } else if (this._bodyFormData) {
+              throw new Error('could not read FormData body as blob');
+            } else {
+              return Promise.resolve(new Blob([this._bodyText]));
+            }
+          };
+
+          this.arrayBuffer = function () {
+            if (this._bodyArrayBuffer) {
+              return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
+            } else {
+              return this.blob().then(readBlobAsArrayBuffer);
+            }
+          };
+        }
+
+        this.text = function () {
+          var rejected = consumed(this);
+          if (rejected) {
+            return rejected;
+          }
+
+          if (this._bodyBlob) {
+            return readBlobAsText(this._bodyBlob);
+          } else if (this._bodyArrayBuffer) {
+            return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+          } else if (this._bodyFormData) {
+            throw new Error('could not read FormData body as text');
+          } else {
+            return Promise.resolve(this._bodyText);
+          }
+        };
+
+        if (support.formData) {
+          this.formData = function () {
+            return this.text().then(decode);
+          };
+        }
+
+        this.json = function () {
+          return this.text().then(JSON.parse);
+        };
+
+        return this;
+      }
+
+      // HTTP methods whose capitalization should be normalized
+      var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
+
+      function normalizeMethod(method) {
+        var upcased = method.toUpperCase();
+        return methods.indexOf(upcased) > -1 ? upcased : method;
+      }
+
+      function Request(input, options) {
+        options = options || {};
+        var body = options.body;
+
+        if (input instanceof Request) {
+          if (input.bodyUsed) {
+            throw new TypeError('Already read');
+          }
+          this.url = input.url;
+          this.credentials = input.credentials;
+          if (!options.headers) {
+            this.headers = new Headers(input.headers);
+          }
+          this.method = input.method;
+          this.mode = input.mode;
+          if (!body && input._bodyInit != null) {
+            body = input._bodyInit;
+            input.bodyUsed = true;
+          }
+        } else {
+          this.url = String(input);
+        }
+
+        this.credentials = options.credentials || this.credentials || 'omit';
+        if (options.headers || !this.headers) {
+          this.headers = new Headers(options.headers);
+        }
+        this.method = normalizeMethod(options.method || this.method || 'GET');
+        this.mode = options.mode || this.mode || null;
+        this.referrer = null;
+
+        if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+          throw new TypeError('Body not allowed for GET or HEAD requests');
+        }
+        this._initBody(body);
+      }
+
+      Request.prototype.clone = function () {
+        return new Request(this, { body: this._bodyInit });
+      };
+
+      function decode(body) {
+        var form = new FormData();
+        body.trim().split('&').forEach(function (bytes) {
+          if (bytes) {
+            var split = bytes.split('=');
+            var name = split.shift().replace(/\+/g, ' ');
+            var value = split.join('=').replace(/\+/g, ' ');
+            form.append(decodeURIComponent(name), decodeURIComponent(value));
+          }
+        });
+        return form;
+      }
+
+      function parseHeaders(rawHeaders) {
+        var headers = new Headers();
+        rawHeaders.split(/\r?\n/).forEach(function (line) {
+          var parts = line.split(':');
+          var key = parts.shift().trim();
+          if (key) {
+            var value = parts.join(':').trim();
+            headers.append(key, value);
+          }
+        });
+        return headers;
+      }
+
+      Body.call(Request.prototype);
+
+      function Response(bodyInit, options) {
+        if (!options) {
+          options = {};
+        }
+
+        this.type = 'default';
+        this.status = 'status' in options ? options.status : 200;
+        this.ok = this.status >= 200 && this.status < 300;
+        this.statusText = 'statusText' in options ? options.statusText : 'OK';
+        this.headers = new Headers(options.headers);
+        this.url = options.url || '';
+        this._initBody(bodyInit);
+      }
+
+      Body.call(Response.prototype);
+
+      Response.prototype.clone = function () {
+        return new Response(this._bodyInit, {
+          status: this.status,
+          statusText: this.statusText,
+          headers: new Headers(this.headers),
+          url: this.url
+        });
+      };
+
+      Response.error = function () {
+        var response = new Response(null, { status: 0, statusText: '' });
+        response.type = 'error';
+        return response;
+      };
+
+      var redirectStatuses = [301, 302, 303, 307, 308];
+
+      Response.redirect = function (url, status) {
+        if (redirectStatuses.indexOf(status) === -1) {
+          throw new RangeError('Invalid status code');
+        }
+
+        return new Response(null, { status: status, headers: { location: url } });
+      };
+
+      self.Headers = Headers;
+      self.Request = Request;
+      self.Response = Response;
+
+      self.fetch = function (input, init) {
+        return new Promise(function (resolve, reject) {
+          var request = new Request(input, init);
+          var xhr = new XMLHttpRequest();
+
+          xhr.onload = function () {
+            var options = {
+              status: xhr.status,
+              statusText: xhr.statusText,
+              headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+            };
+            options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
+            var body = 'response' in xhr ? xhr.response : xhr.responseText;
+            resolve(new Response(body, options));
+          };
+
+          xhr.onerror = function () {
+            reject(new TypeError('Network request failed'));
+          };
+
+          xhr.ontimeout = function () {
+            reject(new TypeError('Network request failed'));
+          };
+
+          xhr.open(request.method, request.url, true);
+
+          if (request.credentials === 'include') {
+            xhr.withCredentials = true;
+          }
+
+          if ('responseType' in xhr && support.blob) {
+            xhr.responseType = 'blob';
+          }
+
+          request.headers.forEach(function (value, name) {
+            xhr.setRequestHeader(name, value);
+          });
+
+          xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
+        });
+      };
+      self.fetch.polyfill = true;
+    })(typeof self !== 'undefined' ? self : this);
+  })(this);
+
+  return _retrieveGlobal();
 });
