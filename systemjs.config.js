@@ -12,7 +12,6 @@ SystemJS.config({
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
-    "onsenui": "node_modules/onsenui/js",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
     "aurelia-event-aggregator": "node_modules/aurelia-event-aggregator/dist/commonjs",
@@ -35,7 +34,8 @@ SystemJS.config({
     "aurelia-dependency-injection": "node_modules/aurelia-dependency-injection/dist/commonjs",
     "aurelia-route-recognizer": "node_modules/aurelia-route-recognizer/dist/commonjs",
     "aurelia-binding": "node_modules/aurelia-binding/dist/commonjs",
-    "aurelia-task-queue": "node_modules/aurelia-task-queue/dist/commonjs"
+    "aurelia-task-queue": "node_modules/aurelia-task-queue/dist/commonjs",
+    "onsenui": "node_modules/onsenui/js"
   },
   "packages": {
     "alis": {
@@ -67,9 +67,6 @@ SystemJS.config({
     },
     "node_modules/leaflet.markercluster/dist": {
       "main": "leaflet.markercluster.js"
-    },
-    "node_modules/onsenui/js": {
-      "main": "onsenui.js"
     },
     "node_modules/systemjs-plugin-css": {
       "main": "css"
@@ -139,6 +136,9 @@ SystemJS.config({
     },
     "node_modules/aurelia-task-queue/dist/commonjs": {
       "main": "aurelia-task-queue.js"
+    },
+    "node_modules/onsenui/js": {
+      "main": "onsenui.js"
     }
   }
 });
