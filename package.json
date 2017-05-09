@@ -26,7 +26,8 @@
     "leaflet.markercluster": "^1.0.4",
     "systemjs": "^0.20.12",
     "systemjs-plugin-css": "^0.1.33",
-    "systemjs-plugin-text": "^0.0.9"
+    "systemjs-plugin-text": "^0.0.9",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

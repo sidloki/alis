@@ -17,6 +17,7 @@ import 'aurelia-templating-binding';
 import 'aurelia-templating-resources';
 import 'aurelia-templating-router';
 import 'aurelia-onsenui';
+import 'whatwg-fetch';
 
 import environment from './environment';
 

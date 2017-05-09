@@ -15,6 +15,7 @@ SystemJS.config({
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
+    "whatwg-fetch": "node_modules/whatwg-fetch",
     "aurelia-event-aggregator": "node_modules/aurelia-event-aggregator/dist/commonjs",
     "aurelia-history": "node_modules/aurelia-history/dist/commonjs",
     "aurelia-history-browser": "node_modules/aurelia-history-browser/dist/commonjs",
@@ -77,6 +78,9 @@ SystemJS.config({
     },
     "node_modules/systemjs-plugin-text": {
       "main": "text"
+    },
+    "node_modules/whatwg-fetch": {
+      "main": "fetch.js"
     },
     "node_modules/aurelia-event-aggregator/dist/commonjs": {
       "main": "aurelia-event-aggregator.js"
