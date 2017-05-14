@@ -1,11 +1,18 @@
 import {HttpClient} from 'aurelia-fetch-client';
+import {Building,} from '../models/building';
+import {Canton} from '../models/canton';
+import {Location} from '../models/location';
+import {Organisation} from '../models/organisation';
+import {RoomType} from '../models/room-type';
+import {System} from '../models/system';
+import {Technology} from '../models/technology';
 
 const tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
 
 export class Database {
 
   constructor() {
-    this.data = {};
+    this.resetData();
     this.http = new HttpClient();
     this.http.configure(config => {
       config
@@ -29,73 +36,103 @@ export class Database {
     });
   }
 
-  load() {
-    return Promise.all(
-      tables.map(table => this.http
-        .fetch(`table=${table}`)
-        .then(response => response.json())
-        .catch(error => {
-          console.error(error);
-          return {
-            results: []
-          };
-        }))
-    ).then(data => {
-      tables.forEach((table, index) => {
-        this.data[table] = data[index].results;
+  resetData() {
+    this.data = {};
+  }
+
+  loadData(force=false) {
+    let models = [Canton, RoomType, System, Technology];
+    if (force === true || Object.keys(this.data).length === 0) {
+      this.resetData();
+      return Promise.all(models.map(model => {
+        let tablename = model.tablename;
+        return this.http
+          .fetch(`table=${tablename}`)
+          .then(response => response.json())
+          .then(data => {
+            this.data[tablename] = data.results.map(result => new model(result));
+          })
+          .catch(error => {
+            console.error(error);
+            this.data[tablename] = [];
+          });
+      })).then(() => {
+        this.processData();
+        return this.data;
       });
-      let locations = {};
-      let buildingCounter = 0;
-      let buildings = this.data.systems.reduce((data, system) => {
-        let buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
-        let orgId = `${system.organisation}`;
-        if (!data[buildingId]) {
-          buildingCounter++;
-          data[buildingId] = {
-            id: buildingCounter,
-            name: system.gebaeude,
-            lat: system.lat,
-            lng: system.lng,
-            strasse_nr: system.strasse_nr,
-            plz: system.plz,
-            ort: system.ort,
-            kanton: this.data.cantons.find(item => item.kantonID === system.kantonID),
-            rooms: []
-          }
-        }
-        system.gebaeudeID = data[buildingId].id;
-        data[buildingId].rooms.push(system);
-        let locationId = system.ort.trim();
-        if (!locations[locationId]) {
-          locations[locationId] = {
-            name: locationId,
-            plz: system.plz,
-            bounds: L.latLngBounds()
-          }
-        }
-        locations[locationId].bounds.extend(L.latLng(system.lat, system.lng));
-        return data;
-      }, {});
-      this.data.buildings = Object.keys(buildings).map(key => {
-        return buildings[key];
-      }).map((building, index, all) => {
-        let org = {};
-        building.rooms.forEach((room) => {
-          let orgId = room.organisation;
-          if (!org[orgId]) {
-            org[orgId] = {
-              name: room.organisation,
-              rooms: []
-            }
-          }
-          org[orgId].rooms.push(room);
+    } else {
+      return Promise.resolve(this.data)
+    }
+  }
+
+  processData() {
+    let systems = this.data[System.tablename];
+    let cantons = this.data[Canton.tablename];
+    let buildings = {};
+    let locations = {};
+    let organisations = {};
+
+    this.data[Building.tablename] = [];
+    this.data[Location.tablename] = [];
+    this.data[Organisation.tablename] = [];
+
+    systems.forEach(system => {
+      system.gebaeudeID = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
+      system.organisationID = `${system.organisation}`;
+      system.locationID = system.ort.trim();
+
+      let building = buildings[system.gebaeudeID];
+      let location = locations[system.locationID];
+
+      if (!building) {
+        building = new Building({
+          id: system.gebaeudeID,
+          name: system.gebaeude,
+          lat: system.lat,
+          lng: system.lng,
+          strasse_nr: system.strasse_nr,
+          plz: system.plz,
+          ort: system.ort,
+          kanton: cantons.find(item => item.kantonID === system.kantonID),
+          kantonID: system.kantonID,
+          rooms: [],
+          organisations: []
         });
-        building.organisations = Object.keys(org).map(key => org[key]);
-        return building;
-      });
-      this.data.locations = Object.keys(locations).map(key => locations[key]);
-      return this.data;
+        buildings[system.gebaeudeID] = building;
+      }
+      if (!location) {
+        location = new Location({
+          id: system.locationID,
+          name: system.locationID,
+          plzs: [],
+          bounds: L.latLngBounds()
+        });
+        locations[system.locationID] = location;
+      }
+
+      let organisation = building.organisations.find(item => item.id === system.organisationID);
+      if (!organisation) {
+        organisation = new Organisation({
+          id: system.organisationID,
+          name: system.organisation,
+          rooms: []
+        });
+        building.organisations.push(organisation);
+      }
+
+      building.rooms.push(system);
+      organisation.rooms.push(system);
+      
+      location.bounds.extend(L.latLng(system.lat, system.lng));
+
+      if (location.plzs.indexOf(system.plz) === -1) {
+        location.plzs.push(system.plz);
+      }
     });
+
+    this.data[Building.tablename] = Object.keys(buildings).map(key => buildings[key]);
+    this.data[Location.tablename] = Object.keys(locations).map(key => locations[key]);
+    this.data[Organisation.tablename] = Object.keys(organisations).map(key => organisations[key]);
   }
 
   queryBuildingsByRoomType(roomType) {

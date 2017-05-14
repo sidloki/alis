@@ -9,7 +9,7 @@ export class App {
   }
 
   activate() {
-    return this.db.load().catch(() => {
+    return this.db.loadData().catch(() => {
       return;
     });
   }
