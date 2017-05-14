@@ -10,11 +10,36 @@ export class Info {
   }
 
   activate(params) {
-    this.data = params.data;
+    let id = parseInt(params.id);
+    this.data = this.db.data.systems.find((item) => {
+      return item.id === id;
+    });
+  }
+
+  getRoomName() {
+    let name = `${this.data.raum} ${this.data.raumnummer}`.trim();
+    if (!name) {
+      name = this.data.gebaeude;
+    }
+    if (!name) {
+      let type = this.db.data.roomtypes.find((type) => {
+        return type.typID === this.data.typID;
+      });
+      name = type.typ;
+    }
+    return name;
   }
 
   openWebsite() {
     window.open(this.data.webadresse, '_system');
+  }
+
+  hasRoomPlan() {
+    return this.data.plan1_dateiname !== 'transp.png' || this.data.plan2_dateiname !== 'transp.png' ? true : false;
+  }
+
+  showRoomPlan() {
+    this.router.navigateToRoute('room-plan', {id: this.data.id});
   }
 
   getPhotoUrl() {

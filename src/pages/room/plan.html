@@ -1,7 +1,16 @@
 <template>
   <require from="./plan.css"></require>
   <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button></ons-back-button>
+      </div>
+      <div class="center">${getRoomName()}</div>
+    </ons-toolbar>
     <ons-list if.bind="plans.length > 0" style="display:flex;flex-direction:column;height:100%;">
+      <ons-list-item modifier="longdivider" if.bind="plans.length === 1">
+        Raumplan
+      </ons-list-item>
       <ons-list-item modifier="longdivider" if.bind="plans.length > 1">
         <ons-select style="width:100%;" value.bind="plan" class="no-underbar">
           <option repeat.for="plan of plans" value.bind="plan.value">${plan.text}</option>

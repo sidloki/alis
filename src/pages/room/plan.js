@@ -11,7 +11,10 @@ export class Plan {
 
   activate(params) {
     let promises = [];
-    this.data = params.data;
+    let id = parseInt(params.id);
+    this.data = this.db.data.systems.find((item) => {
+      return item.id === id;
+    });
     this.plans = [];
     if (this.data.plan1_dateiname !== 'transp.png') {
       let plan = {
@@ -60,6 +63,20 @@ export class Plan {
       });
       this.plan = this.plans[0].value;
     }
+  }
+
+  getRoomName() {
+    let name = `${this.data.raum} ${this.data.raumnummer}`.trim();
+    if (!name) {
+      name = this.data.gebaeude;
+    }
+    if (!name) {
+      let type = this.db.data.roomtypes.find((type) => {
+        return type.typID === this.data.typID;
+      });
+      name = type.typ;
+    }
+    return name;
   }
 
   planChanged(newValue, oldValue) {

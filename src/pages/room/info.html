@@ -1,5 +1,11 @@
 <template>
   <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button></ons-back-button>
+      </div>
+      <div class="center">${getRoomName()}</div>
+    </ons-toolbar>
     <div if.bind="getPhotoUrl()" css="background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;">
     </div>
     <ons-list>
@@ -11,11 +17,19 @@
           ${data.gebaeude}<template if.bind="data.organisation && data.gebaeude">, </template>${data.organisation}<br/>
           ${data.strasse_nr}, ${data.plz} ${data.ort}
       </ons-list-item>
-      <ons-list-item if.bind="data.webadresse" click.trigger="openWebsite()" tappable>
+      <ons-list-item if.bind="data.webadresse" click.trigger="openWebsite()" tappable modifier="chevron" >
         <span class="left">
           <ons-icon icon="md-globe" fixed-width="true"></ons-icon>
         </span>
         <span class="center">Website</span>
+      </ons-list-item>
+      <ons-list-item tappable modifier="chevron" if.bind="hasRoomPlan()" click.trigger="showRoomPlan()">
+        <span class="left" style="">
+          <ons-icon icon="ion-map" fixed-width="true"></ons-icon>
+        </span>
+        <span class="center">
+          Raumplan
+        </span>
       </ons-list-item>
       <ons-list-header>
         Höranlage
