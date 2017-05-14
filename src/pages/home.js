@@ -9,14 +9,18 @@ import {Storage} from '../services/storage';
 export class Home {
   @bindable selection;
   @bindable currentResults;
+  categories;
   results;
   isFiltered;
+  isLoading;
 
   constructor(router, db, storage, search) {
     this.router = router;
     this.db = db;
     this.storage = storage;
     this.search = search;
+
+    this.isLoading = true;
   }
 
   attached() {
@@ -68,7 +72,12 @@ export class Home {
     this.markers.on('click', this.onMarkerClick, this);
     this.buildingsLayer.on('click', this.onBuildingClick, this);
     this.buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
-    this.buildings = this.db.data.buildings;
+
+    this.db.loadData().then(() => {
+      this.buildings = this.db.data.buildings;
+      this.categories = this.db.data.roomtypes;
+      this.isLoading = false;
+    });
   }
 
   onBuildingClick(e) {

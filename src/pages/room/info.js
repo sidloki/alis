@@ -10,9 +10,11 @@ export class Info {
   }
 
   activate(params) {
-    let id = parseInt(params.id);
-    this.data = this.db.data.systems.find((item) => {
-      return item.id === id;
+    return this.db.loadData().then(() => {
+      let id = parseInt(params.id);
+      this.data = this.db.data.systems.find((item) => {
+        return item.id === id;
+      });
     });
   }
 

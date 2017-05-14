@@ -14,6 +14,9 @@
         <ons-toolbar-button if.bind="searchText" click.delegate="clearSearch()">
           <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
         </ons-toolbar-button>
+        <div if.bind="isLoading" style="color:#666;padding:0 12px;height:100%;line-height:inherit;">
+          <ons-icon icon="ion-load-d, material:ion-load-c" spin style="width:auto;"></ons-icon>
+        </div>
       </div>
       <div class="right">
       </div>
@@ -88,7 +91,7 @@
         </ons-toolbar>
         <div class="card" if.bind="!currentSearchText">
           <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
-            <div class="category-item" repeat.for="category of db.data.roomtypes">
+            <div class="category-item" repeat.for="category of categories">
               <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
                 <ons-button style="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;">
                   <ons-icon icon="fa-deaf" size="24px"></ons-icon>
