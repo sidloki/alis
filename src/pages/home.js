@@ -71,6 +71,7 @@ export class Home {
     this.map.on('moveend', this.updateMapView, this);
     this.markers.on('click', this.onMarkerClick, this);
     this.buildingsLayer.on('click', this.onBuildingClick, this);
+    this.buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
     this.buildings = this.db.data.buildings;
   }
 
@@ -79,6 +80,13 @@ export class Home {
       this.showRoom(this.selection.rooms[0]);
     } else {
       this.selection = e.layer.data;
+    }
+  }
+
+  onBuildingDoubleClick(e) {
+    this.selection = e.layer.data;
+    if (this.selection.rooms.length === 1) {
+      this.showRoom(this.selection.rooms[0]);
     }
   }
 
