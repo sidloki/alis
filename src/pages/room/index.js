@@ -8,8 +8,9 @@ export class Index {
   }
 
   activate(params) {
+    let id = parseInt(params.id);
     this.data = this.db.data.systems.find((item) => {
-      return params.id === item.anlageID;
+      return item.id === id;
     });
     this.tabs = [{
       page: './info',
