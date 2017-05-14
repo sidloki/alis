@@ -19,10 +19,6 @@ export class Home {
     this.search = search;
   }
 
-  activate(params) {
-
-  }
-
   attached() {
     if (ons.platform.isAndroid()) {
       this._map.classList.add('map--material');

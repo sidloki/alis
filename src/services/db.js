@@ -7,7 +7,6 @@ import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Technology} from '../models/technology';
 
-const tables = ['systems', 'roomtypes', 'cantons', 'technologies'];
 
 export class Database {
 
