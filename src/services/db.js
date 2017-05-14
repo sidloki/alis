@@ -122,7 +122,7 @@ export class Database {
 
       building.rooms.push(system);
       organisation.rooms.push(system);
-      
+
       location.bounds.extend(L.latLng(system.lat, system.lng));
 
       if (location.plzs.indexOf(system.plz) === -1) {
