@@ -129,11 +129,20 @@ export class Home {
     this.buildingsLayer.clearLayers();
     value.forEach(building => {
       // TODO: marker icons
-      let myIcon = L.divIcon({
-        className: 'leaflet-system-icon fa fa-deaf',
-        iconSize: 22
-      });
-      let marker = L.marker([building.lat, building.lng], {icon: myIcon});
+      let icon;
+      if (building.rooms.length === 1) {
+        icon = L.divIcon({
+          className: 'leaflet-system-icon fa fa-deaf',
+          iconSize: 22
+        });
+      } else {
+        icon = L.divIcon({
+          className: 'leaflet-system-icon',
+          iconSize: 22,
+          html: building.rooms.length
+        })
+      }
+      let marker = L.marker([building.lat, building.lng], {icon: icon});
       marker.data = building;
       this.buildingsLayer.addLayer(marker);
     });
