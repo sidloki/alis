@@ -52,9 +52,8 @@
 .toolbar.searchbar ons-icon[icon*="ion-"] {
   font-size: 26px;
 }
-.toolbar.searchbar.toolbar--material .ons-icon[icon*="ion-"] {
-  vertical-align: inherit;
-  line-height: inherit;
+.toolbar.searchbar.toolbar--material .ons-icon.spinner {
+  vertical-align: -10%;
 }
 
 .toolbar.searchbar .left, .toolbar.searchbar .right {
