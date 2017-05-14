@@ -67,13 +67,23 @@ export class Home {
     }
 
     this.map.on('moveend', this.updateMapView, this);
-
+    this.markers.on('click', this.onMarkerClick, this);
     this.buildingsLayer.on('click', this.onBuildingClick, this);
     this.buildings = this.db.data.buildings;
   }
 
   onBuildingClick(e) {
-    this.selection = e.layer.data;
+    if (this.selection === e.layer.data && this.selection.rooms.length === 1) {
+      this.showRoom(this.selection.rooms[0]);
+    } else {
+      this.selection = e.layer.data;
+    }
+  }
+
+  onMarkerClick(e) {
+    if (this.selection && this.selection.rooms.length === 1) {
+      this.showRoom(this.selection.rooms[0]);
+    }
   }
 
   deselect() {
