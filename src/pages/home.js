@@ -2,19 +2,21 @@ import ons from 'onsenui';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../services/db';
+import {Search} from '../services/search';
 import {Storage} from '../services/storage';
 
-@inject(Router, Database, Storage)
+@inject(Router, Database, Storage, Search)
 export class Home {
   @bindable selection;
   @bindable currentResults;
   results;
   isFiltered;
 
-  constructor(router, db, storage) {
+  constructor(router, db, storage, search) {
     this.router = router;
     this.db = db;
     this.storage = storage;
+    this.search = search;
   }
 
   activate(params) {
@@ -276,11 +278,11 @@ export class Home {
   }
 
   onSearch() {
-    this.currentResults = this.db.search(this.currentSearchText, 20);
+    this.currentResults = this.search.execute(this.currentSearchText, 20);
   }
 
   onSearchInput() {
     this.isFiltered = false;
-    this.currentResults = this.db.search(this._searchinput.value, 10);
+    this.currentResults = this.search.execute(this._searchinput.value, 10);
   }
 }
