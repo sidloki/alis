@@ -34,7 +34,7 @@ const list = [
 ]
 
 let bundleOptions = {
-  minify: false,
+  minify: true,
   sourceMaps: false
 };
 
