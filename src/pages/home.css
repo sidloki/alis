@@ -57,10 +57,12 @@
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
+  border: none;
 }
 .toolbar.searchbar.toolbar--material .toolbar-button--material {
   color: #666;
   margin: 0;
+  border: none;
 }
 .toolbar.searchbar.toolbar--material .toolbar-button--material .ons-icon,
 .toolbar.searchbar.toolbar--material .ons-icon  {
