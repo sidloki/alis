@@ -127,14 +127,14 @@
 }
 
 .category-item .ons-icon {
-  font-size: 24px;
+  font-size: 30px;
 }
 .category-item .ons-icon.mki {
-  font-size: 28px;
+  font-size: 34px;
 }
 .category-item .ons-icon.mki.mki-chapel,
 .category-item .ons-icon.mki.mki-building {
-  font-size: 32px;
+  font-size: 38px;
   margin-top: 2px;
 }
 .category-item .ons-icon.mki.mki-museum,
@@ -143,5 +143,5 @@
 }
 
 .category-item .ons-icon.mki.mki-theatre {
-  margin-top: 4px;
+  margin-top: 3px;
 }
