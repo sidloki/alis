@@ -20,8 +20,8 @@ const Icons = {
     prefix: 'mki'
   },
   6: {
-    name: 'post_office',
-    prefix: 'mki'
+    name: 'document-text',
+    prefix: 'ion'
   },
   7: {
     name: 'ios-people',
