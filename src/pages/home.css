@@ -113,22 +113,15 @@
 }
 
 .category-item {
-  width: 25%;
+  width: 33%;
   text-align:center;
 }
 .category-item .category-label {
   padding-top:5px;
-  font-size:12px;
+  font-size:13px;
   max-width:100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #666;
-}
-
-@media (max-width: 320px) {
-  .category-item {
-    width: 33%;
-    text-align:center;
-  }
 }
