@@ -24,7 +24,7 @@ export class Search {
 
     for (let i = 0; i < this.db.data.locations.length; i++) {
       let location = this.db.data.locations[i];
-      let searchString = `${location.name} ${location.plz}`.toLowerCase();
+      let searchString = `${location.name} ${location.plzs}`.toLowerCase();
       let matches = 0;
       for (let i = 0; i < text.length; i++) {
         let word = text[i];
