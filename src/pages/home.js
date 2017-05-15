@@ -12,15 +12,12 @@ export class Home {
   categories;
   results;
   isFiltered;
-  isLoading;
 
   constructor(router, db, storage, search) {
     this.router = router;
     this.db = db;
     this.storage = storage;
     this.search = search;
-
-    this.isLoading = true;
   }
 
   attached() {
@@ -73,11 +70,8 @@ export class Home {
     this.buildingsLayer.on('click', this.onBuildingClick, this);
     this.buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
 
-    this.db.loadData().then(() => {
-      this.buildings = this.db.data.buildings;
-      this.categories = this.db.data.roomtypes;
-      this.isLoading = false;
-    });
+    this.buildings = this.db.data.buildings;
+    this.categories = this.db.data.roomtypes;
   }
 
   onBuildingClick(e) {

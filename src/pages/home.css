@@ -49,12 +49,6 @@
   width: 17px;
   text-align: center;
 }
-.toolbar.searchbar ons-icon[icon*="ion-"] {
-  font-size: 26px;
-}
-.toolbar.searchbar.toolbar--material .ons-icon.spinner {
-  vertical-align: -10%;
-}
 
 .toolbar.searchbar .left, .toolbar.searchbar .right {
   min-width: auto;

@@ -10,50 +10,48 @@ export class Plan {
   }
 
   activate(params) {
-    return this.db.loadData().then(() => {
-      let promises = [];
-      let id = parseInt(params.id);
-      this.data = this.db.data.systems.find((item) => {
-        return item.id === id;
-      });
-      this.plans = [];
-      if (this.data.plan1_dateiname !== 'transp.png') {
-        let plan = {
-          value: this.data.plan1_dateiname,
-          text: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-          url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
-        };
-        promises.push(new Promise((resolve, reject) => {
-          let img = new Image();
-          img.onload = () => {
-            let scale = 256 / img.width;
-            plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
-            resolve();
-          };
-          img.src = plan.url;
-        }));
-        this.plans.push(plan);
-      }
-      if (this.data.plan2_dateiname !== 'transp.png') {
-        let plan = {
-          value: this.data.plan2_dateiname,
-          text: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-          url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
-        };
-        promises.push(new Promise((resolve, reject) => {
-          let img = new Image();
-          img.onload = () => {
-            let scale = 256 / img.width;
-            plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
-            resolve();
-          };
-          img.src = plan.url;
-        }));
-        this.plans.push(plan);
-      }
-
-      return Promise.all(promises);
+    let promises = [];
+    let id = parseInt(params.id);
+    this.data = this.db.data.systems.find((item) => {
+      return item.id === id;
     });
+    this.plans = [];
+    if (this.data.plan1_dateiname !== 'transp.png') {
+      let plan = {
+        value: this.data.plan1_dateiname,
+        text: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
+        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
+      };
+      promises.push(new Promise((resolve, reject) => {
+        let img = new Image();
+        img.onload = () => {
+          let scale = 256 / img.width;
+          plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
+          resolve();
+        };
+        img.src = plan.url;
+      }));
+      this.plans.push(plan);
+    }
+    if (this.data.plan2_dateiname !== 'transp.png') {
+      let plan = {
+        value: this.data.plan2_dateiname,
+        text: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
+        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
+      };
+      promises.push(new Promise((resolve, reject) => {
+        let img = new Image();
+        img.onload = () => {
+          let scale = 256 / img.width;
+          plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
+          resolve();
+        };
+        img.src = plan.url;
+      }));
+      this.plans.push(plan);
+    }
+
+    return Promise.all(promises);
   }
 
   attached() {
