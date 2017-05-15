@@ -1,12 +1,12 @@
 const Icons = {
   1: 'mki-building',
-  2: 'ion-university, material:md-graduation-cap',
+  2: 'mki-university',
   3: 'mki-chapel',
   4: 'mki-museum',
   5: 'mki-court_house',
-  6: 'ion-ios-email, material:md-email',
+  6: 'mki-post_office',
   7: 'ion-ios-people',
-  8: 'ion-ios-film, material:md-movie-alt',
+  8: 'mki-cinema',
   9: 'mki-theatre'
 };
 
