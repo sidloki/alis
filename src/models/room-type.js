@@ -1,13 +1,40 @@
 const Icons = {
-  1: 'mki-building',
-  2: 'mki-university',
-  3: 'mki-chapel',
-  4: 'mki-museum',
-  5: 'mki-court_house',
-  6: 'mki-post_office',
-  7: 'ion-ios-people',
-  8: 'mki-cinema',
-  9: 'mki-theatre'
+  1: {
+    name: 'building',
+    prefix: 'mki'
+  },
+  2: {
+    name: 'university',
+    prefix: 'mki'
+  },
+  3: {
+    name: 'chapel',
+    prefix: 'mki'
+  },
+  4: {
+    name: 'museum',
+    prefix: 'mki'
+  },
+  5: {
+    name: 'court_house',
+    prefix: 'mki'
+  },
+  6: {
+    name: 'post_office',
+    prefix: 'mki'
+  },
+  7: {
+    name: 'ios-people',
+    prefix: 'ion'
+  },
+  8: {
+    name: 'cinema',
+    prefix: 'mki'
+  },
+  9: {
+    name: 'theatre',
+    prefix: 'mki'
+  }
 };
 
 

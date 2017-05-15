@@ -127,19 +127,19 @@
 .category-item .ons-icon {
   font-size: 24px;
 }
-.category-item .ons-icon.fa.mki {
+.category-item .ons-icon.mki {
   font-size: 28px;
 }
-.category-item .ons-icon.fa.mki.mki-chapel,
-.category-item .ons-icon.fa.mki.mki-building {
+.category-item .ons-icon.mki.mki-chapel,
+.category-item .ons-icon.mki.mki-building {
   font-size: 32px;
   margin-top: 2px;
 }
-.category-item .ons-icon.fa.mki.mki-museum,
-.category-item .ons-icon.fa.mki.mki-court_house {
+.category-item .ons-icon.mki.mki-museum,
+.category-item .ons-icon.mki.mki-court_house {
   margin-top: 2px;
 }
 
-.category-item .ons-icon.fa.mki.mki-theatre {
+.category-item .ons-icon.mki.mki-theatre {
   margin-top: 4px;
 }
