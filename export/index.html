@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="node_modules/onsenui/css/onsen-css-components.min.css">
     <link rel="stylesheet" type="text/css" href="node_modules/leaflet/dist/leaflet.css">
     <link rel="stylesheet" type="text/css" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">
-    <link rel="stylesheet" type="text/css" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" type="text/css" href="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css">
+    <link rel="stylesheet" type="text/css" href="resources/icons/MapkeyIcons.css"/>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATPcjEF52D830ahwcyByXNF2DgloZnrss" async defer></script>
     <script src="node_modules/leaflet/dist/leaflet.js"></script>
     <script src="node_modules/leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js"></script>
@@ -19,6 +19,11 @@
   </head>
 
   <body aurelia-app="alis/main">
+    <div style="height:100%;display:flex;align-items:center;">
+      <div style="font-size:48px;flex:1;text-align:center;">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+    </div>
     <script src="node_modules/es6-promise/dist/es6-promise.auto.min.js"></script>
     <script src="node_modules/systemjs/dist/system.js"></script>
     <script src="systemjs.config.js"></script>
