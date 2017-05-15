@@ -25,10 +25,8 @@
   border: 5px solid rgba(43, 44, 90, 0.25);
 }
 .marker-cluster div {
-
 	text-align: center;
 	border-radius: 15px;
-	/*font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;*/
   color: #fff;
   line-height: inherit;
 }
