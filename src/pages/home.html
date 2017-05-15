@@ -91,7 +91,12 @@
             <div class="category-item" repeat.for="category of categories">
               <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
                 <ons-button style="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;">
-                  <ons-icon icon="fa-deaf" size="24px"></ons-icon>
+                  <template if.bind="category.icon.indexOf('mki') === 0">
+                    <ons-icon class="category mki ${category.icon}"></ons-icon>
+                  </template>
+                  <template if.bind="category.icon.indexOf('mki') !== 0">
+                    <ons-icon icon.bind="category.icon" class="category"></ons-icon>
+                  </template>
                 </ons-button>
                 <div class="category-label">${category.typ}</div>
               </div>
