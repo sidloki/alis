@@ -8,6 +8,31 @@
   text-align: center;
 }
 
+.marker-cluster-small {
+  line-height: 22px;
+}
+.marker-cluster-medium {
+  line-height: 26px;
+}
+.marker-cluster-large {
+  line-height: 30px;
+}
+
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 100%;
+  background-color: rgba(43, 44, 90, 0.75);
+  border: 5px solid rgba(43, 44, 90, 0.25);
+}
+.marker-cluster div {
+
+	text-align: center;
+	border-radius: 15px;
+	/*font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+  color: #fff;
+  line-height: inherit;
+}
+
 .leaflet-container .leaflet-google-mutant .gmnoprint {
   display: none;
 }

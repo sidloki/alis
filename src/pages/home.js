@@ -38,7 +38,28 @@ export class Home {
     }).addTo(this.map);
 
     this.buildingsLayer = L.markerClusterGroup({
-      maxClusterRadius: 40
+      maxClusterRadius: 40,
+      iconCreateFunction: function(cluster) {
+    		var childCount = cluster.getChildCount();
+
+    		var c = ' marker-cluster-';
+        var size = 22;
+    		if (childCount < 10) {
+    			c += 'small';
+    		} else if (childCount < 100) {
+    			c += 'medium';
+          size = 26;
+    		} else {
+    			c += 'large';
+          size = 30;
+    		}
+
+    		return new L.DivIcon({
+          html: '<div>' + childCount + '</div>',
+          className: 'marker-cluster' + c,
+          iconSize: size
+        });
+    	}
     }).addTo(this.map);
 
     this.markers = L.featureGroup().addTo(this.map);
