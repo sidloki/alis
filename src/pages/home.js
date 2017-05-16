@@ -38,7 +38,17 @@ export class Home {
     }).addTo(this.map);
 
     this.buildingsLayer = L.markerClusterGroup({
-      maxClusterRadius: 40,
+      maxClusterRadius: function(zoom) {
+        if (zoom < 13) {
+          return 80;
+        } else if (zoom < 15) {
+          return 60;
+        } else if (zoom < 17) {
+          return 30;
+        } else {
+          return 20;
+        }
+      },
       iconCreateFunction: function(cluster) {
     		var childCount = cluster.getChildCount();
 
