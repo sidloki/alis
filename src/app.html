@@ -1,8 +1,12 @@
 <template>
   <ons-splitter>
-    <ons-splitter-side id="menu" side="left" collapse>
+    <ons-splitter-side id="menu" ref="_menu" side="left" collapse>
       <ons-page>
-        TODO
+        <ons-list>
+          <ons-list-item repeat.for="nav of router.navigation" click.delegate="navigateTo(nav)">
+            <span class="center">${nav.title}</span>
+          </ons-list-item>
+        </ons-list>
       </ons-page>
     </ons-splitter-side>
     <ons-splitter-content>

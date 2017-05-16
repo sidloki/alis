@@ -40,5 +40,11 @@ export class App {
       moduleId: './pages/room/plan',
       nav: false
     }]);
+    this.router = router;
+  }
+
+  navigateTo(item) {
+    this._menu.close();
+    this.router.navigateToRoute(item.config.name);
   }
 }
