@@ -51,8 +51,8 @@
 	background-clip: padding-box;
 	border-radius: 100%;
   font-size: 12px;
-  background-color: rgba(78, 56, 42, 0.75);
-  border: 5px solid rgba(78, 56, 42, 0.25);
+  background-color: rgba(78, 56, 42, 0.6);
+  border: 5px solid rgba(78, 56, 42, 0.2);
 }
 .marker-cluster div {
 	text-align: center;
