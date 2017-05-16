@@ -42,7 +42,7 @@ export class Home {
         if (zoom < 13) {
           return 80;
         } else if (zoom < 15) {
-          return 60;
+          return 50;
         } else if (zoom < 17) {
           return 30;
         } else {
