@@ -68,10 +68,10 @@ export class Info {
   getRatingImageUrl() {
     let name = 'resources/symbols/';
     switch (this.data.bewertung) {
-      case "1":
+      case 1:
         name += 'r32_green.png';
         break;
-      case "2":
+      case 2:
         name += 'r32_yellow.png';
         break;
       default:
@@ -84,10 +84,10 @@ export class Info {
   getRatingName() {
     let name = '';
     switch (this.data.bewertung) {
-      case "1":
+      case 1:
         name = 'Geprüfte Höranlage gemäss Norm';
         break;
-      case "2":
+      case 2:
         name = 'Geprüfte Höranlage nicht nach Norm';
         break;
       default:
