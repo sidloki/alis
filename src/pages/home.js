@@ -153,13 +153,13 @@ export class Home {
       if (buildingIcon) {
         markerIcon = L.divIcon({
           className: `leaflet-system-icon`,
-          iconSize: 24,
+          iconSize: 28,
           html: `<div style="background-color:${buildingIcon.color}"><span class="ons-icon ${buildingIcon.prefix} ${buildingIcon.prefix}-${buildingIcon.name}"></span></div>`
         });
       } else {
         markerIcon = L.divIcon({
           className: 'leaflet-system-icon',
-          iconSize: 24,
+          iconSize: 28,
           html: `<div>${building.rooms.length}</div>`
         })
       }
