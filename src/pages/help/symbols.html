@@ -1,0 +1,36 @@
+<template>
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button></ons-back-button>
+      </div>
+      <div class="center">
+        ${title}
+      </div>
+    </ons-toolbar>
+    <ons-list>
+      <ons-list-header>Technologien</ons-list-header>
+      <ons-list-item repeat.for="technology of technologies">
+        <span class="left" style="align-self:flex-start;">
+          <img src="${technology.image}" alt="" style="width:1.28571429em;"/>
+        </span>
+        <span class="center">
+          <span class="list-item__title">${technology.title}</span>
+          <span class="list-item__subtitle">${technology.description}</span>
+        </span>
+      </ons-list-item>
+    </ons-list>
+    <ons-list>
+      <ons-list-header>Bewertungen</ons-list-header>
+      <ons-list-item repeat.for="rating of ratings">
+        <span class="left" style="align-self:flex-start;">
+          <img src="${rating.image}" alt="" style="width:1.28571429em;"/>
+        </span>
+        <span class="center">
+          <span class="list-item__title">${rating.title}</span>
+          <span class="list-item__subtitle">${rating.description}</span>
+        </span>
+      </ons-list-item>
+    </ons-list>
+  </ons-page>
+</template>

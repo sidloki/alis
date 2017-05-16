@@ -30,6 +30,40 @@ export class App {
         animation: 'lift'
       }
     }, {
+      route: 'help',
+      name: 'help',
+      moduleId: './pages/help/index',
+      nav: true,
+      title: 'Hilfe',
+      settings: {}
+    }, {
+      route: 'help/reception',
+      name: 'help-reception',
+      moduleId: './pages/help/reception',
+      nav: false,
+      title: 'Drahtloser Empfang',
+      settings: {
+        category: 'help'
+      }
+    }, {
+      route: 'help/hearing-loop',
+      name: 'help-hearing-loop',
+      moduleId: './pages/help/hearing-loop',
+      nav: false,
+      title: 'Informationen zu Höranlagen',
+      settings: {
+        category: 'help'
+      }
+    }, {
+      route: 'help/symbols',
+      name: 'help-symbols',
+      moduleId: './pages/help/symbols',
+      nav: false,
+      title: 'Symbole',
+      settings: {
+        category: 'help'
+      }
+    }, {
       route: 'room/:id',
       name: 'room',
       moduleId: './pages/room/info',
