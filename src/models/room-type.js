@@ -1,39 +1,48 @@
 const Icons = {
   1: {
     name: 'building',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#2E7D32'
   },
   2: {
     name: 'university',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#283593'
   },
   3: {
     name: 'chapel',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#F9A825'
   },
   4: {
     name: 'museum',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#F57C00'
   },
   5: {
     name: 'court_house',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#AD1457'
   },
   6: {
     name: 'document-text',
-    prefix: 'ion'
+    prefix: 'ion',
+    color: '#9E9D24'
   },
   7: {
     name: 'ios-people',
-    prefix: 'ion'
+    prefix: 'ion',
+    color: '#6A1B9A'
   },
   8: {
     name: 'cinema',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#C62828'
   },
   9: {
     name: 'theatre',
-    prefix: 'mki'
+    prefix: 'mki',
+    color: '#00838F'
   }
 };
 

@@ -1,13 +1,15 @@
-.leaflet-system-icon {
-  background-color: #2B2C5A;
+.leaflet-system-icon div {
+  background-color: #4E342E;
   border-radius: 50%;
   border: 1.5px solid #ffffff;
   line-height: 24px;
   font-size: 12px;
   color: #ffffff;
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
-.leaflet-system-icon span {
+.leaflet-system-icon div span {
   color: #fff;
 }
 .leaflet-system-icon .ion {
@@ -50,8 +52,8 @@
 	background-clip: padding-box;
 	border-radius: 100%;
   font-size: 12px;
-  background-color: rgba(43, 44, 90, 0.75);
-  border: 5px solid rgba(43, 44, 90, 0.25);
+  background-color: rgba(78, 56, 42, 0.75);
+  border: 5px solid rgba(78, 56, 42, 0.25);
 }
 .marker-cluster div {
 	text-align: center;
