@@ -64,6 +64,13 @@ export class App {
         category: 'help'
       }
     }, {
+      route: 'sponsors',
+      name: 'sponsors',
+      moduleId: './pages/sponsors',
+      nav: true,
+      title: 'Sponsoren',
+      settings: {}
+    }, {
       route: 'room/:id',
       name: 'room',
       moduleId: './pages/room/info',
