@@ -1,0 +1,12 @@
+.page .page__background {
+  background-color: #fff;
+}
+
+.page h2 {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.page.page--material h2 {
+  font-size: 20px;
+}

@@ -71,6 +71,13 @@ export class App {
       title: 'Sponsoren',
       settings: {}
     }, {
+      route: 'impressum',
+      name: 'impressum',
+      moduleId: './pages/impressum',
+      nav: true,
+      title: 'Impressum',
+      settings: {}
+    }, {
       route: 'room/:id',
       name: 'room',
       moduleId: './pages/room/info',
