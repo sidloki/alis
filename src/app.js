@@ -22,14 +22,6 @@ export class App {
       moduleId: './pages/home',
       nav: false
     }, {
-      route: 'list',
-      name: 'list',
-      moduleId: './pages/list',
-      nav: false,
-      options: {
-        animation: 'lift'
-      }
-    }, {
       route: 'help',
       name: 'help',
       moduleId: './pages/help/index',
