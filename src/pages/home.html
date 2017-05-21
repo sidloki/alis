@@ -93,6 +93,11 @@
             </div>
           </div>
         </div>
+        <div style="padding:0 10px;" if.bind="currentResults.locations.length === 0 && currentResults.buildings.length === 0">
+          <p>
+            Für den eingegebenen Suchbegriffe wurde leider nichts gefunden.
+          </p>
+        </div>
         <div class="card" style="padding:0;" if.bind="currentSearchText">
           <ons-list>
             <ons-list-item repeat.for="location of currentResults.locations" tappable modifier="longdivider" click.delegate="onLocationResultClick(location)">
