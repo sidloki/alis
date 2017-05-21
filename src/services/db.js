@@ -134,6 +134,10 @@ export class Database {
     this.data[Organisation.tablename] = Object.keys(organisations).map(key => organisations[key]);
   }
 
+  sort(model, fn) {
+    this.data[model.tablename] = this.data[model.tablename].sort(fn);
+  }
+
   queryBuildingsByRoomType(roomType) {
     let buildings = [];
     return this.data.buildings.reduce((acc, building) => {

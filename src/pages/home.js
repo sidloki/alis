@@ -4,6 +4,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../services/db';
 import {Search} from '../services/search';
 import {Storage} from '../services/storage';
+import {Building} from '../models/building';
 
 @inject(Router, Database, Storage, Search)
 export class Home {
@@ -235,9 +236,24 @@ export class Home {
   }
 
   showSearch() {
+    let center = this.map.getCenter();
     this._search.show();
     this._searchinput.focus();
-    this.isSearching = true;
+    this.db.sort(Building, (a, b) => {
+      let distanceA = this.map.distance(center, L.latLng(a.lat, a.lng));
+      let distanceB = this.map.distance(center, L.latLng(b.lat, b.lng));
+      return distanceA - distanceB;
+    });
+    if (this.isFiltered) {
+      this.results.buildings = this.results.buildings.sort((a, b) => {
+        let distanceA = this.map.distance(center, L.latLng(a.lat, a.lng));
+        let distanceB = this.map.distance(center, L.latLng(b.lat, b.lng));
+        return distanceA - distanceB;
+      });
+    }
+    if (this.searchText) {
+      this.results = this.search.execute(this.searchText, 10);
+    }
     this.currentSearchText = this.searchText;
     this.currentResults = this.results;
   }
@@ -246,7 +262,6 @@ export class Home {
     this._search.hide();
     this.currentSearchText = '';
     this.currentResults = {};
-    this.isSearching = false;
   }
 
   clearSearch() {
