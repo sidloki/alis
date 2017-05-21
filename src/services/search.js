@@ -13,14 +13,8 @@ export class Search {
       locations: [],
       buildings: []
     }
-
-    text = text.trim();
-
-    if (text.length < 3) {
-      return results;
-    }
-
-    text = text.toLowerCase().split(' ').filter(word => word !== '');
+    
+    text = text.trim().toLowerCase().split(' ').filter(word => word !== '');
 
     for (let i = 0; i < this.db.data.locations.length; i++) {
       let location = this.db.data.locations[i];
