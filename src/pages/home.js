@@ -127,7 +127,6 @@ export class Home {
 
   selectionChanged(newValue, oldValue) {
     let marker = this.overlays.get('marker');
-    let locateControl = this.controls.get('locate');
     if (oldValue) {
       this.map.removeLayer(marker);
     }
@@ -140,7 +139,7 @@ export class Home {
           pan: false
         });
         if (!this.map.getBounds().contains(marker.getLatLng())) {
-          locateControl._onDrag();
+          this.disableLocationTracking();
           this.map.setView(marker.getLatLng(), this.map.getZoom());
           marker._bringToFront();
         }
@@ -257,11 +256,10 @@ export class Home {
   zoomToNearest() {
     let center = this.map.getCenter();
     let layer = this.overlays.get('buildings');
-    let locateControl = this.controls.get('locate');
     let closest = L.GeometryUtil.closestLayer(this.map, layer.getLayers(), center);
     if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
       let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
-      locateControl._onDrag();
+      this.disableLocationTracking();
       this.map.fitBounds(bounds, {
         maxZoom: this.map.getZoom(),
         padding: [40, 40]
@@ -292,7 +290,7 @@ export class Home {
       this.map.once('moveend', () => {
         this.selection = query.getById(system.building.id);
       });
-      this.locateControl._onDrag();
+      this.disableLocationTracking();
       this.map.setView([system.building.lat, system.building.lng], 17);
     });
   }
@@ -305,7 +303,7 @@ export class Home {
       this.searchText = this.currentSearchText;
       this.results = this.currentResults;
       this.selection = null;
-      this.locateControl._onDrag();
+      this.disableLocationTracking();
       this.map.fitBounds(location.bounds);
     });
   }
@@ -328,6 +326,11 @@ export class Home {
       this.currentResults = this.search.execute(value);
       this.searchExec = true;
     }, 500);
+  }
+
+  disableLocationTracking() {
+    let locateControl = this.controls.get('locate');
+    locateControl._onDrag();
   }
 
   createBuildingMarker(building) {
