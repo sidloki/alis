@@ -193,10 +193,6 @@ export class Home {
     this.selection = null;
   }
 
-  showList() {
-    this.router.navigateToRoute('list');
-  }
-
   showInfo(system) {
     this.router.navigateToRoute('system', {id: system.id});
   }
