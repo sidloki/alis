@@ -127,6 +127,7 @@ export class Home {
 
   deselect() {
     this.selection = null;
+    this._selectionList.scrollTop = 0;
   }
 
   selectionChanged(newValue, oldValue) {
