@@ -23,8 +23,8 @@ export class Building {
   }
 
   get roomtypes() {
-    return this.rooms.reduce((roomtypes, room) => {
-      let roomtype = room.roomtype;
+    return this.systems.reduce((roomtypes, system) => {
+      let roomtype = system.roomtype;
       if (roomtypes.indexOf(roomtype) === -1) {
         roomtypes.push(roomtype);
       }

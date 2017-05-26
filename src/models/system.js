@@ -1,6 +1,9 @@
 import {Container} from 'aurelia-framework';
 import {Database} from '../services/db';
-
+import {RoomType} from './room-type';
+import {Technology} from './technology';
+import {Building} from './building';
+import {Organisation} from './organisation';
 
 export class System {
 
@@ -13,11 +16,22 @@ export class System {
     return 'systems';
   }
 
+  static get relations() {
+    return new Map([
+      [Building, 'buildingId'],
+      [Organisation, 'organisationId']
+    ]);
+  }
+
   get id() {
     return this.anlageID;
   }
 
   get roomtype() {
-    return this.db.data.roomtypes.find(roomtype => roomtype.id === this.typID);
+    return this.db.query(RoomType).getById(this.typID);
+  }
+
+  get technology() {
+    return this.db.query(Technology).getById(this.techID);
   }
 }

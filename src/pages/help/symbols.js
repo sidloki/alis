@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Database} from '../../services/db';
+import {Technology} from '../../models/technology'
 
 @inject(Database)
 export class Symbols {
@@ -10,7 +11,7 @@ export class Symbols {
 
   activate(params, routeConfig) {
     this.title = routeConfig.title;
-    this.technologies = this.db.data.technologies;
+    this.technologies = this.db.query(Technology).all();
     this.ratings = [{
       image: this.getRatingImageUrl(1),
       title: 'Grüne Raute',

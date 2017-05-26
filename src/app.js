@@ -9,8 +9,11 @@ export class App {
   }
 
   activate() {
-    return this.db.loadData().catch(() => {
-      return;
+    return this.db.load()
+      .then(() => {
+        // console.log("Data loaded");
+      }).catch(() => {
+        return;
     });
   }
 
@@ -70,14 +73,14 @@ export class App {
       title: 'Impressum',
       settings: {}
     }, {
-      route: 'room/:id',
-      name: 'room',
-      moduleId: './pages/room/info',
+      route: 'system/:id',
+      name: 'system',
+      moduleId: './pages/system/info',
       nav: false
     }, {
-      route: 'room/:id/plan',
-      name: 'room-plan',
-      moduleId: './pages/room/plan',
+      route: 'system/:id/plan',
+      name: 'system-plan',
+      moduleId: './pages/system/plan',
       nav: false
     }]);
     this.router = router;

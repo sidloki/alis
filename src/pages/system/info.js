@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Database} from '../../services/db';
+import {System} from '../../models/system';
 
 @inject(Router, Database)
 export class Info {
@@ -10,10 +11,7 @@ export class Info {
   }
 
   activate(params) {
-    let id = parseInt(params.id);
-    this.data = this.db.data.systems.find((item) => {
-      return item.id === id;
-    });
+    this.data = this.db.query(System).getById(parseInt(params.id));
   }
 
   getRoomName() {
@@ -22,10 +20,7 @@ export class Info {
       name = this.data.gebaeude;
     }
     if (!name) {
-      let type = this.db.data.roomtypes.find((type) => {
-        return type.typID === this.data.typID;
-      });
-      name = type.typ;
+      name = this.data.roomtype.typ;
     }
     return name;
   }
@@ -39,7 +34,7 @@ export class Info {
   }
 
   showRoomPlan() {
-    this.router.navigateToRoute('room-plan', {id: this.data.id});
+    this.router.navigateToRoute('system-plan', {id: this.data.id});
   }
 
   getPhotoUrl() {
@@ -52,17 +47,11 @@ export class Info {
   }
 
   getTechImageUrl() {
-    let technology = this.db.data.technologies.find((type) => {
-      return type.techID === this.data.techID;
-    });
-    return `resources/symbols/${technology.technologie}.png`;
+    return `resources/symbols/${this.data.technology.technologie}.png`;
   }
 
   getTechName() {
-    let technology = this.db.data.technologies.find((type) => {
-      return type.techID === this.data.techID;
-    });
-    return technology.technologie;
+    return this.data.technology.technologie;
   }
 
   getRatingImageUrl() {

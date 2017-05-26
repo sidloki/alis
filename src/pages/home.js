@@ -5,6 +5,9 @@ import {Database} from '../services/db';
 import {Search} from '../services/search';
 import {Storage} from '../services/storage';
 import {Building} from '../models/building';
+import {RoomType} from '../models/room-type';
+import {System} from '../models/system';
+import {Organisation} from '../models/organisation';
 
 @inject(Router, Database, Storage, Search)
 export class Home {
@@ -102,13 +105,14 @@ export class Home {
     this.buildingsLayer.on('click', this.onBuildingClick, this);
     this.buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
 
-    this.buildings = this.db.data.buildings;
-    this.categories = this.db.data.roomtypes;
+    this.buildings = this.db.query(System).groupByRelation(Building).all();
+    this.categories = this.db.query(RoomType).all();
+    this.search.sort(this.map.getCenter());
   }
 
   onBuildingClick(e) {
-    if (this.selection === e.layer.data && this.selection.rooms.length === 1) {
-      this.showRoom(this.selection.rooms[0]);
+    if (this.selection === e.layer.data && this.selection.systems.length === 1) {
+      this.showInfo(this.selection.systems[0]);
     } else {
       this.selection = e.layer.data;
     }
@@ -116,14 +120,14 @@ export class Home {
 
   onBuildingDoubleClick(e) {
     this.selection = e.layer.data;
-    if (this.selection.rooms.length === 1) {
-      this.showRoom(this.selection.rooms[0]);
+    if (this.selection.systems.length === 1) {
+      this.showInfo(this.selection.systems[0]);
     }
   }
 
   onMarkerClick(e) {
-    if (this.selection && this.selection.rooms.length === 1) {
-      this.showRoom(this.selection.rooms[0]);
+    if (this.selection && this.selection.systems.length === 1) {
+      this.showInfo(this.selection.systems[0]);
     }
   }
 
@@ -171,7 +175,7 @@ export class Home {
         markerIcon = L.divIcon({
           className: 'leaflet-system-icon',
           iconSize: 28,
-          html: `<div>${building.rooms.length}</div>`
+          html: `<div>${building.systems.length}</div>`
         })
       }
       let marker = L.marker([building.lat, building.lng], {icon: markerIcon});
@@ -222,10 +226,7 @@ export class Home {
       name = room.gebaeude;
     }
     if (!name) {
-      let type = this.db.data.roomtypes.find((type) => {
-        return type.typID === room.typID;
-      });
-      name = type.typ;
+      name = room.roomtype.typ;
     }
     return name;
   }
@@ -237,36 +238,22 @@ export class Home {
 
   showSearch() {
     let center = this.map.getCenter();
+    this.searchExec = false;
     this._search.show();
     this._searchinput.focus();
-    this.db.sort(Building, (a, b) => {
-      let distanceA = this.map.distance(center, L.latLng(a.lat, a.lng));
-      let distanceB = this.map.distance(center, L.latLng(b.lat, b.lng));
-      return distanceA - distanceB;
-    });
-    if (this.isFiltered) {
-      this.results.buildings = this.results.buildings.sort((a, b) => {
-        let distanceA = this.map.distance(center, L.latLng(a.lat, a.lng));
-        let distanceB = this.map.distance(center, L.latLng(b.lat, b.lng));
-        return distanceA - distanceB;
-      });
-    }
-    if (this.searchText) {
-      this.results = this.search.execute(this.searchText, 10);
-    }
-    this.currentSearchText = this.searchText;
-    this.currentResults = this.results;
+    this.search.sort(this.map.getCenter());
+    this.currentSearchText = this.search.text;
+    this.currentResults = this.search.results;
   }
 
   cancelSearch() {
     this._search.hide();
-    this.currentSearchText = '';
-    this.currentResults = {};
   }
 
   clearSearch() {
-    this.searchText = this.currentSearchText = '';
-    this.buildings = this.db.data.buildings;
+    this.search.reset();
+    this.searchText = this.currentSearchText = this.search.text;
+    this.buildings = this.db.query(System).groupByRelation(Building).all();
     this.selection = null;
   }
 
@@ -274,21 +261,24 @@ export class Home {
     this.router.navigateToRoute('list');
   }
 
-  showRoom(room) {
-    this.router.navigateToRoute('room', {id: room.anlageID});
+  showInfo(system) {
+    this.router.navigateToRoute('system', {id: system.id});
   }
 
   searchCategory(item) {
-    this.isFiltered = true;
-    this._search.hide();
-    this.searchText = this.currentSearchText = item.typ;
-    this.buildings = this.db.queryBuildingsByRoomType(item);
-    this.results = this.currentResults = {
-      buildings: this.buildings,
-      locations: []
-    };
-    this.selection = null;
-    this.zoomToNearest();
+    this._search.hide().then(() => {
+      let systems = this.db.query(System).filterBy('typID', item.id);
+      this.search.isFiltered = true;
+      this.search.text = item.typ;
+      this.searchText = this.currentSearchText = this.search.text;
+      this.buildings = systems.groupByRelation(Building).all();
+      this.selection = null;
+      this.zoomToNearest();
+
+      let center = this.map.getCenter();
+      this.search.filter(systems.all());
+      this.search.sort(this.map.getCenter());
+    });
   }
 
   zoomToNearest() {
@@ -307,45 +297,61 @@ export class Home {
   clearCurrentSearch() {
     this.currentSearchText = '';
     this.currentResults = {
-      buildings: [],
+      systems: [],
       locations: []
     };
     this._searchinput.focus();
   }
 
-  onBuildingResultClick(building) {
-    if (!this.isFiltered) {
-      this.buildings = this.db.data.buildings;
-    }
-    this.searchText = this.currentSearchText;
-    this.results = this.currentResults;
-    this.selection = null;
-    this._search.hide();
-    this.map.once('moveend', () => {
-      this.selection = building;
+  onResultClick(system) {
+    this._search.hide().then(() => {
+      let query = this.db.query(System).groupByRelation(Building);
+      if (!this.search.isFiltered) {
+        this.buildings = query.all();
+      }
+      this.search.text = this.currentSearchText;
+      this.search.results = this.currentResults;
+      this.searchText = this.search.text ;
+      this.results = this.currentResults;
+      this.selection = null;
+      this.map.once('moveend', () => {
+        this.selection = query.getById(system.building.id);
+      });
+      this.locateControl._onDrag();
+      this.map.setView([system.building.lat, system.building.lng], 17);
     });
-    this.locateControl._onDrag();
-    this.map.setView([building.lat, building.lng], 17);
   }
 
   onLocationResultClick(location) {
-    if (!this.isFiltered) {
-      this.buildings = this.db.data.buildings;
-    }
-    this.searchText = this.currentSearchText;
-    this.results = this.currentResults;
-    this.selection = null;
-    this._search.hide();
-    this.locateControl._onDrag();
-    this.map.fitBounds(location.bounds);
+    this._search.hide().then(() => {
+      this.buildings = this.db.query(System).groupByRelation(Building).all();
+      this.search.text = this.currentSearchText;
+      this.search.results = this.currentResults;
+      this.searchText = this.currentSearchText;
+      this.results = this.currentResults;
+      this.selection = null;
+      this.locateControl._onDrag();
+      this.map.fitBounds(location.bounds);
+    });
   }
 
   onSearch() {
-    this.currentResults = this.search.execute(this.currentSearchText, 20);
+    this.onSearchInput();
   }
 
   onSearchInput() {
-    this.isFiltered = false;
-    this.currentResults = this.search.execute(this._searchinput.value, 10);
+    let value = this._searchinput.value;
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.searchTimeout = setTimeout(() => {
+      if (this.search.isFiltered) {
+        this.search.isFiltered = false;
+        this.search.reset();
+        this.search.sort(this.map.getCenter());
+      }
+      this.currentResults = this.search.execute(value);
+      this.searchExec = true;
+    }, 500);
   }
 }

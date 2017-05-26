@@ -11,7 +11,7 @@ import {Technology} from '../models/technology';
 export class Database {
 
   constructor() {
-    this.resetData();
+    this.reset();
     this.http = new HttpClient();
     this.http.configure(config => {
       config
@@ -35,128 +35,167 @@ export class Database {
     });
   }
 
-  resetData() {
-    this.data = {};
+  reset() {
+    this.indexes = new Map();
   }
 
-  loadData(force=false) {
+  load() {
     let models = [Canton, RoomType, System, Technology];
-    if (force === true || Object.keys(this.data).length === 0) {
-      this.resetData();
-      return Promise.all(models.map(model => {
-        let tablename = model.tablename;
-        return this.http
-          .fetch(`table=${tablename}`)
-          .then(response => response.json())
-          .then(data => {
-            this.data[tablename] = data.results.map(result => new model(result));
-          })
-          .catch(error => {
-            console.error(error);
-            this.data[tablename] = [];
+    this.reset();
+    return Promise.all(models.map(model => {
+      let tablename = model.tablename;
+      return this.http
+        .fetch(`table=${tablename}`)
+        .then(response => response.json())
+        .then(data => {
+          let index = this.createIndex(model);
+          data.results.forEach((item) => {
+            index.set(item[data.id], new model(item));
           });
-      })).then(() => {
-        this.processData();
-        return this.data;
-      });
-    } else {
-      return Promise.resolve(this.data)
-    }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    })).then(() => {
+      this.process();
+      return;
+    });
   }
 
-  processData() {
-    let systems = this.data[System.tablename];
-    let cantons = this.data[Canton.tablename];
-    let buildings = {};
-    let locations = {};
-    let organisations = {};
+  createIndex(model) {
+    let tablename = model.tablename;
+    this.indexes.set(tablename, new Map());
+    return this.getIndex(model);
+  }
 
-    this.data[Building.tablename] = [];
-    this.data[Location.tablename] = [];
-    this.data[Organisation.tablename] = [];
+  getIndex(model) {
+    let tablename = model.tablename;
+    return this.indexes.get(tablename);
+  }
 
-    systems.forEach(system => {
-      system.gebaeudeID = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
-      system.organisationID = `${system.organisation}`;
-      system.locationID = system.ort.trim();
+  process() {
+    let systems = this.getIndex(System);
+    let buildings = this.createIndex(Building);
+    let organisations = this.createIndex(Organisation);
+    let locations = this.createIndex(Location);
 
-      let building = buildings[system.gebaeudeID];
-      let location = locations[system.locationID];
+    for (let [id, system] of systems.entries()) {
+      system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
+      system.organisationId = `${system.organisation}`;
+      system.locationId = system.ort.trim();
+
+      let building = buildings.get(system.buildingId);
+      let organisation = organisations.get(system.organisationId);
+      let location = locations.get(system.locationId);
 
       if (!building) {
         building = new Building({
-          id: system.gebaeudeID,
+          id: system.buildingId,
           name: system.gebaeude,
           lat: system.lat,
           lng: system.lng,
           strasse_nr: system.strasse_nr,
           plz: system.plz,
           ort: system.ort,
-          kanton: cantons.find(item => item.kantonID === system.kantonID),
-          kantonID: system.kantonID,
-          rooms: [],
-          organisations: []
+          cantonId: system.kantonID,
+          canton: this.query(Canton).getById(system.kantonID)
         });
-        buildings[system.gebaeudeID] = building;
+        buildings.set(building.id, building);
       }
+
       if (!location) {
         location = new Location({
-          id: system.locationID,
-          name: system.locationID,
+          id: system.locationId,
+          name: system.locationId,
           plzs: [],
           bounds: L.latLngBounds()
         });
-        locations[system.locationID] = location;
+        locations.set(location.id, location);
       }
 
-      let organisation = building.organisations.find(item => item.id === system.organisationID);
       if (!organisation) {
         organisation = new Organisation({
-          id: system.organisationID,
-          name: system.organisation,
-          rooms: []
+          id: system.organisationId,
+          name: system.organisation
         });
-        building.organisations.push(organisation);
+        organisations.set(organisation.id, organisation);
       }
 
-      building.rooms.push(system);
-      organisation.rooms.push(system);
+      system.organisation = organisation;
+      system.building = building;
 
       location.bounds.extend(L.latLng(system.lat, system.lng));
 
       if (location.plzs.indexOf(system.plz) === -1) {
         location.plzs.push(system.plz);
       }
-    });
-
-    this.data[Building.tablename] = Object.keys(buildings).map(key => buildings[key]);
-    this.data[Location.tablename] = Object.keys(locations).map(key => locations[key]);
-    this.data[Organisation.tablename] = Object.keys(organisations).map(key => organisations[key]);
+    }
   }
 
-  sort(model, fn) {
-    this.data[model.tablename] = this.data[model.tablename].sort(fn);
+  query(model) {
+    return new Query(this, model, this.getIndex(model));
+  }
+}
+
+export class Query {
+
+  constructor(db, model, index) {
+    this.db = db;
+    this.model = model;
+    this.index = index;
+    this.records = new Map(this.index.entries());
   }
 
-  queryBuildingsByRoomType(roomType) {
-    let buildings = [];
-    return this.data.buildings.reduce((acc, building) => {
-      let rooms = building.rooms.filter(room => room.typID === roomType.typID);
-      if (rooms.length > 0) {
-        let buildingCopy = new Building(building);
-        buildingCopy.rooms = rooms;
-        buildingCopy.organisations = [];
-        building.organisations.forEach(organisation => {
-          let rooms = organisation.rooms.filter(room => room.typID === roomType.typID);
-          if (rooms.length > 0) {
-            let organisationCopy = new Organisation(organisation);
-            organisationCopy.rooms = rooms;
-            buildingCopy.organisations.push(organisationCopy);
-          }
-        });
-        acc.push(buildingCopy);
+  get(property, value) {
+    let match;
+    for (let record of this.records.values()) {
+      if (record[property] === value) {
+        match = record;
+        break;
       }
-      return acc;
-    }, []);
+    }
+    return match;
+  }
+
+  getById(value) {
+    return this.records.get(value);
+  }
+
+  all() {
+    return Array.from(this.records.values());
+  }
+
+  filterBy(property, value) {
+    let records = new Map();
+    for (let [id, record] of this.records.entries()) {
+      if (record[property] === value) {
+        records.set(id, record);
+      }
+    }
+    this.records = records;
+    return this;
+  }
+
+  groupByRelation(model) {
+    let relationProperty = this.model.relations.get(model);
+    let relationQuery = this.db.query(model);
+    let records = new Map();
+    let map = new Map();
+    for (let record of this.records.values()) {
+      let key = record[relationProperty];
+      if (!map.has(key)) {
+        map.set(key, []);
+      }
+      map.get(key).push(record);
+    }
+    for (let [key, value] of map.entries()) {
+      let record = relationQuery.getById(key);
+      if (record) {
+        record[this.model.tablename] = value;
+        records.set(record.id, record);
+      }
+    }
+    relationQuery.records = records;
+    return relationQuery;
   }
 }

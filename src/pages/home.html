@@ -28,35 +28,31 @@
           <ons-icon icon="ion-ios-close,material:md-close-circle" size="2x"></ons-icon>
         </ons-button>
         <ons-list style="flex:1;overflow-y:scroll;">
-          <template if.bind="selection.rooms.length === 1">
-            <ons-list-header if.bind="selection.name && selection.name !== getRoomName(selection.rooms[0])">
+          <template if.bind="selection.systems.length === 1">
+            <ons-list-header if.bind="selection.name && selection.name !== getRoomName(selection.systems[0])">
               <span>${selection.name}</span>
             </ons-list-header>
-            <template repeat.for="org of selection.organisations">
-              <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)" style="margin-bottom:0px;">
-                <span class="list-item__title">
-                  <span>${getRoomName(room)}</span>
-                </span>
-                <span class="list-item__subtitle" if.bind="room.organisation">
-                  <span>${room.organisation}</span>
-                </span>
-              </ons-list-item>
-            </template>
+            <ons-list-item repeat.for="system of selection.systems" tappable click.trigger="showInfo(system)" style="margin-bottom:0px;">
+              <span class="list-item__title">
+                <span>${getRoomName(system)}</span>
+              </span>
+              <span class="list-item__subtitle" if.bind="system.organisation.name">
+                <span>${system.organisation.name}</span>
+              </span>
+            </ons-list-item>
           </template>
-          <template if.bind="selection.rooms.length > 1">
+          <template if.bind="selection.systems.length > 1">
             <ons-list-header if.bind="selection.name">
               <span>${selection.name}</span>
             </ons-list-header>
-              <template repeat.for="org of selection.organisations">
-                <ons-list-item repeat.for="room of org.rooms" tappable click.trigger="showRoom(room)" style="margin-bottom:0px;">
-                  <span class="list-item__title">
-                    <span>${getRoomName(room)}</span>
-                  </span>
-                  <span class="list-item__subtitle" if.bind="room.organisation">
-                    <span>${room.organisation}</span>
-                  </span>
-                </ons-list-item>
-              </template>
+              <ons-list-item repeat.for="system of selection.systems" tappable click.trigger="showInfo(system)" style="margin-bottom:0px;">
+                <span class="list-item__title">
+                  <span>${getRoomName(system)}</span>
+                </span>
+                <span class="list-item__subtitle" if.bind="system.organisation.name">
+                  <span>${system.organisation.name}</span>
+                </span>
+              </ons-list-item>
           </template>
         </ons-list>
       </div>
@@ -93,7 +89,7 @@
             </div>
           </div>
         </div>
-        <div style="padding:0 10px;" if.bind="currentResults.locations.length === 0 && currentResults.buildings.length === 0">
+        <div style="padding:0 10px;" if.bind="currentSearchText && searchExec && currentResults.locations.length === 0 && currentResults.systems.length === 0">
           <p>
             Für den eingegebenen Suchbegriffe wurde leider nichts gefunden.
           </p>
@@ -106,19 +102,17 @@
                 <span class="list-item__title">${location.name}</span>
               </div>
             </ons-list-item>
-            <template repeat.for="building of currentResults.buildings">
-              <ons-list-item repeat.for="org of building.organisations" tappable modifier="longdivider" click.delegate="onBuildingResultClick(building)">
-                <div class="left"></div>
-                <div class="center">
-                  <span class="list-item__title">${building.name || org.name}</span>
-                  <span class="list-item__subtitle">
-                    <span if.bind="building.name">${org.name}</span>
-                    <br if.bind="building.name"/>
-                    <span>${building.strasse_nr}, ${building.plz} ${building.ort}</span>
-                  </span>
-                </div>
-              </ons-list-item>
-            </template>
+            <ons-list-item repeat.for="system of currentResults.systems" tappable modifier="longdivider" click.delegate="onResultClick(system)">
+              <div class="left"></div>
+              <div class="center">
+                <span class="list-item__title">${system.building.name || system.organisation.name}</span>
+                <span class="list-item__subtitle">
+                  <span if.bind="system.building.name">${system.organisation.name}</span>
+                  <br if.bind="system.building.name"/>
+                  <span>${system.building.strasse_nr}, ${system.building.plz} ${system.building.ort}</span>
+                </span>
+              </div>
+            </ons-list-item>
           </ons-list>
         </div>
       </ons-page>

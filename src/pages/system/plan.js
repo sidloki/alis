@@ -1,5 +1,6 @@
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../../services/db';
+import {System} from '../../models/system';
 
 @inject(Database)
 export class Plan {
@@ -11,10 +12,7 @@ export class Plan {
 
   activate(params) {
     let promises = [];
-    let id = parseInt(params.id);
-    this.data = this.db.data.systems.find((item) => {
-      return item.id === id;
-    });
+    this.data = this.db.query(System).getById(parseInt(params.id));
     this.plans = [];
     if (this.data.plan1_dateiname !== 'transp.png') {
       let plan = {
@@ -71,10 +69,7 @@ export class Plan {
       name = this.data.gebaeude;
     }
     if (!name) {
-      let type = this.db.data.roomtypes.find((type) => {
-        return type.typID === this.data.typID;
-      });
-      name = type.typ;
+      name = this.data.roomtype.typ;
     }
     return name;
   }
