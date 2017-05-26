@@ -20,14 +20,14 @@
     </ons-toolbar>
     <div style="display:flex;flex-direction:column;height:100%;">
       <div ref="_map" style="flex:1;width:100%;"></div>
-      <div show.bind="selection" style="position:relative;max-height:60%;height:auto;z-index:10000;display:flex;" ref="roomlist">
+      <div show.bind="selection" style="position:relative;max-height:60%;height:auto;z-index:10000;display:flex;">
         <ons-button style="position:fixed;right:0;left:auto;margin-top:-16px;z-index:10000;" modifier="quiet">
           <ons-icon icon="ion-record,material:md-circle" size="2x" style="color:#fff;"></ons-icon>
         </ons-button>
         <ons-button click.trigger="deselect()" style="position:fixed;right:0;left:auto;margin-top:-16px;z-index:10001;" modifier="quiet">
           <ons-icon icon="ion-ios-close,material:md-close-circle" size="2x"></ons-icon>
         </ons-button>
-        <ons-list style="flex:1;overflow-y:scroll;">
+        <ons-list style="flex:1;overflow-y:scroll;" ref="_selectionList">
           <template if.bind="selection.systems.length === 1">
             <ons-list-header if.bind="selection.name && selection.name !== selection.systems[0].name">
               <span>${selection.name}</span>

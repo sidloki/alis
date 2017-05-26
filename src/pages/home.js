@@ -140,7 +140,7 @@ export class Home {
     if (newValue) {
       let marker = L.marker([newValue.lat, newValue.lng]);
       this.markers.addLayer(marker);
-      this.roomlist.scrollTop = 0;
+      this._selectionList.scrollTop = 0;
       setTimeout(() => {
         this.map.invalidateSize({
           pan: false
