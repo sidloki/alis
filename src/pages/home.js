@@ -22,9 +22,53 @@ export class Home {
     this.db = db;
     this.storage = storage;
     this.search = search;
+
+    // init basemaps
+    this.basemaps = new Map();
+    this.basemaps.set('roadmap', L.gridLayer.googleMutant({
+      type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      styles: [{
+        featureType: "poi",
+        elementType: "labels.icon",
+        stylers: [{ visibility: "off" }]
+      }]
+    }));
+
+    // init map overlays
+    this.overlays = new Map();
+    this.overlays.set('buildings', L.markerClusterGroup({
+      maxClusterRadius: this.getMaxClusterRadius,
+      iconCreateFunction: this.createClusterIcon
+    }));
+    this.overlays.set('marker', L.marker());
+
+    // init map controls
+    this.controls = new Map();
+
+    let locateControl = L.control.locate({
+      showPopup: false,
+      locateControl: {}
+    });
+
+    // locate control tweaks to intercept geolocation start and stop
+    locateControl._start = locateControl.start.bind(locateControl);
+    locateControl._stop = locateControl.stop.bind(locateControl);
+    locateControl._setView = locateControl.setView.bind(locateControl);
+    locateControl.stop = this.onLocateControlStop.bind(this);
+    locateControl.start = this.onLocateControlStart.bind(this);
+    locateControl.setView = this.onLocateControlSetView.bind(this);
+
+    this.controls.set('locate', locateControl);
   }
 
   attached() {
+    let basemapLayer = this.basemaps.get('roadmap');
+    let buildingsLayer = this.overlays.get('buildings');
+    let markerLayer = this.overlays.get('marker');
+    let locateControl = this.controls.get('locate');
+    let mapbounds = this.storage.getItem('mapbounds');
+    let geolocation = this.storage.getItem('geolocation');
+
     if (ons.platform.isAndroid()) {
       this._map.classList.add('map--material');
     }
@@ -32,78 +76,24 @@ export class Home {
       attributionControl: false
     });
 
-    this.basemap = L.gridLayer.googleMutant({
-      type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      styles: [{
-        featureType: "poi",
-        elementType: "labels.icon",
-        stylers: [{ visibility: "off" }]
-      }]
-    }).addTo(this.map);
+    this.map.addLayer(basemapLayer);
+    this.map.addLayer(buildingsLayer);
+    this.map.addControl(locateControl);
 
-    this.buildingsLayer = L.markerClusterGroup({
-      maxClusterRadius: function(zoom) {
-        if (zoom < 13) {
-          return 80;
-        } else if (zoom < 15) {
-          return 50;
-        } else if (zoom < 17) {
-          return 30;
-        } else {
-          return 20;
-        }
-      },
-      iconCreateFunction: function(cluster) {
-    		var childCount = cluster.getChildCount();
-
-    		var c = ' marker-cluster-';
-        var size = 22;
-    		if (childCount < 10) {
-    			c += 'small';
-    		} else if (childCount < 100) {
-    			c += 'medium';
-          size = 26;
-    		} else {
-    			c += 'large';
-          size = 30;
-    		}
-
-    		return new L.DivIcon({
-          html: '<div>' + childCount + '</div>',
-          className: 'marker-cluster' + c,
-          iconSize: size
-        });
-    	}
-    }).addTo(this.map);
-
-    this.markers = L.featureGroup().addTo(this.map);
-
-    this.locateControl = L.control.locate({
-      showPopup: false,
-      locateControl: {}
-    }).addTo(this.map);
-    this.locateControl._start = this.locateControl.start.bind(this.locateControl);
-    this.locateControl._stop = this.locateControl.stop.bind(this.locateControl);
-    this.locateControl._setView = this.locateControl.setView.bind(this.locateControl);
-    this.locateControl.stop = this.onLocateControlStop.bind(this);
-    this.locateControl.start = this.onLocateControlStart.bind(this);
-    this.locateControl.setView = this.onLocateControlSetView.bind(this);
-
-    let mapbounds = this.storage.getItem('mapbounds');
     if (mapbounds) {
       this.map.fitBounds(mapbounds);
     } else {
       this.map.setView([46.801111, 8.226667], 7);
     }
 
-    if (this.storage.getItem('geolocation')) {
-      this.locateControl.start();
+    if (geolocation) {
+      locateControl.start();
     }
 
     this.map.on('moveend', this.updateMapView, this);
-    this.markers.on('click', this.onMarkerClick, this);
-    this.buildingsLayer.on('click', this.onBuildingClick, this);
-    this.buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
+    markerLayer.on('click', this.onMarkerClick, this);
+    buildingsLayer.on('click', this.onBuildingClick, this);
+    buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
 
     this.buildings = this.db.query(System).groupByRelation(Building).all();
     this.categories = this.db.query(RoomType).all();
@@ -136,17 +126,21 @@ export class Home {
   }
 
   selectionChanged(newValue, oldValue) {
-    this.markers.clearLayers();
+    let marker = this.overlays.get('marker');
+    let locateControl = this.controls.get('locate');
+    if (oldValue) {
+      this.map.removeLayer(marker);
+    }
     if (newValue) {
-      let marker = L.marker([newValue.lat, newValue.lng]);
-      this.markers.addLayer(marker);
+      marker.setLatLng([newValue.lat, newValue.lng]);
+      this.map.addLayer(marker);
       this._selectionList.scrollTop = 0;
       setTimeout(() => {
         this.map.invalidateSize({
           pan: false
         });
         if (!this.map.getBounds().contains(marker.getLatLng())) {
-          this.locateControl._onDrag();
+          locateControl._onDrag();
           this.map.setView(marker.getLatLng(), this.map.getZoom());
           marker._bringToFront();
         }
@@ -161,7 +155,8 @@ export class Home {
   }
 
   set buildings(value) {
-    this.buildingsLayer.clearLayers();
+    let layer = this.overlays.get('buildings');
+    layer.clearLayers();
     value.forEach(building => {
       let markerIcon;
       let buildingIcon = building.icon;
@@ -180,12 +175,13 @@ export class Home {
       }
       let marker = L.marker([building.lat, building.lng], {icon: markerIcon});
       marker.data = building;
-      this.buildingsLayer.addLayer(marker);
+      layer.addLayer(marker);
     });
   }
 
   get buildings() {
-    return this.buildingsLayer.getLayers().map(layer => layer.data);
+    let layer = this.overlays.get('buildings');
+    return layer.getLayers().map(layer => layer.data);
   }
 
   updateMapView(evt) {
@@ -197,26 +193,29 @@ export class Home {
   }
 
   onLocateControlStart() {
+    let locateControl = this.controls.get('locate');
     this.storage.setItem('geolocation', true);
-    this.locateControl.isLocatingStart = true;
-    this.locateControl._start();
+    locateControl.isLocatingStart = true;
+    locateControl._start();
   }
 
   onLocateControlStop() {
+    let locateControl = this.controls.get('locate');
     this.storage.setItem('geolocation', false);
-    this.locateControl._stop();
+    locateControl._stop();
   }
 
   onLocateControlSetView() {
-    if (this.locateControl.isLocatingStart) {
-      this.locateControl.isLocatingStart = false;
-      this.locateControl.options.keepCurrentZoomLevel = false;
-      this.locateControl.options.locateOptions.maxZoom = this.map.getZoom() < 15 ? 15 : this.map.getZoom();
-      this.locateControl._setView();
-      this.locateControl.options.keepCurrentZoomLevel = true;
-      this.locateControl.options.locateOptions.maxZoom = Infinity;
+    let locateControl = this.controls.get('locate');
+    if (locateControl.isLocatingStart) {
+      locateControl.isLocatingStart = false;
+      locateControl.options.keepCurrentZoomLevel = false;
+      locateControl.options.locateOptions.maxZoom = this.map.getZoom() < 15 ? 15 : this.map.getZoom();
+      locateControl._setView();
+      locateControl.options.keepCurrentZoomLevel = true;
+      locateControl.options.locateOptions.maxZoom = Infinity;
     } else {
-      this.locateControl._setView();
+      locateControl._setView();
     }
   }
 
@@ -272,10 +271,12 @@ export class Home {
 
   zoomToNearest() {
     let center = this.map.getCenter();
-    let closest = L.GeometryUtil.closestLayer(this.map, this.buildingsLayer.getLayers(), center);
+    let layer = this.overlays.get('buildings');
+    let locateControl = this.controls.get('locate');
+    let closest = L.GeometryUtil.closestLayer(this.map, layer.getLayers(), center);
     if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
       let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
-      this.locateControl._onDrag();
+      locateControl._onDrag();
       this.map.fitBounds(bounds, {
         maxZoom: this.map.getZoom(),
         padding: [40, 40]
@@ -342,5 +343,39 @@ export class Home {
       this.currentResults = this.search.execute(value);
       this.searchExec = true;
     }, 500);
+  }
+
+  createClusterIcon(cluster) {
+    var childCount = cluster.getChildCount();
+
+    var c = ' marker-cluster-';
+    var size = 22;
+    if (childCount < 10) {
+      c += 'small';
+    } else if (childCount < 100) {
+      c += 'medium';
+      size = 26;
+    } else {
+      c += 'large';
+      size = 30;
+    }
+
+    return new L.DivIcon({
+      html: '<div>' + childCount + '</div>',
+      className: 'marker-cluster' + c,
+      iconSize: size
+    });
+  }
+
+  getMaxClusterRadius(zoom) {
+    if (zoom < 13) {
+      return 80;
+    } else if (zoom < 15) {
+      return 50;
+    } else if (zoom < 17) {
+      return 30;
+    } else {
+      return 20;
+    }
   }
 }
