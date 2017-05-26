@@ -1,4 +1,5 @@
 import ons from 'onsenui';
+import ResizeObserver from 'resize-observer-polyfill';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../services/db';
@@ -62,6 +63,7 @@ export class Home {
   }
 
   attached() {
+    let mapSizeObserver = new ResizeObserver(this.resizeMap.bind(this));
     let basemapLayer = this.basemaps.get('roadmap');
     let buildingsLayer = this.overlays.get('buildings');
     let markerLayer = this.overlays.get('marker');
@@ -94,6 +96,8 @@ export class Home {
     markerLayer.on('click', this.onMarkerClick, this);
     buildingsLayer.on('click', this.onBuildingClick, this);
     buildingsLayer.on('dblclick', this.onBuildingDoubleClick, this);
+
+    mapSizeObserver.observe(this._map);
 
     this.buildings = this.db.query(System).groupByRelation(Building).all();
     this.categories = this.db.query(RoomType).all();
@@ -133,23 +137,9 @@ export class Home {
     if (newValue) {
       marker.setLatLng([newValue.lat, newValue.lng]);
       this.map.addLayer(marker);
+      this.panToSelection({animate: false});
+      marker._bringToFront();
       this._selectionList.scrollTop = 0;
-      setTimeout(() => {
-        this.map.invalidateSize({
-          pan: false
-        });
-        if (!this.map.getBounds().contains(marker.getLatLng())) {
-          this.disableLocationTracking();
-          this.map.setView(marker.getLatLng(), this.map.getZoom());
-          marker._bringToFront();
-        }
-      }, 50);
-    } else {
-      setTimeout(() => {
-        this.map.invalidateSize({
-          pan: false
-        });
-      }, 50);
     }
   }
 
@@ -331,6 +321,23 @@ export class Home {
   disableLocationTracking() {
     let locateControl = this.controls.get('locate');
     locateControl._onDrag();
+  }
+
+  resizeMap() {
+    if (this.selection) {
+      this.map.once('moveend', () => {
+        this.panToSelection({animate: true});
+      });
+    }
+    this.map.invalidateSize({pan: false});
+  }
+
+  panToSelection(options) {
+    let coords = L.latLng(this.selection.lat, this.selection.lng);
+    let bounds = this.map.getBounds();
+    if (!bounds.contains(coords)) {
+      this.map.panTo(coords, options);
+    }
   }
 
   createBuildingMarker(building) {
