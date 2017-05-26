@@ -27,6 +27,17 @@ export class System {
     return this.anlageID;
   }
 
+  get name() {
+    let name = `${this.raum} ${this.raumnummer}`.trim();
+    if (!name) {
+      name = this.building.name;
+    }
+    if (!name) {
+      name = this.roomtype.name;
+    }
+    return name;
+  }
+
   get roomtype() {
     return this.db.query(RoomType).getById(this.typID);
   }

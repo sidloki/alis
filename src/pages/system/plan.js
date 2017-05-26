@@ -63,17 +63,6 @@ export class Plan {
     }
   }
 
-  getRoomName() {
-    let name = `${this.data.raum} ${this.data.raumnummer}`.trim();
-    if (!name) {
-      name = this.data.gebaeude;
-    }
-    if (!name) {
-      name = this.data.roomtype.typ;
-    }
-    return name;
-  }
-
   planChanged(newValue, oldValue) {
     if (oldValue) {
       let plan = this.getPlan(oldValue);

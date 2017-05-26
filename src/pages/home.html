@@ -29,12 +29,12 @@
         </ons-button>
         <ons-list style="flex:1;overflow-y:scroll;">
           <template if.bind="selection.systems.length === 1">
-            <ons-list-header if.bind="selection.name && selection.name !== getRoomName(selection.systems[0])">
+            <ons-list-header if.bind="selection.name && selection.name !== selection.systems[0].name">
               <span>${selection.name}</span>
             </ons-list-header>
             <ons-list-item repeat.for="system of selection.systems" tappable click.trigger="showInfo(system)" style="margin-bottom:0px;">
               <span class="list-item__title">
-                <span>${getRoomName(system)}</span>
+                <span>${system.name}</span>
               </span>
               <span class="list-item__subtitle" if.bind="system.organisation.name">
                 <span>${system.organisation.name}</span>
@@ -47,7 +47,7 @@
             </ons-list-header>
               <ons-list-item repeat.for="system of selection.systems" tappable click.trigger="showInfo(system)" style="margin-bottom:0px;">
                 <span class="list-item__title">
-                  <span>${getRoomName(system)}</span>
+                  <span>${system.name}</span>
                 </span>
                 <span class="list-item__subtitle" if.bind="system.organisation.name">
                   <span>${system.organisation.name}</span>

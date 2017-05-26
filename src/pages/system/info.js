@@ -14,17 +14,6 @@ export class Info {
     this.data = this.db.query(System).getById(parseInt(params.id));
   }
 
-  getRoomName() {
-    let name = `${this.data.raum} ${this.data.raumnummer}`.trim();
-    if (!name) {
-      name = this.data.gebaeude;
-    }
-    if (!name) {
-      name = this.data.roomtype.typ;
-    }
-    return name;
-  }
-
   openWebsite() {
     window.open(this.data.webadresse, '_system');
   }

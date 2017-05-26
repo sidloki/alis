@@ -220,17 +220,6 @@ export class Home {
     }
   }
 
-  getRoomName(room) {
-    let name = `${room.raum} ${room.raumnummer}`.trim();
-    if (!name) {
-      name = room.gebaeude;
-    }
-    if (!name) {
-      name = room.roomtype.typ;
-    }
-    return name;
-  }
-
   showMenu() {
     let menu = document.getElementById('menu');
     menu.open();

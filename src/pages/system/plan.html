@@ -4,7 +4,7 @@
       <div class="left">
         <ons-back-button></ons-back-button>
       </div>
-      <div class="center">${getRoomName()}</div>
+      <div class="center">${data.name}</div>
     </ons-toolbar>
     <ons-list if.bind="plans.length > 0" style="display:flex;flex-direction:column;height:100%;">
       <ons-list-item modifier="longdivider" if.bind="plans.length === 1">
