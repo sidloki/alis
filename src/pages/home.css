@@ -1,4 +1,4 @@
-.leaflet-system-icon div {
+.leaflet-building-icon div {
   background-color: #4E342E;
   border-radius: 50%;
   border: 1.5px solid #ffffff;
@@ -10,30 +10,30 @@
   height: 100%;
   box-sizing: border-box;
 }
-.leaflet-system-icon div span {
+.leaflet-building-icon div span {
   color: #fff;
 }
-.leaflet-system-icon .ion {
+.leaflet-building-icon .ion {
   font-size: 17px;
   line-height: 1em;
   vertical-align: -2px;
 }
-.leaflet-system-icon .mki {
+.leaflet-building-icon .mki {
   font-size: 20px;
   line-height: 1em;
 }
-.leaflet-system-icon .mki.mki-chapel,
-.leaflet-system-icon .mki.mki-building {
+.leaflet-building-icon .mki.mki-chapel,
+.leaflet-building-icon .mki.mki-building {
   vertical-align: -2px;
   font-size: 22px;
 }
-.leaflet-system-icon .mki.mki-museum {
+.leaflet-building-icon .mki.mki-museum {
   vertical-align: -1px;
 }
-.leaflet-system-icon .mki.mki-court_house {
+.leaflet-building-icon .mki.mki-court_house {
   vertical-align: -2px;
 }
-.leaflet-system-icon .mki.mki-theatre {
+.leaflet-building-icon .mki.mki-theatre {
   vertical-align: -3px;
 }
 

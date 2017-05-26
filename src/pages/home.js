@@ -158,22 +158,7 @@ export class Home {
     let layer = this.overlays.get('buildings');
     layer.clearLayers();
     value.forEach(building => {
-      let markerIcon;
-      let buildingIcon = building.icon;
-      if (buildingIcon) {
-        markerIcon = L.divIcon({
-          className: `leaflet-system-icon`,
-          iconSize: 28,
-          html: `<div style="background-color:${buildingIcon.color}"><span class="ons-icon ${buildingIcon.prefix} ${buildingIcon.prefix}-${buildingIcon.name}"></span></div>`
-        });
-      } else {
-        markerIcon = L.divIcon({
-          className: 'leaflet-system-icon',
-          iconSize: 28,
-          html: `<div>${building.systems.length}</div>`
-        })
-      }
-      let marker = L.marker([building.lat, building.lng], {icon: markerIcon});
+      let marker = this.createBuildingMarker(building);
       marker.data = building;
       layer.addLayer(marker);
     });
@@ -343,6 +328,26 @@ export class Home {
       this.currentResults = this.search.execute(value);
       this.searchExec = true;
     }, 500);
+  }
+
+  createBuildingMarker(building) {
+    let icon = building.icon;
+    let iconSize = 28;
+    let className = 'leaflet-building-icon';
+    let html;
+    if (icon) {
+      html = `<div style="background-color:${icon.color}"><span class="ons-icon ${icon.prefix} ${icon.prefix}-${icon.name}"></span></div>`;
+    } else {
+      html = `<div>${building.systems.length}</div>`
+    }
+
+    return L.marker([building.lat, building.lng], {
+      icon: L.divIcon({
+        className: className,
+        iconSize: iconSize,
+        html: html
+      })
+    });
   }
 
   createClusterIcon(cluster) {
