@@ -55,9 +55,9 @@ export class Home {
     locateControl._start = locateControl.start.bind(locateControl);
     locateControl._stop = locateControl.stop.bind(locateControl);
     locateControl._setView = locateControl.setView.bind(locateControl);
-    locateControl.stop = this.onLocateControlStop.bind(this);
-    locateControl.start = this.onLocateControlStart.bind(this);
-    locateControl.setView = this.onLocateControlSetView.bind(this);
+    locateControl.stop = this.stopGeolocation.bind(this);
+    locateControl.start = this.startGeolocation.bind(this);
+    locateControl.setView = this.setGeolocationView.bind(this);
 
     this.controls.set('locate', locateControl);
   }
@@ -167,33 +167,6 @@ export class Home {
     ]);
   }
 
-  onLocateControlStart() {
-    let locateControl = this.controls.get('locate');
-    this.storage.setItem('geolocation', true);
-    locateControl.isLocatingStart = true;
-    locateControl._start();
-  }
-
-  onLocateControlStop() {
-    let locateControl = this.controls.get('locate');
-    this.storage.setItem('geolocation', false);
-    locateControl._stop();
-  }
-
-  onLocateControlSetView() {
-    let locateControl = this.controls.get('locate');
-    if (locateControl.isLocatingStart) {
-      locateControl.isLocatingStart = false;
-      locateControl.options.keepCurrentZoomLevel = false;
-      locateControl.options.locateOptions.maxZoom = this.map.getZoom() < 15 ? 15 : this.map.getZoom();
-      locateControl._setView();
-      locateControl.options.keepCurrentZoomLevel = true;
-      locateControl.options.locateOptions.maxZoom = Infinity;
-    } else {
-      locateControl._setView();
-    }
-  }
-
   showMenu() {
     let menu = document.getElementById('menu');
     menu.open();
@@ -250,7 +223,7 @@ export class Home {
     let closest = L.GeometryUtil.closestLayer(this.map, layer.getLayers(), center);
     if (!this.map.getBounds().contains(closest.layer.getLatLng())) {
       let bounds = L.latLngBounds(closest.layer.getLatLng(), center);
-      this.disableLocationTracking();
+      this.disableGeolocationTracking();
       this.map.fitBounds(bounds, {
         maxZoom: this.map.getZoom(),
         padding: [40, 40]
@@ -281,7 +254,7 @@ export class Home {
       this.map.once('moveend', () => {
         this.selection = query.getById(system.building.id);
       });
-      this.disableLocationTracking();
+      this.disableGeolocationTracking();
       this.map.setView([system.building.lat, system.building.lng], 17);
     });
   }
@@ -294,7 +267,7 @@ export class Home {
       this.searchText = this.currentSearchText;
       this.results = this.currentResults;
       this.selection = null;
-      this.disableLocationTracking();
+      this.disableGeolocationTracking();
       this.map.fitBounds(location.bounds);
     });
   }
@@ -319,7 +292,34 @@ export class Home {
     }, 500);
   }
 
-  disableLocationTracking() {
+  startGeolocation() {
+    let locateControl = this.controls.get('locate');
+    this.storage.setItem('geolocation', true);
+    locateControl.isLocatingStart = true;
+    locateControl._start();
+  }
+
+  stopGeolocation() {
+    let locateControl = this.controls.get('locate');
+    this.storage.setItem('geolocation', false);
+    locateControl._stop();
+  }
+
+  setGeolocationView() {
+    let locateControl = this.controls.get('locate');
+    if (locateControl.isLocatingStart) {
+      locateControl.isLocatingStart = false;
+      locateControl.options.keepCurrentZoomLevel = false;
+      locateControl.options.locateOptions.maxZoom = this.map.getZoom() < 15 ? 15 : this.map.getZoom();
+      locateControl._setView();
+      locateControl.options.keepCurrentZoomLevel = true;
+      locateControl.options.locateOptions.maxZoom = Infinity;
+    } else {
+      locateControl._setView();
+    }
+  }
+
+  disableGeolocationTracking() {
     let locateControl = this.controls.get('locate');
     locateControl._onDrag();
   }
