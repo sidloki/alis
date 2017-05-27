@@ -1,4 +1,6 @@
 import {HttpClient} from 'aurelia-fetch-client';
+import {inject} from 'aurelia-framework';
+import {Config} from './config';
 import {Building,} from '../models/building';
 import {Canton} from '../models/canton';
 import {Location} from '../models/location';
@@ -8,15 +10,17 @@ import {System} from '../models/system';
 import {Technology} from '../models/technology';
 
 
+@inject(Config)
 export class Database {
 
-  constructor() {
+  constructor(config) {
+    this.config = config;
     this.reset();
     this.http = new HttpClient();
     this.http.configure(config => {
       config
         .useStandardConfiguration()
-        .withBaseUrl('//www.zeta.hoeranlagenverzeichnis.ch/query.php?')
+        .withBaseUrl(`${this.config.baseUrl}/query.php?`)
         .withDefaults({
           headers: {
             // 'X-Requested-With': 'Fetch'

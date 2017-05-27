@@ -1,13 +1,15 @@
 import {inject, bindable} from 'aurelia-framework';
 import {Database} from '../../services/db';
+import {Config} from '../../services/config';
 import {System} from '../../models/system';
 
-@inject(Database)
+@inject(Database, Config)
 export class Plan {
   @bindable plan;
 
-  constructor(db, element) {
+  constructor(db, config) {
     this.db = db;
+    this.config = config;
   }
 
   activate(params) {
@@ -18,7 +20,7 @@ export class Plan {
       let plan = {
         value: this.data.plan1_dateiname,
         text: this.data.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room1/${this.data.plan1_dateiname}`
+        url: `${this.config.baseUrl}/admin/images/image_room1/${this.data.plan1_dateiname}`
       };
       promises.push(new Promise((resolve, reject) => {
         let img = new Image();
@@ -35,7 +37,7 @@ export class Plan {
       let plan = {
         value: this.data.plan2_dateiname,
         text: this.data.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(this.plans).length + 1}` : 'Raumplan',
-        url: `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_room2/${this.data.plan2_dateiname}`
+        url: `${this.config.baseUrl}/admin/images/image_room2/${this.data.plan2_dateiname}`
       };
       promises.push(new Promise((resolve, reject) => {
         let img = new Image();

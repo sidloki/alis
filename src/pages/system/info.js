@@ -1,13 +1,15 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Database} from '../../services/db';
+import {Config} from '../../services/config';
 import {System} from '../../models/system';
 
-@inject(Router, Database)
+@inject(Router, Database, Config)
 export class Info {
-  constructor (router, db) {
+  constructor (router, db, config) {
     this.router = router;
     this.db = db;
+    this.config = config;
   }
 
   activate(params) {
@@ -31,7 +33,7 @@ export class Info {
     if (!url || url === 'transp.png') {
       return null;
     } else {
-      return `//www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_front/${url}`;
+      return `${this.config.baseUrl}/admin/images/image_front/${url}`;
     }
   }
 
