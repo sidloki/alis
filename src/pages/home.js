@@ -12,7 +12,6 @@ import {Organisation} from '../models/organisation';
 
 @inject(Router, Database, Storage, Search)
 export class Home {
-  @bindable selection;
   @bindable currentResults;
   categories;
   results;
@@ -130,18 +129,24 @@ export class Home {
     this._selectionList.scrollTop = 0;
   }
 
-  selectionChanged(newValue, oldValue) {
+  set selection(value) {
     let marker = this.overlays.get('marker');
-    if (oldValue) {
-      this.map.removeLayer(marker);
-    }
-    if (newValue) {
-      marker.setLatLng([newValue.lat, newValue.lng]);
+    if (value) {
+      marker.setLatLng([value.lat, value.lng]);
+      marker.data = value;
       this.map.addLayer(marker);
       this.panToSelection({animate: false});
       marker._bringToFront();
       this._selectionList.scrollTop = 0;
+    } else {
+      this.map.removeLayer(marker);
+      marker.data = null;
     }
+  }
+
+  get selection() {
+    let marker = this.overlays.get('marker');
+    return marker.data;
   }
 
   set buildings(value) {
