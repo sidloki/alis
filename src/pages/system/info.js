@@ -28,14 +28,6 @@ export class Info {
     this.router.navigateToRoute('system-plan', {id: this.data.id});
   }
 
-  getPhotoUrl() {
-    let url = this.data.foto_dateiname;
-    if (!url || url === 'transp.png') {
-      return null;
-    } else {
-      return `${this.config.baseUrl}/admin/images/image_front/${url}`;
-    }
-  }
   getRatingImageUrl() {
     let name = `${this.config.baseUrl}/symbols/`;
     switch (this.data.bewertung) {

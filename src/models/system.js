@@ -1,5 +1,6 @@
 import {Container} from 'aurelia-framework';
 import {Database} from '../services/db';
+import {Config} from '../services/config';
 import {RoomType} from './room-type';
 import {Technology} from './technology';
 import {Building} from './building';
@@ -10,6 +11,7 @@ export class System {
   constructor(data) {
     Object.assign(this, data);
     this.db = Container.instance.get(Database);
+    this.config = Container.instance.get(Config);
   }
 
   static get tablename() {
@@ -44,5 +46,14 @@ export class System {
 
   get technology() {
     return this.db.query(Technology).getById(this.techID);
+  }
+
+  get photoUrl() {
+    let url = this.foto_dateiname;
+    if (!url || url === 'transp.png') {
+      return null;
+    } else {
+      return `${this.config.baseUrl}/admin/images/image_front/${url}`;
+    }
   }
 }

@@ -6,7 +6,7 @@
       </div>
       <div class="center">${data.name}</div>
     </ons-toolbar>
-    <div if.bind="getPhotoUrl()" css="background-image:url('${getPhotoUrl()}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;">
+    <div if.bind="data.photoUrl" css="background-image:url('${data.photoUrl}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;">
     </div>
     <ons-list>
       <ons-list-item if.bind="data.strasse_nr || data.plz || data.org" tappable>
