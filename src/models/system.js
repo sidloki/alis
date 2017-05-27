@@ -56,4 +56,25 @@ export class System {
       return `${this.config.baseUrl}/admin/images/image_front/${url}`;
     }
   }
+
+  get roomPlans() {
+    let plans = [];
+    if (this.plan1_dateiname !== 'transp.png') {
+      let plan = {
+        value: this.plan1_dateiname,
+        text: this.plan2_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(plans).length + 1}` : 'Raumplan',
+        url: `${this.config.baseUrl}/admin/images/image_room1/${this.plan1_dateiname}`
+      };
+      plans.push(plan);
+    }
+    if (this.plan2_dateiname !== 'transp.png') {
+      let plan = {
+        value: this.plan2_dateiname,
+        text: this.plan1_dateiname !== 'transp.png' ? `Raumplan ${Object.keys(plans).length + 1}` : 'Raumplan',
+        url: `${this.config.baseUrl}/admin/images/image_room2/${this.plan2_dateiname}`
+      };
+      plans.push(plan);
+    }
+    return plans;
+  }
 }
