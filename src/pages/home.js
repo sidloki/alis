@@ -12,10 +12,10 @@ import {Organisation} from '../models/organisation';
 
 @inject(Router, Database, Storage, Search)
 export class Home {
-  @bindable currentResults;
+  searchText;
+  searchResults;
+  isSearching = false;
   categories;
-  results;
-  isFiltered;
 
   constructor(router, db, storage, search) {
     this.router = router;
@@ -178,23 +178,36 @@ export class Home {
   }
 
   showSearch() {
-    this._search.show();
-    this.db.sortByDistance(this.map.getCenter());
-    this.currentSearchText = this.search.text;
-    this.search.update(this.currentSearchText);
-    this.currentResults = this.search.results;
-    this._searchinput.focus();
+    if (!this.isSearching) {
+      this.isSearching = true;
+      this._searchoverlay.scrollTop = 0;
+      this.db.sortByDistance(this.map.getCenter());
+      this.searchText = this.search.text;
+      this.search.update(this.search.text);
+      this.searchResults = this.search.results;
+      this.searchText = this.search.text;
+    }
   }
 
   cancelSearch() {
-    this._search.hide();
+    this.isSearching = false;
+    this.searchText = this.search.text;
   }
 
   clearSearch() {
-    this.search.reset();
-    this.searchText = this.currentSearchText = this.search.text;
-    this.buildings = this.db.query(System).groupByRelation(Building).all();
-    this.selection = null;
+    if (this.isSearching) {
+      this.search.applyFilter = false;
+      this.search.update(null);
+      this.searchText = null;
+      this.searchResults = this.search.results;
+      this._searchinput.focus();
+    } else {
+      this.search.reset();
+      this.buildings = this.db.query(System).groupByRelation(Building).all();
+      this.selection = null;
+      this.searchText = this.search.text;
+      this.searchResults = this.search.results;
+    }
   }
 
   showInfo(system) {
@@ -202,17 +215,15 @@ export class Home {
   }
 
   searchCategory(item) {
-    this._search.hide().then(() => {
-      this.buildings = this.db.query(System).filterBy('typID', item.id).groupByRelation(Building).all();
-      this.search.filter = {
-        property: 'typID',
-        value: item.id
-      };
-      this.search.text = item.typ;
-      this.searchText = this.currentSearchText = this.search.text;
-      this.selection = null;
-      this.zoomToNearest();
-    });
+    this.isSearching = false;
+    this.buildings = this.db.query(System).filterBy('typID', item.id).groupByRelation(Building).all();
+    this.search.filter = {
+      property: 'typID',
+      value: item.id
+    };
+    this.searchText = this.search.text = item.typ;
+    this.selection = null;
+    this.zoomToNearest();
   }
 
   zoomToNearest() {
@@ -229,44 +240,27 @@ export class Home {
     }
   }
 
-  clearCurrentSearch() {
-    this.currentSearchText = '';
-    this.currentResults = {
-      systems: [],
-      locations: []
-    };
-    this._searchinput.focus();
-  }
-
   onResultClick(system) {
-    this._search.hide().then(() => {
-      let query = this.search.query.groupByRelation(Building);
-      this.buildings = query.all();
-      this.search.text = this.currentSearchText;
-      this.search.results = this.currentResults;
-      this.searchText = this.search.text ;
-      this.results = this.currentResults;
-      this.selection = null;
-      this.map.once('moveend', () => {
-        this.selection = query.getById(system.building.id);
-      });
-      this.disableGeolocationTracking();
-      this.map.setView([system.building.lat, system.building.lng], 17);
+    let query = this.search.query.groupByRelation(Building);
+    this.isSearching = false;
+    this.buildings = query.all();
+    this.search.text = this.searchText;
+    this.selection = null;
+    this.map.once('moveend', () => {
+      this.selection = query.getById(system.building.id);
     });
+    this.disableGeolocationTracking();
+    this.map.setView([system.building.lat, system.building.lng], 17);
   }
 
   onLocationResultClick(location) {
-    this._search.hide().then(() => {
-      let query = this.search.query.groupByRelation(Building);
-      this.buildings = query.all();
-      this.search.text = this.currentSearchText;
-      this.search.results = this.currentResults;
-      this.searchText = this.currentSearchText;
-      this.results = this.currentResults;
-      this.selection = null;
-      this.disableGeolocationTracking();
-      this.map.fitBounds(location.bounds);
-    });
+    this.isSearching = false;
+    let query = this.search.query.groupByRelation(Building);
+    this.buildings = query.all();
+    this.search.text = this.searchText;
+    this.selection = null;
+    this.disableGeolocationTracking();
+    this.map.fitBounds(location.bounds);
   }
 
   onSearch() {
@@ -274,7 +268,7 @@ export class Home {
   }
 
   onSearchInput() {
-    let value = this._searchinput.value;
+    let value = this.searchText;
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -283,8 +277,7 @@ export class Home {
         this.search.applyFilters = false;
         this.search.update();
       }
-      this.currentResults = this.search.execute(value);
-      this.searchExec = true;
+      this.searchResults = this.search.execute(value);
     }, 500);
   }
 

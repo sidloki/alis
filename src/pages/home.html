@@ -1,16 +1,19 @@
 <template>
   <require from="./home.css"></require>
   <ons-page>
-    <ons-toolbar modifier="" class="searchbar">
+    <ons-toolbar modifier="" class="searchbar ${isSearching ? 'toolbar--transparent' : ''}">
       <div class="left">
       </div>
       <div class="center">
-        <ons-toolbar-button click.delegate="showMenu()">
+        <ons-toolbar-button if.bind="!isSearching" click.delegate="showMenu()">
           <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
         </ons-toolbar-button>
-        <div style="flex:1" click.delegate="showSearch()">
-          <input type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" />
-        </div>
+        <ons-toolbar-button if.bind="isSearching" click.delegate="cancelSearch()">
+          <ons-icon icon="ion-ios-arrow-back, material:md-arrow-left"></ons-icon>
+        </ons-toolbar-button>
+        <form style="flex:1;" submit.delegate="onSearch()" click.delegate="showSearch()">
+          <input ref="_searchinput" type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" input.trigger="onSearchInput()" />
+        </form>
         <ons-toolbar-button if.bind="searchText" click.delegate="clearSearch()">
           <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
         </ons-toolbar-button>
@@ -18,6 +21,47 @@
       <div class="right">
       </div>
     </ons-toolbar>
+    <!-- search sheet overlay -->
+    <div show.bind="isSearching" style="z-index:11000;background-color:#fff;position:absolute;top:0;right:0;left:0;bottom:0;" ref="_searchoverlay">
+      <div class="card" show.bind="!searchText">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
+          <div class="category-item" repeat.for="category of categories">
+            <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
+              <ons-button css="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;background-color:${category.icon.color};">
+                <span class="category ons-icon ${category.icon.prefix} ${category.icon.prefix}-${category.icon.name}"></span>
+              </ons-button>
+              <div class="category-label">${category.typ}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:0 10px;" show.bind="searchText && searchResults.locations.length === 0 && searchResults.systems.length === 0">
+        <p>
+          Für den eingegebenen Suchbegriffe wurde leider nichts gefunden.
+        </p>
+      </div>
+      <div class="card" style="padding:0;" show.bind="searchText">
+        <ons-list>
+          <ons-list-item repeat.for="location of searchResults.locations" tappable modifier="longdivider" click.delegate="onLocationResultClick(location)">
+            <div class="left"></div>
+            <div class="center">
+              <span class="list-item__title">${location.name}</span>
+            </div>
+          </ons-list-item>
+          <ons-list-item repeat.for="system of searchResults.systems" tappable modifier="longdivider" click.delegate="onResultClick(system)">
+            <div class="left"></div>
+            <div class="center">
+              <span class="list-item__title">${system.building.name || system.organisation.name}</span>
+              <span class="list-item__subtitle">
+                <span if.bind="system.building.name">${system.organisation.name}</span>
+                <br if.bind="system.building.name"/>
+                <span>${system.building.strasse_nr}, ${system.building.plz} ${system.building.ort}</span>
+              </span>
+            </div>
+          </ons-list-item>
+        </ons-list>
+      </div>
+    </div>
     <div style="display:flex;flex-direction:column;height:100%;">
       <div ref="_map" style="flex:1;width:100%;"></div>
       <div show.bind="selection" style="position:relative;max-height:60%;height:auto;z-index:10000;display:flex;">
@@ -58,63 +102,4 @@
       </div>
     </div>
   </ons-page>
-    <ons-modal ref="_search">
-      <ons-page>
-        <ons-toolbar modifier="transparent" class="searchbar">
-          <div class="left">
-          </div>
-          <div class="center">
-            <ons-toolbar-button click.delegate="cancelSearch()">
-              <ons-icon icon="ion-ios-arrow-back, material:md-arrow-left"></ons-icon>
-            </ons-toolbar-button>
-            <form style="flex:1;" submit.delegate="onSearch()">
-              <input ref="_searchinput" type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="currentSearchText" input.trigger="onSearchInput()" />
-            </form>
-            <ons-toolbar-button show.bind="currentSearchText" click.delegate="clearCurrentSearch()">
-              <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
-            </ons-toolbar-button>
-          </div>
-          <div class="right">
-          </div>
-        </ons-toolbar>
-        <div class="card" if.bind="!currentSearchText">
-          <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
-            <div class="category-item" repeat.for="category of categories">
-              <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
-                <ons-button css="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;background-color:${category.icon.color};">
-                  <span class="category ons-icon ${category.icon.prefix} ${category.icon.prefix}-${category.icon.name}"></span>
-                </ons-button>
-                <div class="category-label">${category.typ}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="padding:0 10px;" if.bind="currentSearchText && searchExec && currentResults.locations.length === 0 && currentResults.systems.length === 0">
-          <p>
-            Für den eingegebenen Suchbegriffe wurde leider nichts gefunden.
-          </p>
-        </div>
-        <div class="card" style="padding:0;" if.bind="currentSearchText">
-          <ons-list>
-            <ons-list-item repeat.for="location of currentResults.locations" tappable modifier="longdivider" click.delegate="onLocationResultClick(location)">
-              <div class="left"></div>
-              <div class="center">
-                <span class="list-item__title">${location.name}</span>
-              </div>
-            </ons-list-item>
-            <ons-list-item repeat.for="system of currentResults.systems" tappable modifier="longdivider" click.delegate="onResultClick(system)">
-              <div class="left"></div>
-              <div class="center">
-                <span class="list-item__title">${system.building.name || system.organisation.name}</span>
-                <span class="list-item__subtitle">
-                  <span if.bind="system.building.name">${system.organisation.name}</span>
-                  <br if.bind="system.building.name"/>
-                  <span>${system.building.strasse_nr}, ${system.building.plz} ${system.building.ort}</span>
-                </span>
-              </div>
-            </ons-list-item>
-          </ons-list>
-        </div>
-      </ons-page>
-    </ons-modal>
 </template>
