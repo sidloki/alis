@@ -101,7 +101,7 @@ export class Home {
 
     this.buildings = this.db.query(System).groupByRelation(Building).all();
     this.categories = this.db.query(RoomType).all();
-    this.search.sort(this.map.getCenter());
+    this.db.sortByDistance(this.map.getCenter());
   }
 
   onBuildingClick(e) {
@@ -173,13 +173,12 @@ export class Home {
   }
 
   showSearch() {
-    let center = this.map.getCenter();
-    this.searchExec = false;
     this._search.show();
-    this._searchinput.focus();
-    this.search.sort(this.map.getCenter());
+    this.db.sortByDistance(this.map.getCenter());
     this.currentSearchText = this.search.text;
+    this.search.update(this.currentSearchText);
     this.currentResults = this.search.results;
+    this._searchinput.focus();
   }
 
   cancelSearch() {
@@ -199,17 +198,15 @@ export class Home {
 
   searchCategory(item) {
     this._search.hide().then(() => {
-      let systems = this.db.query(System).filterBy('typID', item.id);
-      this.search.isFiltered = true;
+      this.buildings = this.db.query(System).filterBy('typID', item.id).groupByRelation(Building).all();
+      this.search.filter = {
+        property: 'typID',
+        value: item.id
+      };
       this.search.text = item.typ;
       this.searchText = this.currentSearchText = this.search.text;
-      this.buildings = systems.groupByRelation(Building).all();
       this.selection = null;
       this.zoomToNearest();
-
-      let center = this.map.getCenter();
-      this.search.filter(systems.all());
-      this.search.sort(this.map.getCenter());
     });
   }
 
@@ -238,10 +235,8 @@ export class Home {
 
   onResultClick(system) {
     this._search.hide().then(() => {
-      let query = this.db.query(System).groupByRelation(Building);
-      if (!this.search.isFiltered) {
-        this.buildings = query.all();
-      }
+      let query = this.search.query.groupByRelation(Building);
+      this.buildings = query.all();
       this.search.text = this.currentSearchText;
       this.search.results = this.currentResults;
       this.searchText = this.search.text ;
@@ -257,7 +252,8 @@ export class Home {
 
   onLocationResultClick(location) {
     this._search.hide().then(() => {
-      this.buildings = this.db.query(System).groupByRelation(Building).all();
+      let query = this.search.query.groupByRelation(Building);
+      this.buildings = query.all();
       this.search.text = this.currentSearchText;
       this.search.results = this.currentResults;
       this.searchText = this.currentSearchText;
@@ -278,10 +274,9 @@ export class Home {
       clearTimeout(this.searchTimeout);
     }
     this.searchTimeout = setTimeout(() => {
-      if (this.search.isFiltered) {
-        this.search.isFiltered = false;
-        this.search.reset();
-        this.search.sort(this.map.getCenter());
+      if (this.search.applyFilters) {
+        this.search.applyFilters = false;
+        this.search.update();
       }
       this.currentResults = this.search.execute(value);
       this.searchExec = true;

@@ -13,49 +13,49 @@ export class Search {
   }
 
   reset() {
-    this.isFiltered = false;
     this.text = null;
-    this.dataset = this.db.query(System).all();
+    this.filter = null;
+    this.applyFilters = true;
+    this.dataset = [];
     this.results = {
       locations: [],
       systems: []
     };
   }
 
-  sort(center) {
-    this.dataset = this.dataset.sort((a, b) => {
-      let distanceA = center.distanceTo(L.latLng(a.lat, a.lng));
-      let distanceB = center.distanceTo(L.latLng(b.lat, b.lng));
-      return distanceA - distanceB;
-    });
-    if (this.isFiltered) {
+  update(searchText=null) {
+    let lookups = new Map();
+
+    this.query = this.db.query(System);
+
+    if (this.applyFilters && this.filter) {
+      this.query.filterBy(this.filter.property, this.filter.value);
+    }
+
+    this.dataset = [];
+
+    for (let system of this.query.all()) {
+      let building = system.building;
+      let organisation = system.organisation;
+      let lookupId = `${building.id}-${organisation.id}`;
+      if (!lookups.has(lookupId)) {
+        lookups.set(lookupId, system);
+        this.dataset.push(system);
+      }
+    }
+    if (this.applyFilters) {
       this.results = {
         locations: [],
         systems: []
       };
       this.results.systems = this.dataset.slice(0, 10);
-    } else if (this.text) {
-      this.results = this.execute(this.text);
-    }
-  }
-
-  filter(systems) {
-    let lookup = new Map();
-    this.isFiltered = true;
-    this.dataset = [];
-    for (let system of systems) {
-      let building = system.building;
-      let organisation = system.organisation;
-      let lookupId = `${building.id}-${organisation.id}`;
-      if (!lookup.has(lookupId)) {
-        lookup.set(lookupId, system);
-        this.dataset.push(system);
-      }
+    } else if (searchText) {
+      this.text = searchText;
+      this.results = this.execute(searchText);
     }
   }
 
   execute(text, count=10) {
-    console.log("Exec search");
     let results = {
       locations: [],
       systems: []
@@ -80,27 +80,22 @@ export class Search {
       }
     }
 
-    let lookup = new Map();
     for (let system of this.dataset) {
+      let matches = 0;
       let building = system.building;
       let organisation = system.organisation;
-      let lookupId = `${building.id}-${organisation.id}`;
-      if (!lookup.has(lookupId)) {
-        let matches = 0;
-        let searchString = `${building.name} ${building.strasse_nr} ${building.ort} ${building.plz} ${building.canton.kantonkuerzel} ${organisation.name} ${system.roomtype.typ}`;
-        searchString = searchString.toLowerCase();
-        for (let i = 0; i < text.length; i++) {
-          let word = text[i];
-          if (searchString.indexOf(word) > -1) {
-            matches++;
-          }
-        }
-        if (matches === text.length) {
-          lookup.set(lookupId, system);
-          results.systems.push(system);
+      let searchString = `${building.name} ${building.strasse_nr} ${building.ort} ${building.plz} ${building.canton.kantonkuerzel} ${organisation.name} ${system.roomtype.typ}`;
+      searchString = searchString.toLowerCase();
+      for (let i = 0; i < text.length; i++) {
+        let word = text[i];
+        if (searchString.indexOf(word) > -1) {
+          matches++;
         }
       }
-      if (lookup.size === count) {
+      if (matches === text.length) {
+        results.systems.push(system);
+      }
+      if (results.systems.length === count) {
         break;
       }
     }
