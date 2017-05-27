@@ -36,17 +36,8 @@ export class Info {
       return `${this.config.baseUrl}/admin/images/image_front/${url}`;
     }
   }
-
-  getTechImageUrl() {
-    return `resources/symbols/${this.data.technology.technologie}.png`;
-  }
-
-  getTechName() {
-    return this.data.technology.technologie;
-  }
-
   getRatingImageUrl() {
-    let name = 'resources/symbols/';
+    let name = `${this.config.baseUrl}/symbols/`;
     switch (this.data.bewertung) {
       case 1:
         name += 'r32_green.png';

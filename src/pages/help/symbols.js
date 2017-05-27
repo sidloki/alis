@@ -1,12 +1,14 @@
 import {inject} from 'aurelia-framework';
 import {Database} from '../../services/db';
+import {Config} from '../../services/config';
 import {Technology} from '../../models/technology'
 
-@inject(Database)
+@inject(Database, Config)
 export class Symbols {
 
-  constructor(db) {
+  constructor(db, config) {
     this.db = db;
+    this.config = config;
   }
 
   activate(params, routeConfig) {
@@ -27,9 +29,8 @@ export class Symbols {
     }];
   }
 
-
   getRatingImageUrl(value) {
-    let name = 'resources/symbols/';
+    let name = `${this.config.baseUrl}/symbols/`;
     switch (value) {
       case 1:
         name += 'r32_green.png';

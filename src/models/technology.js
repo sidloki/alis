@@ -1,3 +1,6 @@
+import {Container} from 'aurelia-framework';
+import {Config} from 'alis/services/config';
+
 // TODO: store this data in the backend database
 const Data = {
   1: {
@@ -16,6 +19,7 @@ export class Technology {
   constructor(data) {
     Object.assign(this, data);
     Object.assign(this, Data[this.id]);
+    this.config = Container.instance.get(Config);
   }
 
   static get tablename() {
@@ -30,7 +34,7 @@ export class Technology {
     return this.technologie;
   }
 
-  get image() {
-    return `resources/symbols/${this.title}.png`;
+  get imageUrl() {
+    return `${this.config.baseUrl}/symbols/${this.title}.png`;
   }
 }
