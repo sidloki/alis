@@ -24,33 +24,34 @@ export class Search {
   }
 
   update(searchText=null) {
-    let lookups = new Map();
-
     this.query = this.db.query(System);
 
     if (this.applyFilters && this.filter) {
       this.query.filterBy(this.filter.property, this.filter.value);
     }
 
-    this.dataset = [];
+    this.dataset = this.query.all();
 
-    for (let system of this.query.all()) {
-      let building = system.building;
-      let organisation = system.organisation;
-      let lookupId = `${building.id}-${organisation.id}`;
-      if (!lookups.has(lookupId)) {
-        lookups.set(lookupId, system);
-        this.dataset.push(system);
-      }
-    }
     if (this.applyFilters) {
+      let lookups = new Map();
       this.results = {
         locations: [],
         systems: []
       };
-      this.results.systems = this.dataset.slice(0, 10);
+
+      for (let system of this.dataset) {
+        let building = system.building;
+        let organisation = system.organisation;
+        let lookupId = `${building.id}-${organisation.id}`;
+        if (!lookups.has(lookupId)) {
+          lookups.set(lookupId, system);
+          this.results.systems.push(system);
+        }
+        if (this.results.systems.length === 20) {
+          break;
+        }
+      }
     } else if (searchText) {
-      this.text = searchText;
       this.results = this.execute(searchText);
     }
   }
@@ -80,20 +81,25 @@ export class Search {
       }
     }
 
+    let lookups = new Map();
     for (let system of this.dataset) {
-      let matches = 0;
       let building = system.building;
       let organisation = system.organisation;
-      let searchString = `${building.name} ${building.strasse_nr} ${building.ort} ${building.plz} ${building.canton.kantonkuerzel} ${organisation.name} ${system.roomtype.typ}`;
-      searchString = searchString.toLowerCase();
-      for (let i = 0; i < text.length; i++) {
-        let word = text[i];
-        if (searchString.indexOf(word) > -1) {
-          matches++;
+      let lookupId = `${building.id}-${organisation.id}`;
+      if (!lookups.has(lookupId)) {
+        let matches = 0;
+        let searchString = `${building.name} ${building.strasse_nr} ${building.ort} ${building.plz} ${building.canton.kantonkuerzel} ${organisation.name} ${system.roomtype.typ}`;
+        searchString = searchString.toLowerCase();
+        for (let i = 0; i < text.length; i++) {
+          let word = text[i];
+          if (searchString.indexOf(word) > -1) {
+            matches++;
+          }
         }
-      }
-      if (matches === text.length) {
-        results.systems.push(system);
+        if (matches === text.length) {
+          lookups.set(lookupId, system);
+          results.systems.push(system);
+        }
       }
       if (results.systems.length === count) {
         break;
