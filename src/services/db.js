@@ -135,6 +135,19 @@ export class Database {
   query(model) {
     return new Query(this, model, this.getIndex(model));
   }
+
+  sortByDistance(point) {
+    let index = this.getIndex(System);
+    let records = Array.from(index.values()).sort((a, b) => {
+      let distanceA = point.distanceTo(L.latLng(a.lat, a.lng));
+      let distanceB = point.distanceTo(L.latLng(b.lat, b.lng));
+      return distanceA - distanceB;
+    });
+    index.clear();
+    for (let record of records) {
+      index.set(record.id, record);
+    }
+  }
 }
 
 export class Query {
