@@ -12,6 +12,7 @@ const list = [
   'systemjs.config.js',
   'node_modules/systemjs/dist/system.js',
   'node_modules/es6-promise/dist/es6-promise.auto.min.js',
+  'node_modules/core-js/client/core.min.js',
   'node_modules/onsenui/css/onsenui.css',
   'node_modules/onsenui/css/onsen-css-components.min.css',
   'node_modules/onsenui/css/font_awesome/css/font-awesome.min.css',
