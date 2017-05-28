@@ -268,7 +268,7 @@ export class Home {
   }
 
   onSearchInput() {
-    let value = this.searchText;
+    let value = this._searchinput.value;
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
