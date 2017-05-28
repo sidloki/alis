@@ -7,12 +7,14 @@ SystemJS.config({
     "aurelia-fetch-client": "node_modules/aurelia-fetch-client/dist/commonjs",
     "aurelia-framework": "node_modules/aurelia-framework/dist/commonjs",
     "aurelia-onsenui": "node_modules/aurelia-onsenui/dist/commonjs",
+    "core-js": "node_modules/core-js",
     "es6-promise": "node_modules/es6-promise/lib",
     "leaflet": "node_modules/leaflet/dist",
     "leaflet-geometryutil": "node_modules/leaflet-geometryutil/src",
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
+    "resize-observer-polyfill": "node_modules/resize-observer-polyfill/dist",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
     "whatwg-fetch": "node_modules/whatwg-fetch",
@@ -55,6 +57,9 @@ SystemJS.config({
     "node_modules/aurelia-onsenui/dist/commonjs": {
       "main": "aurelia-onsenui.js"
     },
+    "node_modules/core-js": {
+      "main": "index.js"
+    },
     "node_modules/es6-promise/lib": {
       "main": "dist/es6-promise.js"
     },
@@ -72,6 +77,10 @@ SystemJS.config({
     },
     "node_modules/leaflet.markercluster/dist": {
       "main": "leaflet.markercluster.js"
+    },
+    "node_modules/resize-observer-polyfill/dist": {
+      "main": "ResizeObserver.es.js",
+      "format": "esm"
     },
     "node_modules/systemjs-plugin-css": {
       "main": "css"
