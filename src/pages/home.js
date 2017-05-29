@@ -316,7 +316,9 @@ export class Home {
   resizeMap() {
     if (this.selection) {
       this.map.once('moveend', () => {
+        let marker = this.overlays.get('marker');
         this.panToSelection({animate: true});
+        marker._bringToFront();
       });
     }
     this.map.invalidateSize({pan: false});
