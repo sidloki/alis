@@ -1,5 +1,5 @@
 import {Container} from 'aurelia-framework';
-import {Config} from 'alis/services/config';
+import {Config} from '../services/config';
 
 // TODO: store this data in the backend database
 const Data = {
