@@ -2,6 +2,7 @@ import ons from 'onsenui';
 import ResizeObserver from 'resize-observer-polyfill';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
+import {Config} from '../services/config';
 import {Database} from '../services/db';
 import {Search} from '../services/search';
 import {Storage} from '../services/storage';
@@ -10,29 +11,27 @@ import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Organisation} from '../models/organisation';
 
-@inject(Router, Database, Storage, Search)
+@inject(Router, Database, Storage, Search, Config)
 export class Home {
   searchText;
   searchResults;
   isSearching = false;
   categories;
 
-  constructor(router, db, storage, search) {
+  constructor(router, db, storage, search, config) {
     this.router = router;
     this.db = db;
     this.storage = storage;
     this.search = search;
+    this.config = config;
 
     // init basemaps
     this.basemaps = new Map();
-    this.basemaps.set('roadmap', L.gridLayer.googleMutant({
-      type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      styles: [{
-        featureType: "poi",
-        elementType: "labels.icon",
-        stylers: [{ visibility: "off" }]
-      }]
-    }));
+    for (let basemap of this.config.basemaps) {
+      if (basemap.type === 'google') {
+        this.basemaps.set(basemap.id, L.gridLayer.googleMutant(basemap.config));
+      }
+    }
 
     // init map overlays
     this.overlays = new Map();
@@ -63,7 +62,7 @@ export class Home {
 
   attached() {
     let mapSizeObserver = new ResizeObserver(this.resizeMap.bind(this));
-    let basemapLayer = this.basemaps.get('roadmap');
+    let basemapLayer = this.basemaps.get(this.config.map.basemap);
     let buildingsLayer = this.overlays.get('buildings');
     let markerLayer = this.overlays.get('marker');
     let locateControl = this.controls.get('locate');
@@ -84,7 +83,7 @@ export class Home {
     if (mapbounds) {
       this.map.fitBounds(mapbounds);
     } else {
-      this.map.setView([46.801111, 8.226667], 7);
+      this.map.setView(this.config.map.center, this.config.map.zoom);
     }
 
     if (geolocation) {
