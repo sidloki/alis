@@ -1,0 +1,14 @@
+dist: trusty
+sudo: false
+language: node_js
+node_js:
+  - "4"
+  - "6"
+script:
+  - yarn lint
+  - yarn test-coverage
+  - yarn build
+after_success:
+  - codecov
+cache:
+  yarn: true
