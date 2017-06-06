@@ -11,4 +11,8 @@ export class Canton {
   get id() {
     return this.kantonID;
   }
+
+  get name() {
+    return this.kantonkuerzel;
+  }
 }

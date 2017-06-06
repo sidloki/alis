@@ -65,6 +65,10 @@ export class RoomType {
     return this.typ;
   }
 
+  get description() {
+    return this.beschreibung;
+  }
+
   get icon() {
     return Icons[this.id];;
   }
