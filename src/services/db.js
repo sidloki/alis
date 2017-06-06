@@ -21,21 +21,7 @@ export class Database {
       config
         .useStandardConfiguration()
         .withBaseUrl(`${this.config.baseUrl}/query.php?`)
-        .withDefaults({
-          headers: {
-            // 'X-Requested-With': 'Fetch'
-          }
-        })
-        .withInterceptor({
-          request(request) {
-            console.log(`Requesting ${request.method} ${request.url}`);
-            return request;
-          },
-          response(response) {
-            console.log(`Received ${response.status} ${response.url}`);
-            return response;
-          }
-        });
+        .withDefaults();
     });
   }
 

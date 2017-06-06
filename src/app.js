@@ -11,7 +11,7 @@ export class App {
   activate() {
     return this.db.load()
       .then(() => {
-        // console.log("Data loaded");
+        // data loaded
       }).catch(() => {
         return;
     });
