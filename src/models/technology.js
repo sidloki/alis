@@ -12,7 +12,7 @@ const Data = {
   3: {
     description: 'Empfang über Funk (mit Empfangsgerät und Halsschlaufe induktiv).'
   }
-}
+};
 
 export class Technology {
 

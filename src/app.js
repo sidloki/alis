@@ -14,7 +14,7 @@ export class App {
         // data loaded
       }).catch(() => {
         return;
-    });
+      });
   }
 
   configureRouter(config, router) {

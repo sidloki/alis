@@ -1,7 +1,7 @@
 import ons from 'onsenui';
 import ResizeObserver from 'resize-observer-polyfill';
 import {Router} from 'aurelia-router';
-import {inject, bindable} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
 import {Config} from '../services/config';
 import {Database} from '../services/db';
 import {Search} from '../services/search';
@@ -9,7 +9,6 @@ import {Storage} from '../services/storage';
 import {Building} from '../models/building';
 import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
-import {Organisation} from '../models/organisation';
 
 @inject(Router, Database, Storage, Search, Config)
 export class Home {
@@ -160,7 +159,7 @@ export class Home {
 
   get buildings() {
     let layer = this.overlays.get('buildings');
-    return layer.getLayers().map(layer => layer.data);
+    return layer.getLayers().map(l => l.data);
   }
 
   updateMapView(evt) {
@@ -339,7 +338,7 @@ export class Home {
     if (icon) {
       html = `<div style="background-color:${icon.color}"><span class="ons-icon ${icon.prefix} ${icon.prefix}-${icon.name}"></span></div>`;
     } else {
-      html = `<div>${building.systems.length}</div>`
+      html = `<div>${building.systems.length}</div>`;
     }
 
     return L.marker([building.lat, building.lng], {
@@ -352,10 +351,10 @@ export class Home {
   }
 
   createClusterIcon(cluster) {
-    var childCount = cluster.getChildCount();
+    let childCount = cluster.getChildCount();
 
-    var c = ' marker-cluster-';
-    var size = 22;
+    let c = ' marker-cluster-';
+    let size = 22;
     if (childCount < 10) {
       c += 'small';
     } else if (childCount < 100) {
@@ -380,8 +379,7 @@ export class Home {
       return 50;
     } else if (zoom < 17) {
       return 30;
-    } else {
-      return 20;
     }
+    return 20;
   }
 }

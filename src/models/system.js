@@ -52,9 +52,8 @@ export class System {
     let url = this.foto_dateiname;
     if (!url || url === 'transp.png') {
       return null;
-    } else {
-      return `${this.config.baseUrl}/admin/images/image_front/${url}`;
     }
+    return `${this.config.baseUrl}/admin/images/image_front/${url}`;
   }
 
   get roomPlans() {

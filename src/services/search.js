@@ -2,7 +2,6 @@ import {inject} from 'aurelia-framework';
 import {Database} from './db';
 import {Location} from '../models/location';
 import {System} from '../models/system';
-import {Building} from '../models/building';
 
 @inject(Database)
 export class Search {
@@ -23,7 +22,7 @@ export class Search {
     };
   }
 
-  update(searchText=null) {
+  update(searchText = null) {
     this.query = this.db.query(System);
 
     if (this.applyFilters && this.filter) {
@@ -56,11 +55,11 @@ export class Search {
     }
   }
 
-  execute(text, count=10) {
+  execute(text, count = 10) {
     let results = {
       locations: [],
       systems: []
-    }
+    };
 
     text = text.trim().toLowerCase().split(' ').filter(word => word !== '');
 

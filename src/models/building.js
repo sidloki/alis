@@ -17,9 +17,8 @@ export class Building {
     let roomtypes = this.roomtypes;
     if (roomtypes.length === 1) {
       return roomtypes[0].icon;
-    } else {
-      return null;
     }
+    return null;
   }
 
   get roomtypes() {

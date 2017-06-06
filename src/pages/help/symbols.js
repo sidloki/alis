@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {Database} from '../../services/db';
 import {Config} from '../../services/config';
-import {Technology} from '../../models/technology'
+import {Technology} from '../../models/technology';
 
 @inject(Database, Config)
 export class Symbols {

@@ -8,9 +8,9 @@ export class Config {
     config: {
       type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
       styles: [{
-        featureType: "poi",
-        elementType: "labels.icon",
-        stylers: [{ visibility: "off" }]
+        featureType: 'poi',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
       }]
     }
   }];

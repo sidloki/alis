@@ -6,14 +6,15 @@ import {System} from '../../models/system';
 
 @inject(Router, Database, Config)
 export class Info {
-  constructor (router, db, config) {
+
+  constructor(router, db, config) {
     this.router = router;
     this.db = db;
     this.config = config;
   }
 
   activate(params) {
-    this.data = this.db.query(System).getById(parseInt(params.id));
+    this.data = this.db.query(System).getById(parseInt(params.id, 10));
   }
 
   openWebsite() {

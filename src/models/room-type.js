@@ -70,6 +70,6 @@ export class RoomType {
   }
 
   get icon() {
-    return Icons[this.id];;
+    return Icons[this.id];
   }
 }

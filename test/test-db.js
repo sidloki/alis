@@ -1,15 +1,13 @@
 import 'isomorphic-fetch';
 import fetchMock from 'fetch-mock';
-import { assert } from "chai";
-import { stub } from "sinon";
+import { assert } from 'chai';
+// import { stub } from 'sinon';
 
 import {Config} from '../src/services/config';
 import {Database} from '../src/services/db';
 import {System} from '../src/models/system';
 
-
-describe("#database", () => {
-
+describe('#database', () => {
   let db;
   let config = new Config();
 
@@ -25,7 +23,7 @@ describe("#database", () => {
     fetchMock.restore();
   });
 
-  it("load data should create data index", (done) => {
+  it('load data should create data index', (done) => {
     db.load().then(() => {
       assert(db.getIndex(System));
       done();

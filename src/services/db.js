@@ -1,7 +1,7 @@
 import {HttpClient} from 'aurelia-fetch-client';
 import {inject} from 'aurelia-framework';
 import {Config} from './config';
-import {Building,} from '../models/building';
+import {Building} from '../models/building';
 import {Canton} from '../models/canton';
 import {Location} from '../models/location';
 import {Organisation} from '../models/organisation';
@@ -17,8 +17,8 @@ export class Database {
     this.config = config;
     this.reset();
     this.http = new HttpClient();
-    this.http.configure(config => {
-      config
+    this.http.configure(cfg => {
+      cfg
         .useStandardConfiguration()
         .withBaseUrl(`${this.config.baseUrl}/query.php?`)
         .withDefaults();
@@ -32,19 +32,19 @@ export class Database {
   load() {
     let models = [Canton, RoomType, System, Technology];
     this.reset();
-    return Promise.all(models.map(model => {
-      let tablename = model.tablename;
+    return Promise.all(models.map(Model => {
+      let tablename = Model.tablename;
       return this.http
         .fetch(`table=${tablename}`)
         .then(response => response.json())
         .then(data => {
-          let index = this.createIndex(model);
+          let index = this.createIndex(Model);
           data.results.forEach((item) => {
-            index.set(item[data.id], new model(item));
+            index.set(item[data.id], new Model(item));
           });
         })
         .catch(error => {
-          console.error(error);
+          this.createIndex(Model);
         });
     })).then(() => {
       this.process();
@@ -69,7 +69,7 @@ export class Database {
     let organisations = this.createIndex(Organisation);
     let locations = this.createIndex(Location);
 
-    for (let [id, system] of systems.entries()) {
+    for (let [, system] of systems.entries()) {
       system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
       system.organisationId = `${system.organisation}`;
       system.locationId = system.ort.trim();

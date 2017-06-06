@@ -38,7 +38,7 @@ export class Sponsors {
       title: 'Katholische Kirche Region Bern',
       link: 'http://www.kathbern.ch/',
       logo: `${this.config.baseUrl}/pictures/logo_kathbe.png`
-    }]
+    }];
   }
 
   openWebsite(item) {

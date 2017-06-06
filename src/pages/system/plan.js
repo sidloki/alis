@@ -13,15 +13,14 @@ export class Plan {
   }
 
   activate(params) {
-    let promises = [];
-    this.data = this.db.query(System).getById(parseInt(params.id));
+    this.data = this.db.query(System).getById(parseInt(params.id, 10));
     this.plans = this.data.roomPlans;
     return Promise.all(this.plans.map((plan) => {
       return new Promise((resolve, reject) => {
         let img = new Image();
         img.onload = () => {
           let scale = 256 / img.width;
-          plan.layer = L.imageOverlay(plan.url, [[0,0], [img.height*scale, img.width*scale]]);
+          plan.layer = L.imageOverlay(plan.url, [[0, 0], [img.height * scale, img.width * scale]]);
           resolve();
         };
         img.src = plan.url;
@@ -49,7 +48,7 @@ export class Plan {
       let plan = this.getPlan(newValue);
       this.map.addLayer(plan.layer);
       this.map.fitBounds(plan.layer.getBounds());
-      this.map.setMaxBounds(plan.layer.getBounds())
+      this.map.setMaxBounds(plan.layer.getBounds());
     }
   }
 
