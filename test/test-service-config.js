@@ -11,6 +11,14 @@ describe('#config', () => {
   });
 
   it('should have base url defined', () => {
-    assert(config.baseUrl);
+    assert.isDefined(config.baseUrl);
+  });
+
+  it('should have map defined', () => {
+    assert.isDefined(config.map);
+  });
+
+  it('should have basemaps defined', () => {
+    assert.isDefined(config.basemaps);
   });
 });
