@@ -19,22 +19,12 @@ import 'aurelia-templating-router';
 import 'aurelia-onsenui';
 import 'whatwg-fetch';
 
-import environment from './environment';
-
 export function configure(aurelia) {
   aurelia.use
     .basicConfiguration()
     .history()
     .plugin('aurelia-onsenui')
-    .feature('alis/resources');
-
-  if (environment.debug) {
-    aurelia.use.developmentLogging();
-  }
-
-  if (environment.testing) {
-    aurelia.use.plugin('aurelia-testing');
-  }
+    .developmentLogging();
 
   aurelia.start().then(() => aurelia.setRoot());
 }
