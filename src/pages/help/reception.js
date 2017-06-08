@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {Config} from 'alis/services/config';
+import {Config} from '../../services/config';
 
 @inject(Config)
 export class Reception {
