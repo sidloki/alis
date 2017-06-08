@@ -31,6 +31,11 @@ const list = [
   'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
   'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
   'node_modules/leaflet-geometryutil/src/leaflet.geometryutil.js',
+  'node_modules/mapkeyicons/dist/MapkeyIcons.css',
+  'node_modules/mapkeyicons/dist/MapkeyIcons.eot',
+  'node_modules/mapkeyicons/dist/MapkeyIcons.svg',
+  'node_modules/mapkeyicons/dist/MapkeyIcons.ttf',
+  'node_modules/mapkeyicons/dist/MapkeyIcons.woff',
   'resources/'
 ]
 

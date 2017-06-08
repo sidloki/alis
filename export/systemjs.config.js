@@ -14,6 +14,7 @@ SystemJS.config({
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
     "leaflet.markercluster": "node_modules/leaflet.markercluster/dist",
+    "mapkeyicons": "node_modules/mapkeyicons/dist",
     "resize-observer-polyfill": "node_modules/resize-observer-polyfill/dist",
     "css": "node_modules/systemjs-plugin-css",
     "text": "node_modules/systemjs-plugin-text",
@@ -78,6 +79,7 @@ SystemJS.config({
     "node_modules/leaflet.markercluster/dist": {
       "main": "leaflet.markercluster.js"
     },
+    "node_modules/mapkeyicons/dist": {},
     "node_modules/resize-observer-polyfill/dist": {
       "main": "ResizeObserver.es.js",
       "format": "esm"

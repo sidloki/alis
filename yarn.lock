@@ -2765,6 +2765,10 @@ magic-string@^0.14.0:
   dependencies:
     vlq "^0.2.1"
 
+"mapkeyicons@https://github.com/sidloki/mapkeyicons":
+  version "1.2.0"
+  resolved "https://github.com/sidloki/mapkeyicons#5f6606b0271fdfbd736e14e4e2dab93269cafaf0"
+
 micromatch@2.3.11, micromatch@^2.1.5:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
