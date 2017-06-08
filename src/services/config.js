@@ -1,6 +1,6 @@
 export class Config {
 
-  baseUrl = '//www.zeta.hoeranlagenverzeichnis.ch';
+  baseUrl = 'https://www.zeta.hoeranlagenverzeichnis.ch';
 
   basemaps = [{
     type: 'google',
