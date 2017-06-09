@@ -35,6 +35,26 @@ You can make changes in the code found under `src` and the browser should auto-r
 
 > The app uses [BrowserSync](http://www.browsersync.io/) for automated page refreshes on code changes concurrently across multiple browsers. If you prefer to disable the mirroring feature set the [ghostMode option](http://www.browsersync.io/docs/options/#option-ghostMode) to `false`.
 
+## Running the test
+
+Scripts are created to run the unit test, either wiht or without showing and creating a coverage report:
+
+```bash
+yarn test
+```
+or
+
+```bash
+yarn test-coverage
+```
+
+For a static code analysis [ESLint)[http://eslint.org/) is used:
+
+```bash
+yarn lint
+```
+
+
 ## Export a production version
 
 There's a script to export all the required files to a separate folder `export`:
