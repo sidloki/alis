@@ -48,7 +48,7 @@ or
 yarn test-coverage
 ```
 
-For a static code analysis [ESLint](http://eslint.org/) is used:
+For a static code analysis [ESLint](http://eslint.org/) is prepared. To run the analysis execute the follwoing command:
 
 ```bash
 yarn lint
