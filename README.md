@@ -1,4 +1,4 @@
-# ALis
+# ALiS
 
 [![Build Status][travis-image]][travis-url]
 [![Code Coverage][codecov-image]][codecov-url]
