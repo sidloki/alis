@@ -9,7 +9,7 @@ A mobile application to find locations with assistive listening systems.
 
 To run and develop the application [Node.js](https://nodejs.org/en/) (>=6) and [Yarn](https://yarnpkg.com) are required. The install instructions can be found on their websites.
 
-From the project folder, execute the following command to install the dependencies:
+To install the projcet dependencies, execute the following command from the project folder:
 
 ```bash
 yarn install
@@ -17,7 +17,7 @@ yarn install
 
 ## Running the app
 
-To run the application, execute the following command:
+To run the app, execute the following command:
 
 ```bash
 yarn serve
@@ -37,15 +37,17 @@ You can make changes in the code found under `src` and the browser should auto-r
 
 ## Export a production version
 
-There's a script to export all the required files to separate folder:
+There's a script to export all the required files to a separate folder `export`:
 
 ```bash
 yarn export
 ```
 
-The exported files can be used on a webserver or to create a hybrid application on your own machine or with the [Phonegap Build Service](https://build.phonegap.com/).
+The exported files can be used on a webserver or to create a hybrid application on your own machine useing [Cordova](https://cordova.apache.org/) or with the [Phonegap Build Service](https://build.phonegap.com/).
 
 > To use the Phonegap Build Service you have to delete the `index.html` in the root folder, rename the `export` directory to `www` and commit the changes. To do this, a branch `phonegap` exists.
+
+> To create the hybrid App on your own system, renaming the `export` folder to `www` is sufficient and you don't have to commit the changes.
 
 
 
