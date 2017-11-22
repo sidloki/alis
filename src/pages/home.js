@@ -1,34 +1,38 @@
-import ons from 'onsenui';
 import ResizeObserver from 'resize-observer-polyfill';
 import {Router} from 'aurelia-router';
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
 import {Config} from '../services/config';
 import {Database} from '../services/db';
+import {State} from '../services/state';
 import {Search} from '../services/search';
 import {Storage} from '../services/storage';
 import {Building} from '../models/building';
 import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 
-@inject(Router, Database, Storage, Search, Config)
+@inject(Router, Database, Storage, Search, Config, State)
 export class Home {
   searchText;
   searchResults;
   isSearching = false;
   categories;
+  
+  @bindable()
+  state;
 
-  constructor(router, db, storage, search, config) {
+  constructor(router, db, storage, search, config, state) {
     this.router = router;
     this.db = db;
     this.storage = storage;
     this.search = search;
     this.config = config;
+    this.state = state;
 
     // init basemaps
-    this.basemaps = new Map();
+    this.baseLayers = new Map();
     for (let basemap of this.config.basemaps) {
       if (basemap.type === 'google') {
-        this.basemaps.set(basemap.id, L.gridLayer.googleMutant(basemap.config));
+        this.baseLayers.set(basemap.id, L.gridLayer.googleMutant(basemap.config));
       }
     }
 
@@ -61,21 +65,17 @@ export class Home {
 
   attached() {
     let mapSizeObserver = new ResizeObserver(this.resizeMap.bind(this));
-    let basemapLayer = this.basemaps.get(this.config.map.basemap);
     let buildingsLayer = this.overlays.get('buildings');
     let markerLayer = this.overlays.get('marker');
     let locateControl = this.controls.get('locate');
     let mapbounds = this.storage.getItem('mapbounds');
     let geolocation = this.storage.getItem('geolocation');
 
-    if (ons.platform.isAndroid()) {
-      this._map.classList.add('map--material');
-    }
     this.map = L.map(this._map, {
       attributionControl: false
     });
 
-    this.map.addLayer(basemapLayer);
+    this.map.addLayer(this.baseLayers.get(this.state.baseLayerId));
     this.map.addLayer(buildingsLayer);
     this.map.addControl(locateControl);
 

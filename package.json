@@ -24,6 +24,7 @@
     "core-js": "^2.4.1",
     "es6-promise": "^4.1.0",
     "leaflet": "^1.0.3",
+    "leaflet-easybutton": "^2.2.4",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet.gridlayer.googlemutant": "^0.6.1",
     "leaflet.locatecontrol": "^0.60.0",

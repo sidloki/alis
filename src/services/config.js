@@ -5,6 +5,7 @@ export class Config {
   basemaps = [{
     type: 'google',
     id: 'roadmap',
+    title: 'Standard',
     config: {
       type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
       styles: [{
@@ -12,6 +13,13 @@ export class Config {
         elementType: 'labels.icon',
         stylers: [{ visibility: 'off' }]
       }]
+    }
+  }, {
+    type: 'google',
+    id: 'satellite',
+    title: 'Satellit',
+    config: {
+      type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
     }
   }];
 

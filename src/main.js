@@ -19,12 +19,17 @@ import 'aurelia-templating-router';
 import 'aurelia-onsenui';
 import 'whatwg-fetch';
 
+import {PLATFORM} from 'aurelia-pal';
+
 export function configure(aurelia) {
   aurelia.use
     .basicConfiguration()
     .history()
     .plugin('aurelia-onsenui')
-    .developmentLogging();
+    .developmentLogging()
+    .globalResources([
+      PLATFORM.moduleName('src/components/leaflet-layer-control')
+    ]);
 
   aurelia.start().then(() => aurelia.setRoot());
 }

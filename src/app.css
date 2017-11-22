@@ -92,3 +92,10 @@ ons-select.no-underbar select.select-input--material {
   background-image: none;
   padding: 0;
 }
+/*
+  Map
+*/
+.leaflet-control .zmdi {
+  font-size: 1.4em;
+  line-height: inherit;
+}

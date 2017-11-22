@@ -64,6 +64,7 @@
     </div>
     <div style="display:flex;flex-direction:column;height:100%;">
       <div ref="_map" style="flex:1;width:100%;"></div>
+      <leaflet-layer-control map.bind="map"></leaflet-layer-control>
       <div show.bind="selection" style="position:relative;max-height:60%;height:auto;z-index:10000;display:flex;">
         <ons-button style="position:fixed;right:0;left:auto;margin-top:-16px;z-index:10000;" modifier="quiet">
           <ons-icon icon="ion-record,material:md-circle" size="2x" style="color:#fff;"></ons-icon>

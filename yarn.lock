@@ -2634,6 +2634,12 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-easybutton@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/leaflet-easybutton/-/leaflet-easybutton-2.2.4.tgz#7301cc7d4bdcb55aa396c2697c056612950ab060"
+  dependencies:
+    leaflet "^1.0.1"
+
 leaflet-geometryutil@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/leaflet-geometryutil/-/leaflet-geometryutil-0.8.0.tgz#c09c0fc37628f402846ad5723c80ef95b3d2057c"
@@ -2655,6 +2661,10 @@ leaflet.markercluster@^1.0.4:
 leaflet@>=0.7.0, leaflet@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
+
+leaflet@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.2.0.tgz#fd5d93d9cb00091f5f8a69206d0d6744c1c82697"
 
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"

@@ -1,0 +1,22 @@
+<template>
+  <require from="./leaflet-layer-control.css"></require>
+
+  <ons-popover ref="layerControlEl" direction="down" cover-target cancelable modifier="material">
+    <ons-list>
+      <ons-list-header style="display:flex;flex-direction:row;align-items:center;padding-right:0;">
+        <span style="flex:1;">Kartentyp</span>
+        <ons-button modifier="quiet" click.delegate="hideLayerControl()" style="color:inherit;">
+          <ons-icon icon="md-close" fixed-width="true"></ons-icon>
+        </ons-button>
+      </ons-list-header>
+      <ons-list-item repeat.for="baseLayer of config.basemaps" click.delegate="changeBaseLayer(baseLayer.id)" tappable>
+        <div class="center">
+          ${baseLayer.title}
+        </div>
+        <div class="right">
+          <ons-icon icon="fa-check" if.bind="baseLayer.id === state.baseLayerId"></ons-icon>
+        </div>
+      </ons-list-item>
+    </ons-list>
+  </ons-popover>
+</template>
