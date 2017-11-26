@@ -10,6 +10,7 @@ SystemJS.config({
     "core-js": "node_modules/core-js",
     "es6-promise": "node_modules/es6-promise/lib",
     "leaflet": "node_modules/leaflet/dist",
+    "leaflet-easybutton": "node_modules/leaflet-easybutton/src",
     "leaflet-geometryutil": "node_modules/leaflet-geometryutil/src",
     "leaflet.gridlayer.googlemutant": "node_modules/leaflet.gridlayer.googlemutant",
     "leaflet.locatecontrol": "node_modules/leaflet.locatecontrol/src",
@@ -66,6 +67,12 @@ SystemJS.config({
     },
     "node_modules/leaflet/dist": {
       "main": "leaflet-src.js"
+    },
+    "node_modules/leaflet-easybutton/src": {
+      "main": "easy-button.js",
+      "map": {
+        "leaflet": "node_modules/leaflet-easybutton/node_modules/leaflet/dist"
+      }
     },
     "node_modules/leaflet-geometryutil/src": {
       "main": "leaflet.geometryutil.js"
@@ -158,6 +165,9 @@ SystemJS.config({
     },
     "node_modules/onsenui/js": {
       "main": "onsenui.js"
+    },
+    "node_modules/leaflet-easybutton/node_modules/leaflet/dist": {
+      "main": "leaflet-src.js"
     }
   }
 });
