@@ -1,4 +1,5 @@
 <template>
+  <require from="./info.css"></require>
   <ons-page>
     <ons-toolbar>
       <div class="left">
@@ -23,14 +24,6 @@
         </span>
         <span class="center">Website</span>
       </ons-list-item>
-      <ons-list-item tappable modifier="chevron" if.bind="data.roomPlans.length > 0" click.trigger="showRoomPlan()">
-        <span class="left" style="">
-          <ons-icon icon="ion-map" fixed-width="true"></ons-icon>
-        </span>
-        <span class="center">
-          Raumplan
-        </span>
-      </ons-list-item>
       <ons-list-header>
         Höranlage
       </ons-list-header>
@@ -52,6 +45,20 @@
       </ons-list-item>
       <ons-list-item if.bind="data.bemerkung">
         ${data.bemerkung}
+      </ons-list-item>
+      <ons-list-header>
+        Raumpläne
+      </ons-list-header>
+      <ons-list class="room-plan-list" if.bind="data.roomPlans.length > 0">
+        <ons-list-item modifier="nodivider" repeat.for="roomPlan of data.roomPlans"
+          tappable class="${$index%2 == 0 ? 'first' : 'last'}" click.delegate="showRoomPlan(roomPlan.id)">
+          <div class="center">
+            <div class="image" css="background-image: url(${roomPlan.url})"></div>
+          </div>
+        </ons-list-item>
+      </ons-list>
+      <ons-list-item if.bind="data.roomPlans.length == 0">
+        <div class="center">Keine Raumpläne verhanden</div>
       </ons-list-item>
     </ons-list>
   </ons-page>

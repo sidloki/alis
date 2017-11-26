@@ -25,8 +25,8 @@ export class Info {
     return this.data.plan1_dateiname !== 'transp.png' || this.data.plan2_dateiname !== 'transp.png' ? true : false;
   }
 
-  showRoomPlan() {
-    this.router.navigateToRoute('system-plan', {id: this.data.id});
+  showRoomPlan(id) {
+    this.router.navigateToRoute('system-plan', {id: this.data.id, plan: id});
   }
 
   getRatingImageUrl() {

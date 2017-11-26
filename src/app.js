@@ -78,7 +78,7 @@ export class App {
       moduleId: './pages/system/info',
       nav: false
     }, {
-      route: 'system/:id/plan',
+      route: 'system/:id/:plan',
       name: 'system-plan',
       moduleId: './pages/system/plan',
       nav: false

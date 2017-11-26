@@ -6,23 +6,6 @@
       </div>
       <div class="center">${data.name}</div>
     </ons-toolbar>
-    <ons-list if.bind="plans.length > 0" style="display:flex;flex-direction:column;height:100%;">
-      <ons-list-item modifier="longdivider" if.bind="plans.length === 1">
-        Raumplan
-      </ons-list-item>
-      <ons-list-item modifier="longdivider" if.bind="plans.length > 1">
-        <ons-select style="width:100%;" value.bind="plan" class="no-underbar">
-          <option repeat.for="plan of plans" value.bind="plan.value">${plan.text}</option>
-        </ons-select>
-      </ons-list-item>
-      <ons-list-item style="flex:1;padding:0 0 0 0;">
-        <div class="center" style="min-height:auto;padding:1px 0 0 0"><div ref="planmap" style="width:100%;height:100%;"></div></div>
-      </ons-list-item>
-    </ons-list>
-    <div if.bind="plans.length === 0" style="padding:0 12px;">
-      <p>
-        Für diesen Raum wurden keine Pläne gefunden.
-      </p>
-    </div>
+    <div ref="planmap" style="width:100%;height:100%;"></div>
   </ons-page>
 </template>

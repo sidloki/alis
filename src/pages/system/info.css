@@ -1,0 +1,42 @@
+.room-plan-list {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.room-plan-list ons-list-item {
+  width: 50vw;
+  height: 50vw;
+  padding: 14px 7px;
+}
+.room-plan-list ons-list-item.first {
+  padding-left: 14px;
+}
+.room-plan-list ons-list-item.last {
+  padding-right: 14px;
+}
+.room-plan-list.list--material ons-list-item {
+  width: 50vw;
+  height: 50vw;
+  padding: 16px 8px;
+}
+.room-plan-list.list--material ons-list-item.first {
+  padding-left: 16px;
+}
+.room-plan-list.list--material ons-list-item.last {
+  padding-right: 16px;
+}
+.room-plan-list ons-list-item .center {
+  margin: 0;
+  padding: 0;
+}
+
+.room-plan-list ons-list-item .image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+}
