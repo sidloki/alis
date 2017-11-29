@@ -1,0 +1,28 @@
+ons-popover.popover-address-list .popover__content {
+  height: 120px;
+}
+
+.image-upload {
+  margin-top: 8px;
+  width: 100%;
+}
+
+ons-button.upload-button {
+  border: 1px dashed #ccc;
+  background-color: #fdfdfd;
+  color: #333;
+  height: 140px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload .upload-preview {
+  height: 140px;
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('https://www.zeta.hoeranlagenverzeichnis.ch/admin/images/image_front/hv1401801213_259311001011_1.JPG');
+}

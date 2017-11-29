@@ -1,0 +1,118 @@
+<template>
+  <require from="./add.css"></require>
+
+  <ons-page class="page-text">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button></ons-back-button>
+      </div>
+      <div class="center">
+        ${title}
+      </div>
+      <div class="right">
+        <ons-toolbar-button click.delegate="commit()">
+          <ons-icon icon="md-mail-send"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <ons-list modifier="noborder">
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label for="name" class="input-label">Name*</label>
+          <ons-input type="text" input-id="name" value.bind="data.name" modifier="underbar" style="width:100%;"></ons-input>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label for="address" class="input-label">Adresse*</label>
+          <ons-input input-id="address" type="text" ref="addressInputRef" value.one-way="data.address" modifier="underbar" style="width:100%;"
+                     focus.trigger="showPositionPage()"></ons-input>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label for="category" class="input-label">Kategorie*</label>
+          <ons-select input-id="category" value.bind="data.roomtype" modifier="underbar" style="width:100%;">
+            <option repeat.for="roomtype of roomtypes" value.bind="roomtype.id">
+              ${roomtype.name}
+            </option>
+          </ons-select>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label for="technology" class="input-label">Technologie*</label>
+          <ons-select input-id="technology" value.bind="data.technology" modifier="underbar" style="width:100%;">
+            <option repeat.for="technology of technologies" value.bind="technology.id">
+              ${technology.title}
+            </option>
+          </ons-select>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label class="input-label">Foto</label>
+          <div class="image-upload">
+            <ons-button if.bind="!imageUrl" click.trigger="uploadImageClick()" modifier="quiet" class="upload-button">
+              <ons-icon icon="md-plus"></ons-icon>
+            </ons-button>
+            <div if.bind="imageUrl" class="upload-preview" css="background-image:url(${imageUrl});"></div>
+            <input type="file" ref="imageInputEl" show.bind="false" change.trigger="onImageChange()" />
+            <ons-button style="flex:1;" disabled.bind="!imageUrl" click.trigger="deleteImage()">Löschen</ons-button>
+          </div>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <label for="annotations" class="input-label">Bemerkung</label>
+          <textarea id="annotations" class="textarea" rows="3" style="width:100%;margin-top:8px;"></textarea>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+    </ons-list>
+  </ons-page>
+  <ons-page if.bind="positionPageVisible">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button></ons-back-button>
+      </div>
+      <div class="center">
+        Adresse
+      </div>
+      <div class="right">
+        <ons-toolbar-button disabled.bind="!positionHasAdress" click.trigger="onAcceptAddressClick()">
+          <ons-icon icon="md-check"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <ons-list style="display:flex;flex-direction:column;height:100%;">
+      <ons-list-item modifier="nodivider">
+        <div class="center">
+          <ons-input input-id="address" type="text" ref="addressInputRef" value.one-way="address" style="width:100%;"
+                     input.trigger="onAddressChange($event)" blur.trigger="onAddressBlur()" focus.trigger="onAddressFocus()" placeholder="Suchen oder auf Karte tippen..."></ons-input>
+        </div>
+        <div class="right"></div>
+      </ons-list-item>
+      <ons-list-item style="flex:1;padding:0 0 0 0;">
+        <div class="center" style="min-height:auto;padding:0 0 0 0">
+          <leaflet-map mapclick.trigger="onPositionMapClick($event)" overlays.bind="overlays"></leaflet-map>
+        </div>
+      </ons-list-item>
+    </ons-list>
+    <ons-popover ref="addressListEl" direction="down" modifier="material" class="popover-address-list" preshow.trigger="onPreAdressListShow()">
+      <ons-list modifier="noborder">
+        <ons-list-item modifier="nodivider" tappable repeat.for="item of addressList" click.delegate="onAddressListItemClick(item)">
+          <div class="center">
+            <div class="list-item__title">${item.street}</div>
+            <div class="list-item__subtitle">${item.location}</div>
+          </div>
+        </ons-list-item>
+      </ons-list>
+    </ons-popover>
+  </ons-page>
+</template>

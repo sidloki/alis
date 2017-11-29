@@ -1,0 +1,26 @@
+leaflet-map, leaflet-map .leaflet-map {
+  width: 100%;
+  height: 100%;
+}
+
+leaflet-map.leaflet-map-fixed .leaflet-map {
+  pointer-events: none;
+}
+
+leaflet-map.leaflet-map-fixed .leaflet-map img {
+  pointer-events: none;
+}
+
+leaflet-map .leaflet-layer-control {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+}
+
+leaflet-map .leaflet-button-plain {
+  background-color: #fff;
+  color: #333;
+}

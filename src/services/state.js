@@ -13,4 +13,8 @@ export class State {
 
     this.baseLayerId = this.config.map.basemap;
   }
+
+  get mapCenter() {
+    return L.latLngBounds(this.storage.getItem('mapbounds')).getCenter();
+  }
 }

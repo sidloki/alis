@@ -28,7 +28,8 @@ export function configure(aurelia) {
     .plugin('aurelia-onsenui')
     .developmentLogging()
     .globalResources([
-      PLATFORM.moduleName('src/components/leaflet-layer-control')
+      PLATFORM.moduleName('src/components/leaflet-layer-control'),
+      PLATFORM.moduleName('src/components/leaflet-map')
     ]);
 
   aurelia.start().then(() => aurelia.setRoot());

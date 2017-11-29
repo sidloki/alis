@@ -4,7 +4,7 @@ import {Config} from '../services/config';
 import {State} from '../services/state';
 
 @inject(Element, Config, State, Storage)
-export class LeafletLayerControl {
+export class LeafletLayerControlCustomElement {
 
   @bindable() map;
 
@@ -15,7 +15,7 @@ export class LeafletLayerControl {
 
     this.baseLayers = new Map();
     this.overlays = new Map();
-    
+
     for (let basemap of this.config.basemaps) {
       if (basemap.type === 'google') {
         this.baseLayers.set(basemap.id, L.gridLayer.googleMutant(basemap.config));
@@ -25,7 +25,7 @@ export class LeafletLayerControl {
       position: 'topright'
     });
   }
-  
+
   mapChanged(newValue) {
     if (this.map) {
       this.button.addTo(this.map);
@@ -39,7 +39,7 @@ export class LeafletLayerControl {
   hideLayerControl() {
     this.layerControlEl.hide();
   }
-  
+
   changeBaseLayer(id) {
     let currentId = this.state.baseLayerId;
     if (id !== currentId) {

@@ -25,6 +25,13 @@ export class App {
       moduleId: './pages/home',
       nav: false
     }, {
+      route: 'add-system',
+      name: 'add-system',
+      moduleId: './pages/system/add',
+      title: 'Höranlage hinzufügen',
+      nav: true,
+      settings: {}
+    }, {
       route: 'help',
       name: 'help',
       moduleId: './pages/help/index',

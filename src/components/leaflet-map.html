@@ -1,0 +1,6 @@
+<template>
+  <require from="./leaflet-map.css"></require>
+
+  <div ref="mapContainer" class="leaflet-map"></div>
+  <leaflet-layer-control map.bind="map" if.bind="layerControl"></leaflet-layer-control>
+</template>

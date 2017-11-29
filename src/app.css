@@ -92,9 +92,26 @@ ons-select.no-underbar select.select-input--material {
   background-image: none;
   padding: 0;
 }
+
+/*
+  Forms
+*/
+.list-item .input-label {
+  font-size: 14px;
+  opacity: 0.75;
+  width: 100%;
+}
+.list-item {}
+
 /*
   Map
 */
+.leaflet-map-static {
+  pointer-events: none;
+}
+.leaflet-map-static .leaflet-pane img {
+  pointer-events: none;
+}
 .leaflet-control .zmdi {
   font-size: 1.4em;
   line-height: inherit;
