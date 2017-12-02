@@ -28,7 +28,7 @@ export class App {
       route: 'add-system',
       name: 'add-system',
       moduleId: './pages/system/add',
-      title: 'Höranlage hinzufügen',
+      title: 'Fehlende Anlage melden',
       nav: true,
       settings: {}
     }, {
