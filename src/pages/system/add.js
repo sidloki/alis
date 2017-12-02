@@ -8,6 +8,7 @@ import {System} from '../../models/system';
 import {Building} from '../../models/building';
 import {RoomType} from '../../models/room-type';
 import {Technology} from '../../models/technology';
+import * as ons from 'onsenui';
 
 @inject(Database, Storage, Config, State, History)
 export class Add {
@@ -54,7 +55,8 @@ export class Add {
     this.title = routeConfig.title;
   }
 
-  showPositionPage() {
+  showPositionPage(e) {
+    e.target._input.blur();
     this.history.history.pushState({}, '', '');
     this.positionPageVisible = true;
     window.addEventListener('popstate', this.onPositionPageBack.bind(this));
@@ -72,7 +74,7 @@ export class Add {
 
   onPreAdressListShow() {
     let popoverContent = this.addressListEl.getElementsByClassName('popover__content')[0];
-    popoverContent.style.width = `${this.addressInputRef.clientWidth}px`;
+    popoverContent.style.width = `${this.addressInputEl.clientWidth}px`;
   }
 
   onAddressChange(e) {
@@ -109,12 +111,12 @@ export class Add {
 
   showAddressListPopover() {
     if (!this.addressListEl.visible && this.addressList.length > 0) {
-      this.addressListEl.show(this.addressInputRef);
+      this.addressListEl.show(this.addressInputEl);
     }
   }
 
   hideAddressListPopover() {
-    this.addressListEl.hide(this.addressInputRef);
+    this.addressListEl.hide(this.addressInputEl);
   }
 
   onAddressListItemClick(item) {
@@ -144,11 +146,14 @@ export class Add {
   }
 
   onImageChange() {
-    this.image = this.imageInputEl.files[0];
-    if (this.imageUrl) {
-      URL.revokeObjectURL(this.imageUrl);
+    let file = this.imageInputEl.files[0];
+    if (file) {
+      this.image = this.imageInputEl.files[0];
+      if (this.imageUrl) {
+        URL.revokeObjectURL(this.imageUrl);
+      }
+      this.imageUrl = URL.createObjectURL(this.image);
     }
-    this.imageUrl = URL.createObjectURL(this.image);
   }
 
   deleteImage() {
