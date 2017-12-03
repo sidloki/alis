@@ -19,7 +19,7 @@ export class Config {
     id: 'satellite',
     title: 'Satellit',
     config: {
-      type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      type: 'satellite' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
     }
   }];
 
@@ -27,5 +27,11 @@ export class Config {
     basemap: 'roadmap',
     center: [46.801111, 8.226667],
     zoom: 7
+  };
+
+  googleApiKey = 'AIzaSyATPcjEF52D830ahwcyByXNF2DgloZnrss';
+  mapzenApiKey = 'mapzen-AYm4FLg';
+  serviceUrls = {
+    mapzen: 'https://search.mapzen.com/v1/'
   };
 }

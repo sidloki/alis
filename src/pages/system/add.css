@@ -1,5 +1,6 @@
-ons-popover.popover-address-list .popover__content {
-  height: 120px;
+.address-list {
+  max-height: 150px;
+  overflow-y: scroll;
 }
 
 .image-upload {

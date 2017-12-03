@@ -101,7 +101,11 @@ ons-select.no-underbar select.select-input--material {
   opacity: 0.75;
   width: 100%;
 }
-.list-item {}
+.list-item .error {
+  padding-top: 8px;
+  color: #ee0000;
+  font-size: 12px;
+}
 
 /*
   Map

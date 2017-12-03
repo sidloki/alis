@@ -1,62 +1,51 @@
 import {inject, bindable} from 'aurelia-framework';
 import {History} from 'aurelia-history';
-import {Database} from '../../services/db';
-import {Storage} from '../../services/storage';
-import {Config} from '../../services/config';
-import {State} from '../../services/state';
-import {System} from '../../models/system';
-import {Building} from '../../models/building';
-import {RoomType} from '../../models/room-type';
-import {Technology} from '../../models/technology';
-import * as ons from 'onsenui';
+import ons from 'onsenui';
 
-@inject(Database, Storage, Config, State, History)
+@inject(History)
 export class Add {
 
   overlays = [];
   positionPageVisible = false;
+  // formattedAddress = '';
+  addressListVisible = false;
   @bindable() coordinates;
-  @bindable() positionHasAdress = false;
-  @bindable() addressListVisible = false;
+  @bindable() bounds;
   @bindable() imageUrl;
 
-  address = '';
+  @bindable place = null;
+  data = {
+    place: null,
+    image: null,
+    annotations: '',
+    username: '',
+    useremail: ''
+  };
 
-  constructor(db, storage, config, state, history) {
-    this.db = db;
-    this.storage = storage;
-    this.config = config;
-    this.state = state;
+  errors = {};
+
+  addressList = [];
+
+  searchTypes = [
+    'art_gallery', 'bank', 'church', 'hindu_temple', 'hospital',
+    'insurance_agency', 'local_government_office', 'mosque',
+    'movie_theater', 'museum', 'pharmacy', 'police',
+    'post_office', 'school', 'stadium', 'synagogue', 'university'
+  ];
+
+  constructor(history) {
     this.history = history;
-    this.roomtypes = db.query(RoomType).all();
-    this.technologies = db.query(Technology).all();
-    this.data = {
-      name: '',
-      address: '',
-      building: '',
-      room: '',
-      coordinates: null,
-      roomtype: null,
-      technology: null,
-    };
-    this.addressList = [];
 
-    this.overlays = [];
-    // this.system = new System({
-    //   raum: '',
-    //   raumnummer: '',
-    //   building: new Building({
-    //     name: ''
-    //   }),
-    // });
+    this.autocompleteService = new google.maps.places.AutocompleteService();
+    this.geocoder = new google.maps.Geocoder();
+    this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
   }
 
   activate(params, routeConfig) {
     this.title = routeConfig.title;
   }
 
-  showPositionPage(e) {
-    e.target._input.blur();
+  showPositionPage() {
     this.history.history.pushState({}, '', '');
     this.positionPageVisible = true;
     window.addEventListener('popstate', this.onPositionPageBack.bind(this));
@@ -70,74 +59,166 @@ export class Add {
 
   onPositionMapClick(e) {
     this.coordinates = e.detail.latlng;
-  }
-
-  onPreAdressListShow() {
-    let popoverContent = this.addressListEl.getElementsByClassName('popover__content')[0];
-    popoverContent.style.width = `${this.addressInputEl.clientWidth}px`;
+    this.center = this.coordinates;
+    this.searchNearBy(this.coordinates, 25)
+      .then(result => {
+        this.loadPlaceDetail(result.place_id);
+      })
+      .catch(() => {
+        this.geocodeLocation(this.coordinates)
+          .then(result => {
+            this.loadPlaceDetail(result.place_id);
+          })
+          .catch(error => {
+            alert("Nichts gefunden.");
+          });
+      });
   }
 
   onAddressChange(e) {
     let value = e.target.value;
     if (value.length >= 3) {
-      // TODO: query address from google
-      this.addressList = [{
-        street: 'Strasse Hausnummer',
-        location: 'Ort Kanton'
-      }, {
-        street: 'Strasse Hausnummer',
-        location: 'Ort Kanton'
-      }, {
-        street: 'Strasse Hausnummer',
-        location: 'Ort Kanton'
-      }];
-      this.addressListVisible = true;
+      this.queryAddressListItems(value)
+        .then(() => {
+          this.showAddressList();
+        })
+        .catch(() => {
+          this.hideAddressList();
+        });
     } else {
-      this.addressListVisible = false;
+      this.hideAddressList();
     }
   }
 
   onAddressBlur() {
-    this.addressListVisible = false;
+    if (this.place) {
+      this.addressInputEl.value = this.place.name;
+    }
+    this.hideAddressList();
   }
 
   onAddressFocus() {
-    this.addressListVisible = true;
-  }
-
-  addressListVisibleChanged(newValue) {
-    newValue ? this.showAddressListPopover() : this.hideAddressListPopover();
-  }
-
-  showAddressListPopover() {
-    if (!this.addressListEl.visible && this.addressList.length > 0) {
-      this.addressListEl.show(this.addressInputEl);
-    }
-  }
-
-  hideAddressListPopover() {
-    this.addressListEl.hide(this.addressInputEl);
+    this.showAddressList();
   }
 
   onAddressListItemClick(item) {
-    this.address = `${item.street} ${item.location}`;
+    this.loadPlaceDetail(item.place_id)
+      .then(place => {
+        let bounds = place.geometry.viewport.toJSON();
+        this.leafletMap.map.fitBounds([
+          [bounds.north, bounds.east],
+          [bounds.south, bounds.west]
+        ]);
+        this.coordinates = place.geometry.location.toJSON();
+      });
+  }
+
+  showAddressList() {
+    if (!this.addressListVisible && this.addressList.length > 0) {
+      this.addressListVisible = true;
+    }
+  }
+
+  hideAddressList() {
+    this.addressListVisible = false;
+  }
+
+  placeChanged(newValue) {
+    if (newValue) {
+      this.queryAddressListItems(newValue.name);
+    }
+  }
+
+  searchNearBy(location, radius) {
+    return new Promise((resolve, reject) => {
+      this.placesService.nearbySearch({
+        location: location,
+        radius: radius
+      }, (results, status) => {
+        if (results) {
+          let result = results.find(x => this.searchTypes.find(t => x.types.indexOf(t) > -1));
+          if (result) {
+            resolve(result);
+          } else {
+            reject(status);
+          }
+        } else {
+          reject(status);
+        }
+      });
+    });
+  }
+
+  geocodeLocation(location) {
+    return new Promise((resolve, reject) => {
+      this.geocoder.geocode({
+        location: location
+      }, (results, status) => {
+        if (status === 'OK') {
+          resolve(results[0]);
+        } else {
+          reject(status);
+        }
+      });
+    });
+  }
+
+  queryAddressListItems(value) {
+    return new Promise((resolve, reject) => {
+      let center = this.leafletMap.map.getCenter();
+      let location = new google.maps.LatLng(center.lat, center.lng);
+      this.autocompleteService.getPlacePredictions({
+        input: value,
+        location: location,
+        radius: 10000,
+        types: ['address']
+      }, (predictions, status) => {
+        if (predictions !== null) {
+          this.addressList = predictions;
+          resolve();
+        } else {
+          this.addressList = [];
+          reject();
+        }
+      });
+    });
+  }
+
+  loadPlaceDetail(id) {
+    return new Promise((resolve, reject) => {
+      this.placesService.getDetails({
+        placeId: id
+      }, (place, status) => {
+        this.place = place;
+        if (place !== null) {
+          resolve(place);
+        } else {
+          reject(status);
+        }
+      });
+    });
   }
 
   coordinatesChanged(newValue) {
     if (newValue) {
       this.overlays = [{
         type: 'marker',
-        latLng: newValue
+        latLng: L.latLng(newValue.lat, newValue.lng)
       }];
-      // TODO: get address from coordinates
-      this.address = 'Addresse aus Position';
-      this.positionHasAdress = true;
+    } else {
+      this.overlays = [];
     }
   }
 
   onAcceptAddressClick() {
+    let bounds = this.place.geometry.viewport.toJSON();
     this.data.coordinates = this.coordinates;
-    this.data.address = this.address;
+    this.data.place = this.place;
+    this.bounds = [
+      [bounds.north, bounds.east],
+      [bounds.south, bounds.west]
+    ];
+    this.validate();
     this.history.history.back();
   }
 
@@ -163,7 +244,27 @@ export class Add {
   }
 
   commit() {
-    //TODO: ajax request
-    console.log(this.data);
+    this.validate();
+    if (Object.keys(this.errors).length === 0) {
+      //TODO: prepare data and send to server
+      console.log(this.data);
+    } else {
+      ons.notification.alert('Geben Sie eine Adresse, Ihr Name und Ihre E-Mail-Adresse ein', {
+        title: 'Fehlende Anlage melden'
+      });
+    }
+  }
+
+  validate() {
+    this.errors = {};
+    if (!this.data.place) {
+      this.errors.address = 'Bitte geben Sie eine gültige Adresse ein.';
+    }
+    if (!this.data.username) {
+      this.errors.username = 'Bitte geben Sie Ihren Namen an.';
+    }
+    if (!this.data.useremail) {
+      this.errors.useremail = 'Bitte geben Sie Ihre E-Mail-Addresse an.';
+    }
   }
 }

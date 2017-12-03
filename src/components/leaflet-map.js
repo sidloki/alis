@@ -11,6 +11,7 @@ export class LeafletMap {
   }
 
   @bindable() center;
+  @bindable() bounds;
   @bindable() fixed = false;
   @bindable() layerControl = true;
   @bindable() zoomControl = true;
@@ -33,7 +34,9 @@ export class LeafletMap {
   }
 
   attached() {
-    let bounds = L.latLngBounds(this.storage.getItem('mapbounds'));
+    if (!this.bounds) {
+      this.bounds = L.latLngBounds(this.storage.getItem('mapbounds'));
+    }
 
     this.mapOptions.zoomControl = this.zoomControl;
     if (!this.map) {
@@ -42,8 +45,8 @@ export class LeafletMap {
 
     this.map.addLayer(this.baseLayers.get(this.state.baseLayerId));
 
-    if (bounds && bounds.isValid()) {
-      this.map.fitBounds(bounds);
+    if (this.bounds) {
+      this.map.fitBounds(this.bounds);
     } else {
       this.map.setView(this.config.map.center, this.config.map.zoom);
     }
@@ -54,6 +57,12 @@ export class LeafletMap {
   centerChanged(newValue) {
     if (newValue) {
       this.map.setView(newValue, this.map.getZoom());
+    }
+  }
+
+  boundsChanged(newValue) {
+    if (newValue && this.map) {
+      this.map.fitBounds(newValue);
     }
   }
 

@@ -17,14 +17,20 @@
     </ons-toolbar>
     <ons-list modifier="noborder" class="form">
       <ons-list-header style="display:none;"></ons-list-header>
-      <ons-list-item modifier="nodivider">
+      <ons-list-item modifier="nodivider" click.trigger="showPositionPage()">
         <div class="left">
           <ons-icon icon="ion-ios-location,material:md-pin" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
           <label for="address" class="input-label">Adresse*</label>
-          <ons-input input-id="address" type="text" value.one-way="data.address" modifier="underbar" style="width:100%;"
-                     focus.trigger="showPositionPage($event)"></ons-input>
+          <ons-input input-id="address" type="text" modifier="underbar" style="width:100%;" value.one-way="data.place.formatted_address" readonly="true"></ons-input>
+          <div class="error" if.bind="errors.address">${errors.address}</div>
+          <div style="width:100%;height:120px;position:relative;margin-top:12px;">
+            <leaflet-map fixed.bind="true" overlays.bind="overlays" center.bind="data.coordinates" bounds.bind="bounds" layer-control.bind="false" zoom-control.bind="false"></leaflet-map>
+            <div if.bind="!place" style="z-index:10000;background-color: rgba(0,0,0,0.5);color:#fff;position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;padding:16px;">
+              <div style="text-align:center;">Position auf der Karte markieren</div>
+            </div>
+          </div>
         </div>
         <div class="right"></div>
       </ons-list-item>
@@ -52,7 +58,7 @@
         </div>
         <div class="center">
           <label for="annotations" class="input-label">Bemerkung</label>
-          <textarea id="annotations" class="textarea" rows="4" style="width:100%;margin-top:8px;"></textarea>
+          <textarea id="annotations" class="textarea" rows="4" style="width:100%;margin-top:8px;" value.bind="data.annotations"></textarea>
         </div>
         <div class="right"></div>
       </ons-list-item>
@@ -63,7 +69,8 @@
         </div>
         <div class="center">
           <label for="username" class="input-label">Name*</label>
-          <ons-input input-id="username" type="text" modifier="underbar" style="width:100%;"></ons-input>
+          <ons-input input-id="username" type="text" modifier="underbar" style="width:100%;" value.bind="data.username" input.trigger="validate()"></ons-input>
+          <div class="error" if.bind="errors.username">${errors.username}</div>
         </div>
         <div class="right"></div>
       </ons-list-item>
@@ -73,7 +80,8 @@
         </div>
         <div class="center">
           <label for="useremail" class="input-label">E-Mail*</label>
-          <ons-input input-id="useremail" type="email" modifier="underbar" style="width:100%;"></ons-input>
+          <ons-input input-id="useremail" type="email" modifier="underbar" style="width:100%;" value.bind="data.useremail" input.trigger="validate()"></ons-input>
+          <div class="error" if.bind="errors.useremail">${errors.useremail}</div>
         </div>
         <div class="right"></div>
       </ons-list-item>
@@ -88,34 +96,37 @@
         Adresse
       </div>
       <div class="right">
-        <ons-toolbar-button disabled.bind="!positionHasAdress" click.trigger="onAcceptAddressClick()">
+        <ons-toolbar-button disabled.bind="!place" click.trigger="onAcceptAddressClick()">
           <ons-icon icon="md-check"></ons-icon>
         </ons-toolbar-button>
       </div>
     </ons-toolbar>
-    <ons-list style="display:flex;flex-direction:column;height:100%;">
-      <ons-list-item modifier="nodivider">
+    <ons-list modifier="noborder" style="display:flex;flex-direction:column;height:100%;">
+      <ons-list-item modifier="nodivier">
         <div class="center">
-          <ons-input input-id="address" type="text" ref="addressInputEl" value.one-way="address" style="width:100%;"
-                     input.trigger="onAddressChange($event)" blur.trigger="onAddressBlur()" focus.trigger="onAddressFocus()" placeholder="Suchen oder auf Karte tippen..."></ons-input>
+          <ons-input input-id="address" type="text" value.one-way="place.name" modifier="underbar" style="width:100%;"
+                     ref="addressInputEl" input.trigger="onAddressChange($event) & debounce" blur.trigger="onAddressBlur() & debounce"
+                     focus.trigger="onAddressFocus()" placeholder="Suchen oder auf die Karte tippen...">
+          </ons-input>
+          <div style="position:relative;width:100%;">
+            <div style="position:absolute;top:0;right:0;left:0;z-index:20000;" class="popover--material__content" if.bind="addressListVisible">
+              <ons-list modifier="noborder" class="address-list">
+                <ons-list-item modifier="nodivider" tappable="true" repeat.for="item of addressList" click.delegate="onAddressListItemClick(item)">
+                  <div class="center">
+                    <div class="list-item__title">${item.structured_formatting.main_text}</div>
+                    <div class="list-item__subtitle">${item.structured_formatting.secondary_text}</div>
+                  </div>
+                </ons-list-item>
+              </ons-list>
+            </div>
+          </div>
         </div>
-        <div class="right"></div>
       </ons-list-item>
-      <ons-list-item style="flex:1;padding:0 0 0 0;">
-        <div class="center" style="min-height:auto;padding:0 0 0 0">
-          <leaflet-map mapclick.trigger="onPositionMapClick($event)" overlays.bind="overlays"></leaflet-map>
+      <ons-list-item style="flex:1;padding:0;" modifier="nodivier">
+        <div class="center" style="padding:0;">
+          <leaflet-map mapclick.trigger="onPositionMapClick($event)" view-model.ref="leafletMap" bounds.bind="bounds" overlays.bind="overlays" center.bind="center" style="flex:1;"></leaflet-map>
         </div>
       </ons-list-item>
     </ons-list>
-    <ons-popover ref="addressListEl" direction="down" modifier="material" class="popover-address-list" preshow.trigger="onPreAdressListShow()">
-      <ons-list modifier="noborder">
-        <ons-list-item modifier="nodivider" tappable repeat.for="item of addressList" click.delegate="onAddressListItemClick(item)">
-          <div class="center">
-            <div class="list-item__title">${item.street}</div>
-            <div class="list-item__subtitle">${item.location}</div>
-          </div>
-        </ons-list-item>
-      </ons-list>
-    </ons-popover>
   </ons-page>
 </template>
