@@ -23,7 +23,7 @@
         </div>
         <div class="center">
           <label for="address" class="input-label">Adresse*</label>
-          <ons-input input-id="address" type="text" modifier="underbar" style="width:100%;" value.one-way="data.place.formatted_address" readonly="true"></ons-input>
+          <ons-input input-id="address" type="text" modifier="underbar" style="width:100%;" value.one-way="data.formatted_address" readonly="true"></ons-input>
           <div class="error" if.bind="errors.address">${errors.address}</div>
           <div style="width:100%;height:120px;position:relative;margin-top:12px;">
             <leaflet-map fixed.bind="true" overlays.bind="overlays" center.bind="data.coordinates" bounds.bind="bounds" layer-control.bind="false" zoom-control.bind="false"></leaflet-map>
@@ -69,7 +69,7 @@
         </div>
         <div class="center">
           <label for="username" class="input-label">Name*</label>
-          <ons-input input-id="username" type="text" modifier="underbar" style="width:100%;" value.bind="data.username" input.trigger="validate()"></ons-input>
+          <ons-input input-id="username" type="text" modifier="underbar" style="width:100%;" value.bind="data.username" input.trigger="validate($event)"></ons-input>
           <div class="error" if.bind="errors.username">${errors.username}</div>
         </div>
         <div class="right"></div>
@@ -80,7 +80,7 @@
         </div>
         <div class="center">
           <label for="useremail" class="input-label">E-Mail*</label>
-          <ons-input input-id="useremail" type="email" modifier="underbar" style="width:100%;" value.bind="data.useremail" input.trigger="validate()"></ons-input>
+          <ons-input input-id="useremail" type="email" modifier="underbar" style="width:100%;" value.bind="data.useremail" input.trigger="validate($event)"></ons-input>
           <div class="error" if.bind="errors.useremail">${errors.useremail}</div>
         </div>
         <div class="right"></div>

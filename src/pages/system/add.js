@@ -1,21 +1,30 @@
 import {inject, bindable} from 'aurelia-framework';
 import {History} from 'aurelia-history';
+import {HttpClient} from 'aurelia-fetch-client';
 import ons from 'onsenui';
+import {Config} from '../../services/config';
+import {Database} from '../../services/db';
+import {Canton} from '../../models/canton';
 
-@inject(History)
+@inject(History, Config, Database)
 export class Add {
 
   overlays = [];
   positionPageVisible = false;
-  // formattedAddress = '';
   addressListVisible = false;
   @bindable() coordinates;
   @bindable() bounds;
   @bindable() imageUrl;
+  image = null;
 
   @bindable place = null;
   data = {
-    place: null,
+    name: '',
+    formatted_address: '',
+    street_number: '',
+    postcode: '',
+    location: '',
+    canton: '',
     image: null,
     annotations: '',
     username: '',
@@ -33,8 +42,16 @@ export class Add {
     'post_office', 'school', 'stadium', 'synagogue', 'university'
   ];
 
-  constructor(history) {
+  constructor(history, config, db) {
     this.history = history;
+    this.config = config;
+    this.db = db;
+    this.http = new HttpClient();
+    this.http.configure(cfg => {
+      cfg.useStandardConfiguration()
+         .withBaseUrl(`${this.config.baseUrl}/add-system.php`)
+         .withDefaults();
+    });
 
     this.autocompleteService = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
@@ -70,7 +87,9 @@ export class Add {
             this.loadPlaceDetail(result.place_id);
           })
           .catch(error => {
-            alert("Nichts gefunden.");
+            ons.notification.alert('Nichts gefunden.', {
+              title: 'Für die gewählte Position konnte keine Adresse gefunden werden.'
+            });
           });
       });
   }
@@ -173,12 +192,12 @@ export class Add {
         radius: 10000,
         types: ['address']
       }, (predictions, status) => {
-        if (predictions !== null) {
+        if (status === 'OK') {
           this.addressList = predictions;
-          resolve();
+          resolve(predictions);
         } else {
           this.addressList = [];
-          reject();
+          resolve([]);
         }
       });
     });
@@ -213,12 +232,29 @@ export class Add {
   onAcceptAddressClick() {
     let bounds = this.place.geometry.viewport.toJSON();
     this.data.coordinates = this.coordinates;
-    this.data.place = this.place;
+    this.data.name = this.place.name || '';
+    this.data.formatted_address = this.place.formatted_address;
+    this.data.lat = this.coordinates.lat;
+    this.data.lng = this.coordinates.lng;
+    this.data.website = this.place.website || '';
+    this.place.address_components.forEach(c => {
+      if (c.types.indexOf('postal_code') > -1) {
+        this.data.postcode = c.long_name;
+      } else if (c.types.indexOf('route') > -1) {
+        this.data.street = c.long_name;
+      } else if (c.types.indexOf('street_number') > -1) {
+        this.data.housenumber = c.long_name;
+      } else if (c.types.indexOf('administrative_area_level_1') > -1) {
+        this.data.canton = this.db.query(Canton).get('name', c.short_name);
+      } else if (c.types.indexOf('locality') > -1) {
+        this.data.location = c.long_name;
+      }
+    });
     this.bounds = [
       [bounds.north, bounds.east],
       [bounds.south, bounds.west]
     ];
-    this.validate();
+    this.errors.address = null;
     this.history.history.back();
   }
 
@@ -229,7 +265,7 @@ export class Add {
   onImageChange() {
     let file = this.imageInputEl.files[0];
     if (file) {
-      this.image = this.imageInputEl.files[0];
+      this.image = file;
       if (this.imageUrl) {
         URL.revokeObjectURL(this.imageUrl);
       }
@@ -244,27 +280,52 @@ export class Add {
   }
 
   commit() {
-    this.validate();
-    if (Object.keys(this.errors).length === 0) {
-      //TODO: prepare data and send to server
-      console.log(this.data);
-    } else {
-      ons.notification.alert('Geben Sie eine Adresse, Ihr Name und Ihre E-Mail-Adresse ein', {
-        title: 'Fehlende Anlage melden'
-      });
-    }
+    let formData = new FormData();
+    formData.append('username', this.data.username);
+    formData.append('useremail', this.data.useremail);
+
+    formData.append('name', this.data.name);
+    formData.append('lat', this.data.lat);
+    formData.append('lng', this.data.lng);
+    formData.append('street_number', `${this.data.street} ${this.data.housenumber}`);
+    formData.append('location', this.data.location);
+    formData.append('postcode', this.data.postcode);
+    formData.append('cantonId', this.data.canton ? this.data.canton.id : null);
+    formData.append('website', this.data.website);
+    formData.append('annotations', this.data.annotations);
+    formData.append('image', this.image);
+
+    this.http.fetch('', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.code !== 200) {
+        this.errors = data.errors;
+        this.showInvalidAlert(data.message);
+      } else {
+        this.showSuccessMessage();
+      }
+    });
   }
 
-  validate() {
-    this.errors = {};
-    if (!this.data.place) {
-      this.errors.address = 'Bitte geben Sie eine gültige Adresse ein.';
-    }
-    if (!this.data.username) {
-      this.errors.username = 'Bitte geben Sie Ihren Namen an.';
-    }
-    if (!this.data.useremail) {
-      this.errors.useremail = 'Bitte geben Sie Ihre E-Mail-Addresse an.';
-    }
+  showInvalidAlert(msg) {
+    ons.notification.alert(msg, {
+      title: 'Fehlende Anlage melden'
+    });
+  }
+
+  showSuccessMessage() {
+    ons.notification.alert('Ihre Daten wurden gesendet und werden überprüft.', {
+      title: 'Vielen Dank',
+      callback: () => {
+        this.history.navigateBack();
+      }
+    });
+  }
+
+  validate(event) {
+    this.errors[event.target.id] = null;
   }
 }
