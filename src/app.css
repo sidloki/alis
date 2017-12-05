@@ -120,3 +120,10 @@ ons-select.no-underbar select.select-input--material {
   font-size: 1.4em;
   line-height: inherit;
 }
+
+/*
+  iOS fix
+*/
+ons-button, ons-button.button, ons-toolbar-button, ons-list-item, ons-fab, ons-back-button {
+  cursor: pointer;
+}
