@@ -20,7 +20,7 @@ export class Database {
     this.http.configure(cfg => {
       cfg
         .useStandardConfiguration()
-        .withBaseUrl(`${this.config.baseUrl}/query.php?`)
+        .withBaseUrl(`${this.config.baseUrl}/db_query.php?`)
         .withDefaults();
     });
   }

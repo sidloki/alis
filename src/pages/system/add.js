@@ -49,7 +49,7 @@ export class Add {
     this.http = new HttpClient();
     this.http.configure(cfg => {
       cfg.useStandardConfiguration()
-         .withBaseUrl(`${this.config.baseUrl}/add-system.php`)
+         .withBaseUrl(`${this.config.baseUrl}/db_add_system.php`)
          .withDefaults();
     });
 
