@@ -28,10 +28,4 @@ export class Config {
     center: [46.801111, 8.226667],
     zoom: 7
   };
-
-  googleApiKey = 'AIzaSyATPcjEF52D830ahwcyByXNF2DgloZnrss';
-  mapzenApiKey = 'mapzen-AYm4FLg';
-  serviceUrls = {
-    mapzen: 'https://search.mapzen.com/v1/'
-  };
 }
