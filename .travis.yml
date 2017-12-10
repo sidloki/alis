@@ -1,12 +1,10 @@
-dist: trusty
-sudo: false
 language: node_js
 node_js:
   - "6"
+  - "8"
 script:
-  - yarn lint
-  - yarn test-coverage
-  - yarn build
+  - npm run lint --silent
+  - npm run export
 after_success:
   - codecov
 cache:

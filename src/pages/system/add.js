@@ -46,8 +46,8 @@ export class Add {
     this.history = history;
     this.config = config;
     this.db = db;
-    this.http = new HttpClient();
-    this.http.configure(cfg => {
+    this.httpClient = new HttpClient();
+    this.httpClient.configure(cfg => {
       cfg.useStandardConfiguration()
          .withBaseUrl(`${this.config.baseUrl}/db_add_system.php`)
          .withDefaults();
@@ -295,7 +295,7 @@ export class Add {
     formData.append('annotations', this.data.annotations);
     formData.append('image', this.image);
 
-    this.http.fetch('', {
+    this.httpClient.fetch('', {
       method: 'POST',
       body: formData
     })

@@ -16,8 +16,8 @@ export class Database {
   constructor(config) {
     this.config = config;
     this.reset();
-    this.http = new HttpClient();
-    this.http.configure(cfg => {
+    this.httpClient = new HttpClient();
+    this.httpClient.configure(cfg => {
       cfg
         .useStandardConfiguration()
         .withBaseUrl(`${this.config.baseUrl}/db_query.php?`)
@@ -34,7 +34,7 @@ export class Database {
     this.reset();
     return Promise.all(models.map(Model => {
       let tablename = Model.tablename;
-      return this.http
+      return this.httpClient
         .fetch(`table=${tablename}`)
         .then(response => response.json())
         .then(data => {

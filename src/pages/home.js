@@ -1,4 +1,4 @@
-import ResizeObserver from 'resize-observer-polyfill';
+import * as ResizeObserver from 'resize-observer-polyfill';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
 import {Config} from '../services/config';

@@ -20,7 +20,7 @@ yarn install
 To run the app, execute the following command:
 
 ```bash
-yarn serve
+yarn prod
 ```
 
 This builds the app and starts a webserver. Browse to [https://localhost:9000](https://localhost:9000) to see the app.
@@ -28,12 +28,10 @@ This builds the app and starts a webserver. Browse to [https://localhost:9000](h
 To develop the application execute the following command:
 
 ```bash
-yarn watch
+yarn dev
 ```
 
 You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
-
-> The app uses [BrowserSync](http://www.browsersync.io/) for automated page refreshes on code changes concurrently across multiple browsers. If you prefer to disable the mirroring feature set the [ghostMode option](http://www.browsersync.io/docs/options/#option-ghostMode) to `false`.
 
 ## Running the test
 
@@ -57,18 +55,13 @@ yarn lint
 
 ## Export a production version
 
-There's a script to export all the required files to a separate folder `export`:
+There's a script to export all the required files to a separate folder `www`:
 
 ```bash
 yarn export
 ```
 
 The exported files can be used on a webserver or to create a hybrid application on your own machine useing [Cordova](https://cordova.apache.org/) or with the [Phonegap Build Service](https://build.phonegap.com/).
-
-> To use the Phonegap Build Service you have to delete the `index.html` in the root folder, rename the `export` directory to `www` and commit the changes. To do this, a branch `phonegap` exists.
-
-> To create the hybrid App on your own system, renaming the `export` folder to `www` is sufficient and you don't have to commit the changes.
-
 
 
 [travis-url]: https://travis-ci.org/sidloki/alis
