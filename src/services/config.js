@@ -25,7 +25,6 @@ export class Config {
 
   map = {
     basemap: 'roadmap',
-    center: [46.801111, 8.226667],
-    zoom: 7
+    view: [[45.805829,7.338867],[47.813155,9.008789]]
   };
 }

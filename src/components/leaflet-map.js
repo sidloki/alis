@@ -35,7 +35,7 @@ export class LeafletMap {
 
   attached() {
     if (!this.bounds) {
-      this.bounds = L.latLngBounds(this.storage.getItem('mapbounds'));
+      this.bounds = L.latLngBounds(this.state.mapBounds);
     }
 
     this.mapOptions.zoomControl = this.zoomControl;

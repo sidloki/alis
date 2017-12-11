@@ -68,7 +68,7 @@ export class Home {
     let buildingsLayer = this.overlays.get('buildings');
     let markerLayer = this.overlays.get('marker');
     let locateControl = this.controls.get('locate');
-    let mapbounds = this.storage.getItem('mapbounds');
+    let mapbounds = this.state.mapBounds;
     let geolocation = this.storage.getItem('geolocation');
 
     this.map = L.map(this._map, {
@@ -79,11 +79,7 @@ export class Home {
     this.map.addLayer(buildingsLayer);
     this.map.addControl(locateControl);
 
-    if (mapbounds) {
-      this.map.fitBounds(mapbounds);
-    } else {
-      this.map.setView(this.config.map.center, this.config.map.zoom);
-    }
+    this.map.fitBounds(mapbounds);
 
     if (geolocation) {
       locateControl.start();
