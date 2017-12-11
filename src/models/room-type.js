@@ -46,7 +46,6 @@ const Icons = {
   }
 };
 
-
 export class RoomType {
 
   constructor(data) {

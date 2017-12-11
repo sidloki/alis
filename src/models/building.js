@@ -1,7 +1,6 @@
 import {Container} from 'aurelia-framework';
 import {Database} from '../services/db';
 
-
 export class Building {
 
   constructor(data) {

@@ -16,7 +16,7 @@ export class Home {
   searchResults;
   isSearching = false;
   categories;
-  
+
   @bindable()
   state;
 
@@ -332,7 +332,10 @@ export class Home {
     let className = 'leaflet-building-icon';
     let html;
     if (icon) {
-      html = `<div style="background-color:${icon.color}"><span class="ons-icon ${icon.prefix} ${icon.prefix}-${icon.name}"></span></div>`;
+      html =
+        `<div style="background-color:${icon.color}">
+          <span class="ons-icon ${icon.prefix} ${icon.prefix}-${icon.name}"></span>
+        </div>`;
     } else {
       html = `<div>${building.systems.length}</div>`;
     }

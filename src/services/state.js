@@ -13,7 +13,7 @@ export class State {
 
     this.baseLayerId = this.config.map.basemap;
   }
-  
+
   get mapBounds() {
     let mapBounds = this.storage.getItem('mapbounds') || this.config.map.view;
     return L.latLngBounds(mapBounds);

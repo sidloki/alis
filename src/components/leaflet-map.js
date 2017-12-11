@@ -8,7 +8,7 @@ export class LeafletMap {
 
   mapOptions = {
     attributionControl: false
-  }
+  };
 
   @bindable() center;
   @bindable() bounds;

@@ -4,10 +4,14 @@
         "tslint:recommended"
     ],
     "jsRules": {
-      "quotemark": [true, "single"]
+      "quotemark": [true, "single"],
+      "object-literal-sort-keys": false,
+      "trailing-comma": [false]
     },
     "rules": {
-      "quotemark": [true, "single"]
+      "quotemark": [true, "single"],
+      "object-literal-sort-keys": false,
+      "trailing-comma": [false]
     },
     "rulesDirectory": []
 }

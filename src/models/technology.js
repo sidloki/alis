@@ -4,13 +4,19 @@ import {Config} from '../services/config';
 // TODO: store this data in the backend database
 const Data = {
   1: {
-    description: 'T-Modus ist das häufigste Piktogramm. Induktiver Empfang des Direkttons über die Hörgeräte, welche über eine Programmtaste am Hörgerät in den T-Modus umgestellt wurden.'
+    description:
+      `T-Modus ist das häufigste Piktogramm. Induktiver Empfang des Direkttons über die Hörgeräte,
+      welche über eine Programmtaste am Hörgerät in den T-Modus umgestellt wurden.`
   },
   2: {
-    description: 'In seltenen Fällen wird der Direktton über Infrarotlicht an ein kleines tragbares Gerät mit einer induktiven Halsschleife übertragen. Dieser Empfänger ist bei der Rezeption oder an der Kasse erhältlich.'
+    description:
+      `In seltenen Fällen wird der Direktton über Infrarotlicht an ein kleines tragbares Gerät mit
+      einer induktiven Halsschleife übertragen. Dieser Empfänger ist bei der Rezeption oder an der Kasse erhältlich.`
   },
   3: {
-    description: 'Hier ist für einen induktiven Empfang noch zusätzlich ein kleines tragbares Gerät bei der Rezeption oder an der Kasse erhältlich. Eine induktive Halsschleife ist am kleinen Gerät angeschlossen.'
+    description:
+      `Hier ist für einen induktiven Empfang noch zusätzlich ein kleines tragbares Gerät bei der Rezeption
+      oder an der Kasse erhältlich. Eine induktive Halsschleife ist am kleinen Gerät angeschlossen.`
   }
 };
 

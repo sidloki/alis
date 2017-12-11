@@ -9,7 +9,6 @@ import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Technology} from '../models/technology';
 
-
 @inject(Config)
 export class Database {
 

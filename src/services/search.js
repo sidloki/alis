@@ -87,7 +87,10 @@ export class Search {
       let lookupId = `${building.id}-${organisation.id}`;
       if (!lookups.has(lookupId)) {
         let matches = 0;
-        let searchString = `${building.name} ${building.strasse_nr} ${building.ort} ${building.plz} ${building.canton.kantonkuerzel} ${organisation.name} ${system.roomtype.typ}`;
+        let searchString =
+          `${building.name} ${building.strasse_nr}
+          ${building.ort} ${building.plz} ${building.canton.kantonkuerzel}
+          ${organisation.name} ${system.roomtype.typ}`;
         searchString = searchString.toLowerCase();
         for (let i = 0; i < text.length; i++) {
           let word = text[i];
