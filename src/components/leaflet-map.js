@@ -114,7 +114,6 @@ export class LeafletMap {
   }
 
   onMapClick(e) {
-    console.log("Map map click event");
     var event = new CustomEvent('mapclick', { detail: e });
     this.el.dispatchEvent(event);
   }
