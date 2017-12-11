@@ -76,7 +76,8 @@ Sparky.task('build', () => {
       production ? UglifyJSPlugin() : function () {},
       WebIndexPlugin({
         title: 'Höranlagen',
-        template: 'src/index.html'
+        template: 'src/index.html',
+        path: './'
       })
     ]
   });
