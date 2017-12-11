@@ -17,15 +17,15 @@ export class Symbols {
     this.ratings = [{
       image: this.getRatingImageUrl(1),
       title: 'Grüne Raute',
-      description: 'Geprüfte Höranlage gemäss Norm.'
+      description: 'Geprüfte Höranlage mit normgerechtem Empfang.'
     }, {
       image: this.getRatingImageUrl(2),
       title: 'Gelbe Raute',
-      description: 'Überprüfte Höranlage (nicht nach Norm geprüft oder mit Mängeln).'
+      description: 'Geprüfte Höranlage, die die Voraussetzungen für einen normgerechten Empfang knapp nicht erfüllt.'
     }, {
       image: this.getRatingImageUrl(3),
       title: 'Weisse Raute',
-      description: 'Nicht überprüfte Höranlage, keine Bewertung. '
+      description: 'Nicht überprüfte Höranlage, keine Bewertung.'
     }];
   }
 

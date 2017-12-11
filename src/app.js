@@ -25,46 +25,33 @@ export class App {
       moduleId: './pages/home',
       nav: false
     }, {
-      route: 'add-system',
-      name: 'add-system',
-      moduleId: './pages/system/add',
-      title: 'Fehlende Anlage melden',
+      route: 'quickstart',
+      name: 'quickstart',
+      moduleId: './pages/help/quickstart',
+      title: 'Quickstart',
       nav: true,
       settings: {}
     }, {
-      route: 'help',
-      name: 'help',
-      moduleId: './pages/help/index',
+      route: 'help/symbols',
+      name: 'help-symbols',
+      moduleId: './pages/help/symbols',
       nav: true,
-      title: 'Hilfe',
+      title: 'Informationen zu Höranlagen',
       settings: {}
     }, {
       route: 'help/reception',
       name: 'help-reception',
       moduleId: './pages/help/reception',
-      nav: false,
-      title: 'Drahtloser Empfang',
-      settings: {
-        category: 'help'
-      }
+      nav: true,
+      title: 'Informationen zu Hörhilfen',
+      settings: {}
     }, {
-      route: 'help/hearing-loop',
-      name: 'help-hearing-loop',
-      moduleId: './pages/help/hearing-loop',
-      nav: false,
-      title: 'Informationen zu Höranlagen',
-      settings: {
-        category: 'help'
-      }
-    }, {
-      route: 'help/symbols',
-      name: 'help-symbols',
-      moduleId: './pages/help/symbols',
-      nav: false,
-      title: 'Symbole',
-      settings: {
-        category: 'help'
-      }
+      route: 'add-system',
+      name: 'add-system',
+      moduleId: './pages/system/add',
+      title: 'Neue Höranlage melden',
+      nav: true,
+      settings: {}
     }, {
       route: 'sponsors',
       name: 'sponsors',
