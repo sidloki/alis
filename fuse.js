@@ -26,7 +26,7 @@ const server = outDir === 'dist';
 
 const resources = [
   '.nojekyll',
-  //'favicon.ico',
+  'favicon.ico',
   'LICENSE',
   'node_modules/core-js/client/core.min.js',
   'node_modules/onsenui/css/onsenui.css',
