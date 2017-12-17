@@ -20,8 +20,11 @@ export class Add {
   @bindable place = null;
   data = {
     name: '',
+    lat: '',
+    lng: '',
     formatted_address: '',
-    street_number: '',
+    street: '',
+    housenumber: '',
     postcode: '',
     location: '',
     canton: '',
