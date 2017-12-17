@@ -1,7 +1,7 @@
 import {inject, bindable} from 'aurelia-framework';
 import {History} from 'aurelia-history';
 import {HttpClient} from 'aurelia-fetch-client';
-import ons from 'onsenui';
+import * as ons from 'onsenui';
 import {Config} from '../../services/config';
 import {Database} from '../../services/db';
 import {Canton} from '../../models/canton';
