@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ch.strobel.apps.alis" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>ALiS</name>
+<widget id="ch.iggh.hearingloops" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Hearingloop</name>
     <description>
-        A mobile application to find locations with assistive listening systems.
+        Find locations with assistive listening systems.
     </description>
-    <author email="mail@pstrobel.ch" href="https://github.com/sidloki/alis">
-        Marco Strobel
+    <author email="info@iggh.ch" href="https://www.iggh.ch/">
+        IGGH Interessengemeinschaft Gehörlose und Hörbehinderte 
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
