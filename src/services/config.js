@@ -1,6 +1,6 @@
 export class Config {
 
-  baseUrl = 'https://epsilon.höranlagen.ch';
+  baseUrl = 'https://hoeranlagen.ch';
 
   basemaps = [{
     type: 'google',
