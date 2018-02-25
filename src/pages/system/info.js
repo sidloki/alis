@@ -28,36 +28,4 @@ export class Info {
   showRoomPlan(id) {
     this.router.navigateToRoute('system-plan', {id: this.data.id, plan: id});
   }
-
-  getRatingImageUrl() {
-    let name = `${this.config.baseUrl}/symbols/`;
-    switch (this.data.bewertung) {
-      case 1:
-        name += 'r32_green.png';
-        break;
-      case 2:
-        name += 'r32_yellow.png';
-        break;
-      default:
-        name += 'r32_white.png';
-        break;
-    }
-    return name;
-  }
-
-  getRatingName() {
-    let name = '';
-    switch (this.data.bewertung) {
-      case 1:
-        name = 'Geprüfte Höranlage gemäss Norm';
-        break;
-      case 2:
-        name = 'Geprüfte Höranlage nicht nach Norm';
-        break;
-      default:
-        name = 'Nicht überprüfte Höranlage';
-        break;
-    }
-    return name;
-  }
 }
