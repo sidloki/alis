@@ -5,6 +5,11 @@ export function configure(aurelia) {
   aurelia.use
     .basicConfiguration()
     .history()
+    .plugin(PLATFORM.moduleName('./plugins/aurelia-messageformat'), {
+      language: navigator.language || 'en',
+      languages: ['en', 'de', 'fr', 'it'],
+      fallbackLanguage: 'en'
+    })
     .plugin('aurelia-onsenui')
     .globalResources([
       PLATFORM.moduleName('./components/leaflet-layer-control'),

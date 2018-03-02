@@ -1,11 +1,16 @@
 const fs = require('fs-extra-promise');
 const path = require('path');
+const klawSync = require('klaw-sync');
+const yaml = require('js-yaml');
+const MessageFormat = require('messageformat');
+const UglifyJS = require("uglify-js");
 const bs = require('browser-sync').create();
 const {
   EnvPlugin,
   FuseBox,
   RawPlugin,
   Sparky,
+  Log,
   UglifyJSPlugin,
   WebIndexPlugin
 } = require('fuse-box');
@@ -61,7 +66,38 @@ Sparky.task('copy', () => {
   }));
 });
 
-Sparky.task('build', () => {
+Sparky.task('compile:translations', () => {
+  return Sparky.src("**/*.yaml", {base: "./src/locales"})
+        .file("*", async (file) => {
+          file.read();
+
+          const lang = path.basename(file.name, path.extname(file.name));
+          try {
+            const translations = yaml.safeLoad(file.contents);
+            const mf = new MessageFormat(lang);
+            let source = mf.compile(translations).toString('module.exports');
+  
+            if (production) {
+              const result = UglifyJS.minify(source, {});
+
+              if (result.error) {
+                const message = `UglifyJSPlugin - ${result.error.message}`;
+                console.error(message);
+              } else {
+                source = result.code;
+              }
+            }
+            
+            file.setContent(source);
+            file.ext('js');
+          } catch (e) {
+            console.error(`Error parsing YAML file: ${file.name}`);
+          }
+        })
+        .dest("./dist/locales").exec();
+});
+
+Sparky.task('build', ['compile:translations'], () => {
   const fuse = FuseBox.init({
     homeDir: 'src',
     output: outDir + '/$name.js',
@@ -134,7 +170,11 @@ Sparky.task('build', () => {
     `);
 
   if (!production) {
-    app.watch().completed(() => bs.reload()).sourceMaps(true);
+    let watcher = app.watch()
+      .completed(() => {
+        Sparky.exec('compile:translations');
+        bs.reload();
+      }).sourceMaps(true);
   }
 
   if (server) {
@@ -154,4 +194,3 @@ Sparky.task('build', () => {
 });
 
 Sparky.task('default', ['clean', 'copy', 'build'], () => {});
-
