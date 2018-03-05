@@ -94,7 +94,7 @@ Sparky.task('compile:translations', () => {
             console.error(`Error parsing YAML file: ${file.name}`);
           }
         })
-        .dest("./dist/locales").exec();
+        .dest(`./${outDir}/locales`).exec();
 });
 
 Sparky.task('build', ['compile:translations'], () => {
