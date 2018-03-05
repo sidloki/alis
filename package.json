@@ -10,7 +10,8 @@
     "dev": "cross-env NODE_ENV=development node fuse",
     "prod": "cross-env NODE_ENV=production node fuse",
     "export": "cross-env NODE_ENV=production OUT_DIR=www node fuse",
-    "lint": "cross-env tslint --project tsconfig.json"
+    "lint": "cross-env tslint --project tsconfig.json",
+    "gh-pages": "git subtree push --prefix www origin gh-pages"
   },
   "dependencies": {
     "aurelia-bootstrapper": "^2.1.1",
