@@ -22,10 +22,9 @@
         <span class="left">
           <ons-icon icon="md-globe" fixed-width="true"></ons-icon>
         </span>
-        <span class="center">Website</span>
+        <span class="center" i18n="website"></span>
       </ons-list-item>
-      <ons-list-header>
-        Höranlage
+      <ons-list-header i18n="hearing-assistance-system">
       </ons-list-header>
       <ons-list-item>
         <span class="left" style="">
@@ -40,14 +39,13 @@
           <img src="${data.rating.imageUrl}" alt="" style="width:1.28571429em;"/>
         </span>
         <span class="center">
-          ${data.rating.shortDescription}
+          ${data.rating.description}
         </span>
       </ons-list-item>
       <ons-list-item if.bind="data.bemerkung">
         ${data.bemerkung}
       </ons-list-item>
-      <ons-list-header>
-        Raumpläne
+      <ons-list-header i18n="floor-plans">
       </ons-list-header>
       <ons-list class="room-plan-list" if.bind="data.roomPlans.length > 0">
         <ons-list-item modifier="nodivider" repeat.for="roomPlan of data.roomPlans"
@@ -58,7 +56,7 @@
         </ons-list-item>
       </ons-list>
       <ons-list-item if.bind="data.roomPlans.length == 0">
-        <div class="center">Keine Raumpläne verhanden</div>
+        <div class="center" i18n="no-floor-plans"></div>
       </ons-list-item>
     </ons-list>
   </ons-page>

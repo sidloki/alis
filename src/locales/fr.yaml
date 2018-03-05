@@ -1,0 +1,193 @@
+image: Image
+map-type: Type de carte
+default: Par défault
+satellite: Satellite
+address: Adresse
+technologies: 
+ratings: 
+hearing-assistance-system:
+floor-plans: 
+no-floor-plans: 
+website: 
+
+search:
+  placeholder: 
+  no-results: 
+
+links:
+  metas:
+    title: 
+      "Liste des aides auditives de l'Institut fédéral de métrologie METAS"
+    url: 
+      "https://www.metas.ch/metas/fr/home/dok/rechtliches/hoergeraetliste.html"
+
+data:
+  technologies:
+    1:
+      title:
+      description:
+        "Le mode T est le pictogramme le plus courant. Réception inductive de
+        la tonalité directe via les aides auditives qui ont été commutées en
+        mode T sur l'appareil auditif via une touche de programme."
+    2:
+      title:
+      description:
+        "Dans de rares cas, la tonalité directe est transmise par infrarouge à
+        un petit appareil portatif, équipé d'un collier inductif. Ce récepteur
+        est disponible à la réception ou à la caisse."
+    3:
+      title:
+      description:
+        "Pour la réception inductive, un petit appareil portatif est disponible
+        à la réception ou à la caisse. Un collier inductif est connecté au
+        petit appareil."
+
+  ratings:
+    1:
+      title: Losange vert
+      description: Appareil auditif testé avec réception standardisée.
+      description-short: 
+
+    2:
+      title: Losange jaune
+      description:
+        "Appareil auditif testé ne répondant pas aux exigences d'une réception
+        standardisée."
+      description-short: 
+    3:
+      title: Losange blanc
+      description: Appareil auditif non contrôlé, aucune évaluation.
+      description-short: 
+
+pages:
+  help:
+    quickstart:
+      title: Démarrage rapide
+      content:
+        "<p>Où trouver des appareils auditifs? Sur www.höranlagen.ch, entrez
+        des <b>mots-clés</b> comme «cinéma», «théâtre», «église», par exemple.
+        Vous pouvez <b>limiter</b> votre recherche avec d'autres mots-clés, par
+        exemple: «université Lausanne», «cinéma Rex» ou «église Genève». La
+        fonction de recherche vérifie toutes les adresses postales, les
+        désignations de locaux et d'immeubles.</p>
+
+        <p>Cliquez sur un <b>marqueur</b> et une fenêtre d‘informations avec
+        l‘adresse postale et des données sur le système d‘écoute apparaissent.
+        Le cas échéant, les plans fournissent des informations sur une zone
+        verte pour une réception optimale. Cliquez sur les photos pour les
+        agrandir.</p>"
+
+    reception:
+      title: Informations sur les appareils auditifs
+      content:
+        "<p>La plupart des aides auditives peuvent recevoir un signal sonore
+        <b>sans fil</b> dans les cinémas, les théâtres, les églises, les
+        universités, etc. Vous entendrez <b>clairement sans écho, ni bruit de
+        fond</b>. Cela permet de comprendre facilement ce qui se dit, même dans
+        les grandes salles de réunion. Vous trouvez des appareils auditifs dans
+        plus de 2 000 endroits en Suisse.</p>
+
+        <p>C‘est très simple. Il suffit de régler vos appareils auditifs sur la 
+        <b>position T ou boucle magnétique</b> qui se trouve sur vos appareils
+        ou via la télécommande. En cas de doute, renseignez-vous auprès de
+        votre <b>audioprothésiste</b> sur la réception par induction.</p>
+
+        <p>Les <b>appareils auditifs</b> comprenant les intra-auriculaire,
+        contours d‘oreilles et implants cochléaires peuvent avoir la position
+        T.</p>
+
+        <p>Votre aide auditive a-t-elle également une bobine téléphonique? Sur
+        le site Web suivant, vous pouvez consulter la liste des appareils
+        auditifs et déterminer si votre aide auditive possède une bobine
+        téléphonique:</p>"
+
+    symbols:
+      title: Informations sur les systèmes d'écoute
+
+  add-system:
+    title: Signaler un nouveau système d'écoute
+
+  sponsors:
+    title: Sponsors
+
+  legal-notice:
+    title: Mentions légales
+    responsability: "Le gestionnaire de cette page d'accueil est:"
+
+    warrenty:
+      title: Clause de non-responsabilité
+      content:
+        "Les contenus de ce site web constituent une offre d'informations non
+        contraignante. L'IGGH n'en garantit ni l'actualité, la justesse, la
+        fiabilité, l'exhaustivité, ni la qualité. Leur utilisation se fait au
+        propre risque de l'utilisatrice ou de l'utilisateur. L'IGGH n'est en
+        rien responsable en cas de dégâts ou dégâts consécutifs matériels ou
+        immatériels qui résulteraient de l'utilisation ou de la non utilisation
+        des informations proposées, d'une utilisation abusive ou comme suite de
+        défauts techniques. L'IGGH se réserve le droit d'effectuer des
+        modifications ou des suppression à tout moment, et ce, sans avis
+        préalable."
+
+    liability:
+      title: Limitation de responsabilité
+      content: 
+        "L'IGGH n'est pas responsable des dégâts directs ou indirects qui
+        résulteraient de l'accès à ou de l'utilisation de ce site web ou des
+        informations qui y sont publiées."
+          
+    links:
+      title: Liens vers des pages internet
+      content:
+        "L'IGGH ne contrôle aucunes des pages en lien avec ce site web et ne
+        prend aucune responsabilité pour leur contenu et pour les éventuels
+        services proposés. La visite de telles pages se fait au risque propre
+        de l'utilisatrice / de l'utilisateur."
+
+    privacy:
+      title: Protection des données
+      content: 
+        "<p>L'IGGH traite les données personnelles transmises de manière
+        strictement confidentielle et protège les intérêts des utilisatrices et
+        des utilisateurs. Les données personnelles ne sont ni vendues à des
+        tiers, ni diffusées. L'IGGH s'efforce de manière appropriée de protéger
+        les bases de données contre les accès étrangers, les pertes et les abus
+        ou les falsifications. L'IGGH ne peut néanmoins donner aucune garantie
+        par rapport à cela.</p>
+
+        <p>La page internet de l'IGGH est en principe accessible sans mentions
+        de données personnelles. En collaboration étroite avec les partenaires
+        d'hébergement, nous nous efforçons de protéger par tous les moyens les
+        bases de données contre les accès étrangers, les pertes, les abus ou
+        les falsifications. Lors des visites, le serveur web du fournisseur
+        d'hébergement de l'IGGH enregistre les données d'utilisation de maniére
+        non-personnelle. Les fichiers de journal donnent des informations sur
+        le nombre d'accès à la page d'accueil de l'IGGH. Les données
+        d'utilisation ne sont pas liées à des données personnelles.</p>
+
+        <p>La prise de contact volontaire avec nous constitue une exception.
+        Toutes les données que vous nous transmettez sont traitées de manière
+        strictement confidentielle. Nous les recueillons et les enregistrons
+        seulement dans la mesure où cela est nécessaire pour votre inscription
+        et votre requête. L'accès à ce site web et le transfert de courriers
+        électroniques qui nous sont adressés ne sont pas cryptés. Il est
+        théoriquement possible que les données soient incomplètes ou consultées
+        par des tiers. Pour cette raison, nous vous prions de ne pas nous
+        transmettre de données condifentielles par courrier électronique. Nous
+        répondons habituellement aux requêtes que nous recevons par courrier
+        électronique également par courrier électronique. Au cas où vous ne
+        deviez pas souhaitez cela, nous vous prions de le faire remarquer dans
+        votre requête.</p>"
+
+    copyright:
+      title: 
+        "Droit d'auteur, droit des marques, copyright et autres droits de
+        protection"
+      content: 
+        "Pour l'ensemble des contenus de site web (images, graphismes, textes,
+        vidéo, etc.), l'IGGH ou des tiers qui mettent ce matériel à notre
+        disposition sont propriétaires du droit d'auteur (tous droits
+        réservés). Lors du téléchargement ou de la copie des contenus, des
+        images, des photos et d'autres données, aucuns droits ne sont
+        transférés en ce qui concerne leurs contenus. Pour la reproduction et
+        la transmission de quelques éléments que ce soit, le consentement écrit
+        préalable de l'IGGH doit être obtenu."

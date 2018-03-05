@@ -1,0 +1,184 @@
+image: Bild
+map-type: Kartentyp
+default: Standard
+satellite: Satelitt
+address: Adresse
+technologies: Technologien
+ratings: Bewertungen
+hearing-assistance-system: Höranlage
+floor-plans: Raumpläne
+no-floor-plans: Keine Raumpläne verfügbar
+website: Website
+
+search:
+  placeholder: "Höranlage suchen..."
+  no-results: Für den eingegebenen Suchbegriff wurde nichts gefunden.
+
+links:
+  metas:
+    title:
+      "Hörgeräteliste Eidgenössisches Institut für Metrologie METAS"
+    url: 
+      "https://www.metas.ch/metas/de/home/dok/rechtliches/hoergeraetliste.html"
+
+data:
+  technologies:
+    1:
+      title: Induktion
+      description:
+        "T-Modus ist das häufigste Piktogramm. Induktiver Empfang des
+        Direkttons über die Hörgeräte, welche über eine Programmtaste am
+        Hörgerät in den T-Modus umgestellt wurden."
+    2:
+      title: Infrarot
+      description:
+        "In seltenen Fällen wird der Direktton über Infrarotlicht an ein
+        kleines tragbares Gerät mit einer induktiven Halsschleife übertragen.
+        Dieser Empfänger ist bei der Rezeption oder an der Kasse erhältlich."
+    3:
+      title: Funk
+      description:
+        "Hier ist für einen induktiven Empfang ein kleines tragbares Gerät bei
+        der Rezeption oder an der Kasse erhältlich. Eine induktive Halsschleife
+        ist am kleinen Gerät angeschlossen."
+
+  ratings:
+    1:
+      title: Grüne Raute
+      description: Geprüfte Höranlage mit normgerechtem Empfang.
+      description-short: Geprüfte Höranlage gemäss Norm
+
+    2:
+      title: Gelbe Raute
+      description:
+        "Geprüfte Höranlage, die die Voraussetzungen für einen normgerechten
+        Empfang knapp nicht erfüllt."
+      description-short: Geprüfte Höranlage nicht nach Norm
+    3:
+      title: Weisse Raute
+      description: Nicht überprüfte Höranlage, keine Bewertung.
+      description-short: Nicht überprüfte Höranlage
+
+pages:
+  help:
+    quickstart:
+      title: Quickstart
+      content:
+        "<p>Wo finden Sie Höranlagen? Tippen Sie hier im www.hoeranlagen.ch
+        <b>Suchbegriffe</b> wie z. B. «Kino», «Theater», «Kirche»,
+        «Mehrzweckraum» usw. ein. Sie können die Suche mit weiteren
+        Suchbegriffen <b>einschränken</b>, zum Beispiel: «Universität Bern»,
+        «Kino Kosmos» oder «Kirche Stansstad». Die Suchfunktion prüft alle
+        Postadressen, Raum- und Gebäudebezeichnungen.</p>
+
+        <p>Klicken Sie auf einen <b>Marker</b> und es erscheint ein
+        Info-Fenster mit der Postadresse und mit Angaben zur Höranlage. Sofern
+        vorhanden, informieren Raumpläne über einen grünen Raumbereich für
+        einen optimalen Empfang. Klicken Sie auf die Bilder für eine
+        Vergrösserung.</p>"
+
+    reception:
+      title: Informationen zu Hörhilfen
+      content:
+        "<p>Wussten Sie schon? Die meisten Hörhilfen können <b>drahtlos</b> ein
+        Tonsignal im Kino, Theater, in Kirchen, Hochschulen, u.s.w. empfangen.
+        Sie hören in klarer Lautstärke und <b>ohne Nachhall und
+        Nebengeräusche</b>. Dies ermöglicht selbst in grossen
+        Versammlungsräumen ein angenehmes Sprachverstehen. An über 2000
+        Standorten in der Schweiz stehen Höranlagen zur Verfügung.</p>
+
+        <p>Es ist ganz einfach. Sie brauchen Ihre Hörhilfen nur in den
+        <b>T-Modus</b> einzustellen. Dies geschieht über eine Programmtaste
+        oder mit der Fernbedienung Ihrer Hörgeräte. Wenn Sie diese Funktion
+        noch nicht kennen, fragen Sie Ihren <b>Akustiker</b> nach dem T-Modus
+        oder nach dem induktiven Empfang.</p>
+
+        <p>Zu den <b>Hörhilfen</b> gehören alle Gehäuseformen, die vom kleinen
+        Im-Ohr-Gerät über Hinter-dem-Ohr-Gerät bis hin zu spezialisierten
+        Hörhilfen wie Cochlea Implantaten reichen.</p>
+
+        <p>Hat auch Ihr Hörgerät eine Telefonspule? Auf folgender Webseite
+        können Sie die <b>Hörgeräteliste</b> einsehen und feststellen, ob Ihr
+        Hörgerät eine Telefonspule besitzt:</p>"
+
+    symbols:
+      title: Informationen zu Höranlagen
+
+  add-system:
+    title: Neue Höranlage melden
+
+  sponsors:
+    title: Sponsoren
+
+  legal-notice:
+    title: Impressum
+    responsability: "Verantwortlich für den Inhalt dieser App ist:"
+
+    warrenty:
+      title: Keine Garantie
+      content:
+        "Die Inhalte dieser App stellen ein unverbindliches Informationsangebot
+        dar. Die IGGH gewährleistet weder deren Aktualität, Richtigkeit,
+        Zuverlässigkeit, Vollständigkeit noch deren Qualität. Die Nutzung
+        erfolgt auf eigenes Risiko der Besucherin oder des Besuchers. Die IGGH
+        haftet auf keinen Fall für Schäden oder Folgeschäden materieller oder
+        ideeller Art, die sich aus der Nutzung oder Nichtnutzung der
+        angebotenen Informationen, aus der missbräuchlichen Verwendung oder als
+        Folge von technischen Störungen ergeben. Die IGGH behält sich die
+        Veränderung oder Löschung von Informationen jederzeit und ohne
+        vorherige Ankündigung vor."
+
+    liability:
+      title: Haftungsbeschränkung
+      content: 
+        "Die IGGH haftet für keinen direkten oder indirekten Schaden, der durch
+        den Zugriff oder die Nutzung dieser App oder der darin veröffentlichten
+        Informationen entstand."
+          
+    links:
+      title: Verknüpfte Internetseiten
+      content:
+        "Die IGGH überprüft keine der mit den IGGH-Internetseiten verknüpften
+        Seiten und übernimmt keine Haftung für deren Inhalt und für allfällige
+        angebotene Leistungen. Der Besuch solcher Seiten erfolgt auf eigenes
+        Risiko der Nutzerin / des Nutzers."
+
+    privacy:
+      title: Datenschutz
+      content: 
+        "<p>Die IGGH behandelt die ihr überlassenen persönlichen Daten streng
+        vertraulich und schützt die Interessen der Nutzerinnen und Nutzer.
+        Persönliche Daten werden weder an Dritte verkauft noch weitergegeben.
+        Die IGGH bemüht sich in angemessener Weise, die Datenbanken vor fremden
+        Zugriffen, Verlusten und Missbrauch oder vor Fälschung zu schützen. Die
+        IGGH kann dafür aber keine Garantie übernehmen.</p>
+
+        <p>Die Internetseite der IGGH ist grundsätzlich ohne Angaben von
+        Personalien zugänglich. In enger Zusammenarbeit mit den
+        Hosting-Partnern bemühen wir uns, die Datenbanken mit allen Mitteln vor
+        fremden Zugriffen, Verlusten, Missbrauch oder vor Fälschung zu
+        schützen. Beim Besuch registrieren die Webserver des Hosting-Providers
+        der IGGH unpersönliche Nutzungsdaten. Die Logfiles geben Auskunft über
+        die Anzahl Zugriffe auf die Homepage der IGGH. Die Nutzungsdaten werden
+        nicht mit persönlichen Daten verknüpft.</p>
+
+        <p>Eine Ausnahme bildet die freiwillige Kontaktaufnahme mit uns. Alle
+        Dateien, die Sie uns übermitteln, werden streng vertraulich behandelt.
+        Wir erfassen und speichern sie nur soweit, wie es Ihre Anmeldung und
+        Anfrage erfordert. Der Zugang zu dieser App und die Übertragung von
+        E-Mails an uns sind unverschlüsselt. Es ist theoretisch möglich, dass
+        Dateien unvollständig oder von Dritten eingesehen werden könnten. Aus
+        diesem Grund bitten wir Sie, uns keine vertraulichen Daten per E-Mail
+        zu übermitteln. Anfragen, welche wir per E-Mail erhalten, beantworten
+        wir üblicherweise auch per E-Mail. Sollten Sie dies nicht wünschen,
+        bitten wir Sie, dies in Ihrer Anfrage anzumerken.</p>"
+
+    copyright:
+      title: Copyright
+      content: 
+        "Für sämtliche Inhalte dieser App (Bilder, Grafiken, Texte, Video usw.)
+        hat die IGGH das Urheberrecht (alle Rechte vorbehalten). Durch das
+        Herunterladen oder Kopieren von Inhalten, Bildern, Fotos und anderen
+        Dateien werden keinerlei Rechte bezüglich der Inhalte übertragen. Für
+        die Reproduktion und Weitergabe jeglicher Elemente ist die schriftliche
+        Zustimmung der IGGH im Voraus einzuholen."

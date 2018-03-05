@@ -12,7 +12,7 @@
           <ons-icon icon="ion-ios-arrow-back, material:md-arrow-left"></ons-icon>
         </ons-toolbar-button>
         <form style="flex:1;" submit.delegate="onSearch()" click.delegate="showSearch()">
-          <input ref="_searchinput" type="search" class="search-input" placeholder="Höranlage suchen..." value.bind="searchText" input.trigger="onSearchInput()" />
+          <input ref="_searchinput" type="search" class="search-input" i18n i18n-attrs="placeholder:search.placeholder" value.bind="searchText" input.trigger="onSearchInput()" />
         </form>
         <ons-toolbar-button if.bind="searchText" click.delegate="clearSearch()">
           <ons-icon icon="ion-ios-close-empty, material:md-close"></ons-icon>
@@ -36,9 +36,7 @@
         </div>
       </div>
       <div style="padding:0 10px;" show.bind="searchText && searchResults.locations.length === 0 && searchResults.systems.length === 0">
-        <p>
-          Für den eingegebenen Suchbegriffe wurde leider nichts gefunden.
-        </p>
+        <p i18n="search.no-results"></p>
       </div>
       <div class="card" style="padding:0;" show.bind="searchText">
         <ons-list>

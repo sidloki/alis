@@ -1,3 +1,13 @@
 .page .page__background {
   background-color: #fff;
 }
+
+h1.paragraph {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+h1.paragraph + p,
+h1.paragraph + div > p {
+  margin-top: 0;
+}
