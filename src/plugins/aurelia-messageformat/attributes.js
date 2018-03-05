@@ -1,4 +1,4 @@
-import {I18N} from './i18n'
+import {I18N} from './i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute} from 'aurelia-templating';
 import {DOM} from 'aurelia-pal';

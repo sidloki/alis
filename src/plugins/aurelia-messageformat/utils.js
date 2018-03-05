@@ -1,17 +1,3 @@
-export function normalize(content, options) {
-  if (options.trimWhiteSpace) {
-    content = content.replace(/^\n+|\s+$/g, '');
-  }
-  if (!options.preserveIndentation) {
-    content = content.replace(/^[ \t]+/mg, '');
-  }
-  if (typeof options.replaceNewLines === 'string') {
-    content = content.replace(/\n/g, options.replaceNewLines);
-  }
-
-  return content;
-}
-
 export function  negotiateLanguages(
   requestedLocales,
   availableLocales,
@@ -58,5 +44,5 @@ export function getProp(object, path) {
   while (object && index < length) {
     object = object[keys[index++]];
   }
-  return (index && index == length) ? object : undefined;
+  return (index && index === length) ? object : undefined;
 }

@@ -30,7 +30,7 @@ export class I18N {
   async setup(options) {
     this.options = Object.assign(this.options, options);
 
-    await Promise.all(this.options.languages.map(language => 
+    await Promise.all(this.options.languages.map(language =>
       this.loadCatalog(language)));
 
     this.setLocale(this.options.language);
@@ -79,13 +79,6 @@ export class I18N {
       let params = this.getParams(el);
       let key = el.getAttribute('i18n');
 
-      // if (!el._i18n) {
-      //   el._i18n = el.innerHTML;
-      // }
-      // if (!key) {
-      //   key = el._i18n;
-      // }
-
       let value = this.tr(key, params);
 
       if (isHtml.test(value)) {
@@ -99,20 +92,8 @@ export class I18N {
       let params = this.getParams(el);
       let items = el.getAttribute('i18n-attrs').split(';');
 
-      // if (!el._i18n_attrs) {
-      //   el._i18n_attrs = {};
-      // }
-      
       for (let item of items) {
-        var [attr, key] = item.split(':');
-
-        // if (!el._i18n_attrs[attr]) {
-        //   el._i18n_attrs[attr] = el.getAttribute(attr);
-        // }
-
-        // if (!key) {
-        //   key = el._i18n_attrs[attr];
-        // }
+        let [attr, key] = item.split(':');
 
         let value = this.tr(key, params);
         el.setAttribute(attr, value);

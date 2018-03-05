@@ -78,7 +78,7 @@ export class Database {
       switch (system.bewertung) {
         case 1:
         case 2:
-          system.ratingId = system.bewertung;  
+          system.ratingId = system.bewertung;
           break;
         default:
           system.ratingId = 3;
@@ -144,7 +144,7 @@ export class Database {
       system.organisation = organisation;
       system.building = building;
       system.rating = rating;
-      
+
       location.bounds.extend(L.latLng(system.lat, system.lng));
 
       if (location.plzs.indexOf(system.plz) === -1) {
