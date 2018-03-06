@@ -24,3 +24,7 @@ leaflet-map .leaflet-button-plain {
   background-color: #fff;
   color: #333;
 }
+
+leaflet-map .easy-button-container .easy-button-button {
+  padding: 0;
+}
