@@ -22,6 +22,26 @@ links:
       "https://www.metas.ch/metas/en/home/dok/rechtliches/hoergeraetliste.html"
 
 data:
+  roomtypes:
+    1:
+      title: Mehrzweckraum
+    2:
+      title: Unterrichtsraum
+    3:
+      title: Kultusraum
+    4:
+      title: Kulturraum
+    5:
+      title: Amtsraum
+    6:
+      title: Kundenschalter
+    7:
+      title: Allgemeinraum
+    8:
+      title: Kino
+    9:
+      title: Theater
+
   technologies:
     1:
       title: Induction loop

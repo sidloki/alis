@@ -215,7 +215,7 @@ export class Home {
       property: 'typID',
       value: item.id
     };
-    this.searchText = this.search.text = item.typ;
+    this.searchText = this.search.text = item.name;
     this.selection = null;
     this.zoomToNearest();
   }

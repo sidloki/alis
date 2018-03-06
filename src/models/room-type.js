@@ -1,3 +1,5 @@
+import {_} from '../plugins/aurelia-messageformat';
+
 const Icons = {
   1: {
     name: 'building',
@@ -58,10 +60,6 @@ export class RoomType {
 
   get id() {
     return this.typID;
-  }
-
-  get name() {
-    return this.typ;
   }
 
   get description() {

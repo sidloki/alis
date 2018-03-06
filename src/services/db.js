@@ -9,6 +9,7 @@ import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Technology} from '../models/technology';
 import {Rating} from '../models/rating';
+import {_} from '../plugins/aurelia-messageformat';
 
 @inject(Config)
 export class Database {
@@ -65,10 +66,15 @@ export class Database {
 
   process() {
     let systems = this.getIndex(System);
+    let roomTypes = this.getIndex(RoomType);
     let buildings = this.createIndex(Building);
     let organisations = this.createIndex(Organisation);
     let locations = this.createIndex(Location);
     let ratings = this.createIndex(Rating);
+
+    for (let [, roomType] of roomTypes.entries()) {
+      roomType.name = _(`data.${RoomType.tablename}.${roomType.id}.title`);
+    }
 
     for (let [, system] of systems.entries()) {
       system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;

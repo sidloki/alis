@@ -22,6 +22,26 @@ links:
       "https://www.metas.ch/metas/fr/home/dok/rechtliches/hoergeraetliste.html"
 
 data:
+  roomtypes:
+    1:
+      title: 
+    2:
+      title: 
+    3:
+      title: 
+    4:
+      title: 
+    5:
+      title: 
+    6:
+      title: 
+    7:
+      title: 
+    8:
+      title: 
+    9:
+      title: 
+
   technologies:
     1:
       title:
