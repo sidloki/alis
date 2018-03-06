@@ -9,6 +9,7 @@ import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Technology} from '../models/technology';
 import {Rating} from '../models/rating';
+import {Lang} from '../models/lang';
 import {_} from '../plugins/aurelia-messageformat';
 
 @inject(Config)
@@ -31,7 +32,7 @@ export class Database {
   }
 
   load() {
-    let models = [Canton, RoomType, System, Technology];
+    let models = [Canton, RoomType, System, Technology, Lang];
     this.reset();
     return Promise.all(models.map(Model => {
       let tablename = Model.tablename;
@@ -80,6 +81,7 @@ export class Database {
       system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
       system.organisationId = `${system.organisation}`;
       system.locationId = system.ort.trim();
+      system.lang = this.query(Lang).getById(system.langID);
 
       switch (system.bewertung) {
         case 1:

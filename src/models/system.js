@@ -5,6 +5,7 @@ import {RoomType} from './room-type';
 import {Technology} from './technology';
 import {Building} from './building';
 import {Organisation} from './organisation';
+import {I18N} from '../plugins/aurelia-messageformat';
 
 export class System {
 
@@ -12,6 +13,7 @@ export class System {
     Object.assign(this, data);
     this.db = Container.instance.get(Database);
     this.config = Container.instance.get(Config);
+    this.i18n = Container.instance.get(I18N);
   }
 
   static get tablename() {
@@ -38,6 +40,11 @@ export class System {
       name = this.roomtype.name;
     }
     return name;
+  }
+
+  get annotation() {
+    let locale = this.i18n.getLocale();
+    return this.lang[locale];
   }
 
   get roomtype() {
