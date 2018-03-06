@@ -48,13 +48,16 @@ export class I18N {
 
   setLocale(locale) {
     let oldLocale = this.getLocale();
-    this.locale = locale;
     this.locales = negotiateLanguages(
-      [this.getLocale()].concat(navigator.languages || []),
+      [locale].concat(navigator.languages || []),
       this.options.languages,
       this.options.fallbackLanguage
     );
-    this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+    this.locale = this.locales[0];
+    this.ea.publish('i18n:locale:changed', {
+      oldValue: oldLocale,
+      newValue: this.locale
+    });
     this.signaler.signal('aurelia-translation-signal');
   }
 
