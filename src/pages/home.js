@@ -1,4 +1,5 @@
 import * as ResizeObserver from 'resize-observer-polyfill';
+import * as ons from 'onsenui';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
 import {Config} from '../services/config';
@@ -49,6 +50,11 @@ export class Home {
 
     let locateControl = L.control.locate({
       showPopup: false,
+      onLocationError: (error) => {
+        ons.notification.alert('Ist die Ortung aktiviert und die App berechtigt darauf zugreifen?', {
+          title: 'Ortung fehlgeschlagen'
+        });
+      },
       locateControl: {}
     });
 
