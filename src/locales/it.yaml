@@ -9,6 +9,12 @@ hearing-assistance-system:
 floor-plans: 
 no-floor-plans: 
 website: 
+photo: 
+delete: 
+annotation: 
+your-contact-info: 
+full-name: 
+email-address: 
 
 error:
   geolocation:
@@ -133,6 +139,18 @@ pages:
 
   add-system:
     title: Segnala un nuovo sistema di ascolto
+    mark-position: 
+    search:
+      placeholder: 
+      no-results:
+        title: 
+        message: 
+    submit:
+      success:
+        title: 
+        message: 
+      error:
+        title: 
 
   sponsors:
     title: Sponsor

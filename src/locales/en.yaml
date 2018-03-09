@@ -9,6 +9,12 @@ hearing-assistance-system: Hearing Assistance System
 floor-plans: Floor plans
 no-floor-plans: No floor plans available
 website: Website
+photo: Photo
+delete: Delete
+annotation: Annotations
+your-contact-info: Your contact details
+full-name: Full name
+email-address: E-mail address
 
 error:
   geolocation:
@@ -129,6 +135,18 @@ pages:
 
   add-system:
     title: Report a new hearing assistance system
+    mark-position: Mark location on map
+    search:
+      placeholder: "Search or tap on the map..."
+      no-results:
+        title: "Nothing found."
+        message: "No address could be found for the selected position."
+    submit:
+      success:
+        title: Thanks
+        message: "The data has been sent and will be reviewed."
+      error:
+        title: Error
 
   sponsors:
     title: Sponsors

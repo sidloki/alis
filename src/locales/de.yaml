@@ -9,6 +9,12 @@ hearing-assistance-system: Höranlage
 floor-plans: Raumpläne
 no-floor-plans: Keine Raumpläne verfügbar
 website: Website
+photo: Foto
+delete: Löschen
+annotation: Bemerkungen
+your-contact-info: Ihre Kontaktdaten
+full-name: Vollständiger Name
+email-address: E-Mail-Adresse
 
 error:
   geolocation:
@@ -132,6 +138,18 @@ pages:
 
   add-system:
     title: Neue Höranlage melden
+    mark-position: Position auf der Karte markieren
+    search:
+      placeholder: "Suchen oder auf die Karte tippen..."
+      no-results:
+        title: "Nichts gefunden."
+        message: "Für die gewählte Position konnte keine Adresse gefunden werden."
+    submit:
+      success:
+        title: Vielen Dank
+        message: "Ihre Daten wurden gesendet und werden überprüft."
+      error:
+        title: Fehler
 
   sponsors:
     title: Sponsoren
