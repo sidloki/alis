@@ -10,6 +10,12 @@ floor-plans: Floor plans
 no-floor-plans: No floor plans available
 website: Website
 
+error:
+  geolocation:
+    title: Geolocation failed
+    message:
+      "Is geolocation enabled and is the app authorized to access it?"
+
 search:
   placeholder: "Search Hearing Assistance System..."
   no-results: Nothing was found for the entered search term.

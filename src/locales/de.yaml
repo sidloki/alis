@@ -10,6 +10,12 @@ floor-plans: Raumpläne
 no-floor-plans: Keine Raumpläne verfügbar
 website: Website
 
+error:
+  geolocation:
+    title: Ortung fehlgeschlagen
+    message:
+      "Ist die Ortung aktiviert und die App berechtigt darauf zugreifen?"
+
 search:
   placeholder: "Höranlage suchen..."
   no-results: Für den eingegebenen Suchbegriff wurde nichts gefunden.

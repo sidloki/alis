@@ -10,6 +10,7 @@ import {Storage} from '../services/storage';
 import {Building} from '../models/building';
 import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
+import {_} from '../plugins/aurelia-messageformat';
 
 @inject(Router, Database, Storage, Search, Config, State)
 export class Home {
@@ -51,8 +52,8 @@ export class Home {
     let locateControl = L.control.locate({
       showPopup: false,
       onLocationError: (error) => {
-        ons.notification.alert('Ist die Ortung aktiviert und die App berechtigt darauf zugreifen?', {
-          title: 'Ortung fehlgeschlagen'
+        ons.notification.alert(_('error.geolocation.message'), {
+          title: _('error.geolocation.title')
         });
       },
       locateControl: {}

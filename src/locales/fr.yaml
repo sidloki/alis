@@ -10,6 +10,11 @@ floor-plans:
 no-floor-plans: 
 website: 
 
+error:
+  geolocation:
+    title: 
+    message:
+
 search:
   placeholder: 
   no-results: 
