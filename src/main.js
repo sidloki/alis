@@ -2,11 +2,12 @@ import 'whatwg-fetch';
 import {PLATFORM} from 'aurelia-pal';
 
 export function configure(aurelia) {
+  const params = parseQueryString(location.search.substring(1));
   aurelia.use
     .basicConfiguration()
     .history()
     .plugin(PLATFORM.moduleName('./plugins/aurelia-messageformat'), {
-      language: navigator.language || 'en',
+      language: params.lang || navigator.language || 'en',
       languages: ['en', 'de', 'fr', 'it'],
       fallbackLanguage: 'en'
     })
@@ -21,4 +22,24 @@ export function configure(aurelia) {
   }
 
   aurelia.start().then(() => aurelia.setRoot());
+}
+
+function parseQueryString(query) {
+  var vars = query.split('&');
+  var queryString = {};
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    // If first entry with this name
+    if (typeof queryString[pair[0]] === 'undefined') {
+      queryString[pair[0]] = decodeURIComponent(pair[1]);
+      // If second entry with this name
+    } else if (typeof queryString[pair[0]] === 'string') {
+      var arr = [queryString[pair[0]], decodeURIComponent(pair[1])];
+      queryString[pair[0]] = arr;
+      // If third or later entry with this name
+    } else {
+      queryString[pair[0]].push(decodeURIComponent(pair[1]));
+    }
+  }
+  return queryString;
 }
