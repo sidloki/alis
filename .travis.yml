@@ -4,7 +4,8 @@ node_js:
   - "8"
 script:
   - npm run lint --silent
-  - npm run export
+  - npm run build
+  - npm run phonegap
 after_success:
   - codecov
 cache:
