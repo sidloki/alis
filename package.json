@@ -7,9 +7,10 @@
   "author": "Marco Strobel <mail@strobel.ch>",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node fuse",
-    "prod": "cross-env NODE_ENV=production node fuse",
-    "export": "cross-env NODE_ENV=production OUT_DIR=www node fuse",
+    "dev": "cross-env NODE_ENV=development SERVER=true node fuse",
+    "prod": "cross-env NODE_ENV=production SERVER=treu node fuse",
+    "build": "cross-env NODE_ENV=production node fuse",
+    "phonegap": "cross-env NODE_ENV=production OUT_DIR=www node fuse",
     "lint": "cross-env tslint --project tsconfig.json"
   },
   "dependencies": {

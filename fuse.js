@@ -22,7 +22,8 @@ const AureliaPlugin = function() {
 
 const production = process.env.NODE_ENV === 'production';
 const outDir = process.env.OUT_DIR ? process.env.OUT_DIR : 'dist';
-const server = outDir === 'dist';
+const server = process.env.SERVER ? process.env.SERVER : false;
+const indexTemplate = outDir === 'dist' ? 'index.html' : 'index_cordova.html';
 
 const resources = [
   '.nojekyll',
@@ -76,7 +77,7 @@ Sparky.task('build', () => {
       production ? UglifyJSPlugin() : function () {},
       WebIndexPlugin({
         title: 'Höranlagen',
-        template: 'src/index.html',
+        template: `src/${indexTemplate}`,
         path: './'
       })
     ]
@@ -131,6 +132,7 @@ Sparky.task('build', () => {
       !> [main.ts]
       + [**/*.{js,html,css}]
       - index.html
+      - index_cordova.html
     `);
 
   if (!production) {
