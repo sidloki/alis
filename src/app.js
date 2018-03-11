@@ -43,7 +43,7 @@ export class App {
       name: 'help-video',
       moduleId: './pages/help/video',
       nav: true,
-      title: 'Video: Wie funktionniert eine Höranlage?',
+      title: 'Video: Wie funktioniert eine Höranlage?',
       settings: {}
     }, {
       route: 'help/symbols',
