@@ -33,18 +33,25 @@ export class App {
       nav: true,
       settings: {}
     }, {
-      route: 'help/symbols',
-      name: 'help-symbols',
-      moduleId: './pages/help/symbols',
-      nav: true,
-      title: _('pages.help.symbols.title'),
-      settings: {}
-    }, {
       route: 'help/reception',
       name: 'help-reception',
       moduleId: './pages/help/reception',
       nav: true,
       title: _('pages.help.reception.title'),
+      settings: {}
+    }, {
+      route: 'help/video',
+      name: 'help-video',
+      moduleId: './pages/help/video',
+      nav: true,
+      title: 'Video: Wie funktioniert eine Höranlage?',
+      settings: {}
+    }, {
+      route: 'help/symbols',
+      name: 'help-symbols',
+      moduleId: './pages/help/symbols',
+      nav: true,
+      title: _('pages.help.symbols.title'),
       settings: {}
     }, {
       route: 'add-system',
