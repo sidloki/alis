@@ -8,7 +8,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development SERVER=true node fuse",
-    "prod": "cross-env NODE_ENV=production SERVER=treu node fuse",
+    "prod": "cross-env NODE_ENV=production SERVER=true node fuse",
     "build": "cross-env NODE_ENV=production node fuse",
     "phonegap": "cross-env NODE_ENV=production OUT_DIR=www node fuse",
     "lint": "cross-env tslint --project tsconfig.json"
