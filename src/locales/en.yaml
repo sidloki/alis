@@ -133,6 +133,9 @@ pages:
     symbols:
       title: Information about Hearing Assistance Systems
 
+    video:
+      title: "Video: How does a Hearing Loop work?"
+
   add-system:
     title: Report a new hearing assistance system
     mark-position: Mark location on map

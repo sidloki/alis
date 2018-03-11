@@ -135,6 +135,9 @@ pages:
     symbols:
       title: Informations sur les systèmes d'écoute
 
+    video:
+      title: "Vidéo: Comment fonctionne un système d'écoute?"
+
   add-system:
     title: Signaler un nouveau système d'écoute
     mark-position: 

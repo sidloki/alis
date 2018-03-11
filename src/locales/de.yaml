@@ -136,6 +136,9 @@ pages:
     symbols:
       title: Informationen zu Höranlagen
 
+    video:
+      title: "Video: Wie funktioniert eine Höranlage?"
+
   add-system:
     title: Neue Höranlage melden
     mark-position: Position auf der Karte markieren
