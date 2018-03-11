@@ -32,11 +32,11 @@ export class App {
       nav: true,
       settings: {}
     }, {
-      route: 'help/symbols',
-      name: 'help-symbols',
-      moduleId: './pages/help/symbols',
+      route: 'help/reception',
+      name: 'help-reception',
+      moduleId: './pages/help/reception',
       nav: true,
-      title: 'Informationen zu Höranlagen',
+      title: 'Informationen zu Hörhilfen',
       settings: {}
     }, {
       route: 'help/video',
@@ -46,11 +46,11 @@ export class App {
       title: 'Video: Wie funktionniert eine Höranlage?',
       settings: {}
     }, {
-      route: 'help/reception',
-      name: 'help-reception',
-      moduleId: './pages/help/reception',
+      route: 'help/symbols',
+      name: 'help-symbols',
+      moduleId: './pages/help/symbols',
       nav: true,
-      title: 'Informationen zu Hörhilfen',
+      title: 'Informationen zu Höranlagen',
       settings: {}
     }, {
       route: 'add-system',
