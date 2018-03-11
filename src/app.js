@@ -39,6 +39,13 @@ export class App {
       title: 'Informationen zu Höranlagen',
       settings: {}
     }, {
+      route: 'help/video',
+      name: 'help-video',
+      moduleId: './pages/help/video',
+      nav: true,
+      title: 'Video: Wie funktionniert eine Höranlage?',
+      settings: {}
+    }, {
       route: 'help/reception',
       name: 'help-reception',
       moduleId: './pages/help/reception',
