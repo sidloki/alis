@@ -8,8 +8,11 @@
         ${title}
       </div>
     </ons-toolbar>
-    <ons-list>
-      <ons-list-item repeat.for="sponsor of sponsors" modifier="longdivider" click.delegate="openWebsite(sponsor)">
+    <div style="margin: 0 16px;">
+      <p>Wir danken folgenden Sponsoren für die finanzielle Unterstützung:</p>
+    </div>
+    <ons-list modifier="noborder">
+      <ons-list-item repeat.for="sponsor of sponsors" modifier="longdivider tappable" click.delegate="openWebsite(sponsor)">
         <span class="center" style="padding-right:14px;">
           <img if.bind="sponsor.logo" src="${sponsor.logo}" alt="${sponsor.title}" style="max-width:100%;max-height:120px;">
           <span if.bind="!sponsor.logo" class="list-item__title">${sponsor.title}</span>

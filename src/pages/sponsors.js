@@ -11,33 +11,28 @@ export class Sponsors {
   activate(params, routeConfig) {
     this.title = routeConfig.title;
     this.sponsors = [{
-      title: 'pro audito schweiz',
-      link: 'http://www.proaudito.ch',
-      logo: `${this.config.baseUrl}/pictures/logo_pa_hoch.png`
-    }, {
-      title: 'Eidgenössische Büro für die Gleichstellung von Menschen mit Behinderung EBGB',
-      link: 'http://www.edi.admin.ch/ebgb',
-      logo: `${this.config.baseUrl}/pictures/logo_ebgb_hoch.png`
-    }, {
-      title: 'Denk an mich',
-      link: 'http://www.denkanmich.ch',
-      logo: `${this.config.baseUrl}/pictures/logo_dam_hoch.png`
-    }, {
-      title: 'Sonos',
-      link: 'http://www.sonos-info.ch',
-      logo: `${this.config.baseUrl}/pictures/logo_sonos_2015.png`
-    }, {
-      title: 'Oertli Stiftung',
-      link: 'http://www.oertlistiftung.ch/',
-      logo: `${this.config.baseUrl}/pictures/logo_oertli_stiftung.png`
-    }, {
-      title: 'Paul Hess Stiftung',
+      title: 'Irma Wiegert Stiftung c/o pro audito schweiz',
       link: '',
-      logo: ''
     }, {
-      title: 'Katholische Kirche Region Bern',
-      link: 'http://www.kathbern.ch/',
-      logo: `${this.config.baseUrl}/pictures/logo_kathbe.png`
+      title: 'pro audito schweiz',
+      link: 'http://www.pro-audito.ch/',
+      logo: `${this.config.baseUrl}/pictures/logos/logo-pro-audito-schweiz.png`
+    }, {
+      title: 'Reformierte Kirche Kanton Zug',
+      link: 'http://www.ref-zug.ch/kanton-zug/',
+      logo: `${this.config.baseUrl}/pictures/logos/logo-ref-kirche-kt-zug.png`
+    }, {
+      title: 'Reformierte Kirche Baselland',
+      link: 'https://refbl.ch/',
+      logo: `${this.config.baseUrl}/pictures/logos/logo-ref-kirche-baselland.png`
+    }, {
+      title: 'Reformierte Kirche Kanton Luzern',
+      link: 'http://www.reflu.ch/',
+      logo: `${this.config.baseUrl}/pictures/logos/logo-ref-kirche-kt-luzern.png`
+    }, {
+      title: 'Evangelische Landeskirche des Kantons Thurgau',
+      link: 'http://www.evang-tg.ch/',
+      logo: `${this.config.baseUrl}/pictures/logos/logo-evg-kirche-kt-thurgau.png`
     }];
   }
 
