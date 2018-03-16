@@ -85,8 +85,14 @@
         </div>
         <div class="right"></div>
       </ons-list-item>
+      <ons-list-item>
+        <div class="right">
+          <ons-button click.delegate="commit()">Senden</ons-button>
+        </div>
+      </ons-list-item>
     </ons-list>
   </ons-page>
+  <!-- Position page overlay -->
   <ons-page if.bind="positionPageVisible">
     <ons-toolbar>
       <div class="left">
