@@ -96,8 +96,11 @@
     </div>
     <script src="cordova.js"></script>
     <script>
-      if (navigator.splashscreen) {
-        navigator.splashscreen.hide();
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        if (navigator.splashscreen) {
+          navigator.splashscreen.hide();
+        }
       }
     </script>
     <script  type="text/javascript" src="a823fcc8-vendor.js"></script>
