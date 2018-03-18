@@ -4,7 +4,7 @@
     <ons-splitter-side id="menu" ref="_menu" side="left" collapse swipeable swipe-target-width="1">
       <ons-page>
         <ons-list modifier="noborder">
-          <ons-list-item repeat.for="nav of router.navigation" click.delegate="navigateTo(nav)" modifier="nodivider">
+          <ons-list-item repeat.for="nav of router.navigation" click.delegate="navigateTo(nav)" modifier="nodivider tappable">
             <span class="center">${nav.title}</span>
           </ons-list-item>
         </ons-list>
