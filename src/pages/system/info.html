@@ -10,7 +10,7 @@
     <div if.bind="data.photoUrl" css="background-image:url('${data.photoUrl}');background-repeat:no-repeat;background-size:cover;background-position:center;width:100%;height:35%;">
     </div>
     <ons-list>
-      <ons-list-item if.bind="data.strasse_nr || data.plz || data.org" tappable>
+      <ons-list-item if.bind="data.strasse_nr || data.plz || data.org">
         <span class="left">
           <ons-icon icon="ion-ios-location,material:md-pin" fixed-width="true"></ons-icon>
         </span>
