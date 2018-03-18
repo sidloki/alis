@@ -1,6 +1,6 @@
 {
   "name": "alis",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A mobile application to find locations with assistive listening systems.",
   "main": "src/main.js",
   "repository": "https://github.com/sidloki/alis.git",
