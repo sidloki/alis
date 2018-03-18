@@ -29,15 +29,77 @@
     <link rel="stylesheet" type="text/css" href="node_modules/mapkeyicons/dist/MapkeyIcons.css"/>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATPcjEF52D830ahwcyByXNF2DgloZnrss&libraries=places" async defer></script>
     <script src="node_modules/core-js/client/core.min.js"></script>
+    <style>
+      #splash-container {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 999999;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #bada63;
+        color: #4d4d4d;
+      }
+      #splash-container-inner {
+        font-size: 36px;
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        font-family: sans;
+        font-weight: bold;
+      }
+      #splash-text {
+        padding-bottom: 20px;
+      }
+      #splash-text > div {
+        padding: 10px;
+      }
+      #splash-spinner-container {
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      #splash-spinner {
+        border: 8px solid #b3c976;
+        border-radius: 50%;
+        border-top: 8px solid #4d4d4d;
+        width: 36px;
+        height: 36px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+      }
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }  
+    </style>
   </head>
 
   <body aurelia-app="main">
-    <div style="height:100%;display:flex;align-items:center;">
-      <div style="font-size:48px;flex:1;text-align:center;">
-        <i class="fa fa-spinner fa-spin"></i>
+    <div id="splash-container">
+      <div id="splash-container-inner">
+        <div id="splash-text">
+          <div>Klarer</div>
+          <div>hören</div>
+          <div>und</div>
+          <div>verstehen</div>
+        </div>
+        <div id="splash-spinner-container">
+          <div id="splash-spinner"></div>
+        </div>
       </div>
     </div>
     <script src="cordova.js"></script>
+    <script>
+      if (navigator.splashscreen) {
+        navigator.splashscreen.hide();
+      }
+    </script>
     $bundles
   </body>
 </html>
