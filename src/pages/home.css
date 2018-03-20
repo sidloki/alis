@@ -68,6 +68,10 @@
   display: inherit;
 }
 
+.leaflet-container .easy-button-container .easy-button-button {
+  padding: 0;
+}
+
 .category-item {
   width: 33%;
   text-align:center;

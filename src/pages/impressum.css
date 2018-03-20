@@ -2,11 +2,12 @@
   background-color: #fff;
 }
 
-.page h2 {
+h1.paragraph {
   font-size: 17px;
-  font-weight: 500;
+  font-weight: bold;
+  margin-bottom: 0;
 }
-
-.page.page--material h2 {
-  font-size: 20px;
+h1.paragraph + p,
+h1.paragraph + div > p {
+  margin-top: 0;
 }

@@ -22,13 +22,13 @@
           <ons-icon icon="ion-ios-location,material:md-pin" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label for="address" class="input-label">Adresse*</label>
+          <label for="address" class="input-label"><span i18n="address"></span>*</label>
           <ons-input input-id="address" type="text" modifier="underbar" style="width:100%;" value.one-way="data.formatted_address" readonly="true"></ons-input>
           <div class="error" if.bind="errors.address">${errors.address}</div>
           <div style="width:100%;height:120px;position:relative;margin-top:12px;">
             <leaflet-map fixed.bind="true" overlays.bind="overlays" center.bind="data.coordinates" bounds.bind="bounds" layer-control.bind="false" zoom-control.bind="false"></leaflet-map>
             <div if.bind="!place" style="z-index:10000;background-color: rgba(0,0,0,0.5);color:#fff;position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;padding:16px;">
-              <div style="text-align:center;">Position auf der Karte markieren</div>
+              <div style="text-align:center;" i18n="pages.add-system.mark-position"></div>
             </div>
           </div>
         </div>
@@ -39,8 +39,8 @@
           <ons-icon icon="ion-camera,material:md-camera" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label class="input-label">Foto</label>
-          <ons-button if.bind="imageUrl" click.trigger="deleteImage()" modifier="quiet" style="position:absolute;right:6px;top:7px;">Löschen</ons-button>
+          <label class="input-label" i18n="photo"></label>
+          <ons-button if.bind="imageUrl" click.trigger="deleteImage()" modifier="quiet" style="position:absolute;right:6px;top:7px;" i18n="delete"></ons-button>
           <div class="image-upload">
             <ons-button if.bind="!imageUrl" click.trigger="uploadImageClick()" modifier="quiet" class="upload-button">
               <ons-icon icon="md-plus"></ons-icon>
@@ -57,18 +57,18 @@
           <ons-icon icon="md-comment-text" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label for="annotations" class="input-label">Bemerkung</label>
+          <label for="annotations" class="input-label" i18n="annotation"></label>
           <textarea id="annotations" class="textarea" rows="4" style="width:100%;margin-top:8px;" value.bind="data.annotations"></textarea>
         </div>
         <div class="right"></div>
       </ons-list-item>
-      <ons-list-header>Ihre Kontaktdaten</ons-list-header>
+      <ons-list-header i18n="your-contact-info"></ons-list-header>
       <ons-list-item modifier="nodivider">
         <div class="left">
           <ons-icon icon="ion-person, material:md-account" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label for="username" class="input-label">Name*</label>
+          <label for="username" class="input-label"><span i18n="full-name"></span>*</label>
           <ons-input input-id="username" type="text" modifier="underbar" style="width:100%;" value.bind="data.username" input.trigger="validate($event)"></ons-input>
           <div class="error" if.bind="errors.username">${errors.username}</div>
         </div>
@@ -79,7 +79,7 @@
           <ons-icon icon="ion-email, material:md-email" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label for="useremail" class="input-label">E-Mail*</label>
+          <label for="useremail" class="input-label"><span i18n="email-address"></span>*</label>
           <ons-input input-id="useremail" type="email" modifier="underbar" style="width:100%;" value.bind="data.useremail" input.trigger="validate($event)"></ons-input>
           <div class="error" if.bind="errors.useremail">${errors.useremail}</div>
         </div>
@@ -98,9 +98,7 @@
       <div class="left">
         <ons-back-button></ons-back-button>
       </div>
-      <div class="center">
-        Adresse
-      </div>
+      <div class="center" i18n="address"></div>
       <div class="right">
         <ons-toolbar-button disabled.bind="!place" click.trigger="onAcceptAddressClick()">
           <ons-icon icon="md-check"></ons-icon>
@@ -112,7 +110,7 @@
         <div class="center">
           <ons-input input-id="address" type="text" value.one-way="place.name" modifier="underbar" style="width:100%;"
                      ref="addressInputEl" input.trigger="onAddressChange($event) & debounce" blur.trigger="onAddressBlur() & debounce"
-                     focus.trigger="onAddressFocus()" placeholder="Suchen oder auf die Karte tippen...">
+                     focus.trigger="onAddressFocus()" i18n-attrs="placeholder:pages.add-system.search.placeholder">
           </ons-input>
           <div style="position:relative;width:100%;">
             <div style="position:absolute;top:0;right:0;left:0;z-index:20000;" class="popover--material__content" if.bind="addressListVisible">

@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Database} from './services/db';
+import {_} from './plugins/aurelia-messageformat';
 
 @inject(Database)
 export class App {
@@ -28,7 +29,7 @@ export class App {
       route: 'quickstart',
       name: 'quickstart',
       moduleId: './pages/help/quickstart',
-      title: 'Quickstart',
+      title: _('pages.help.quickstart.title'),
       nav: true,
       settings: {}
     }, {
@@ -36,27 +37,27 @@ export class App {
       name: 'help-reception',
       moduleId: './pages/help/reception',
       nav: true,
-      title: 'Informationen zu Hörhilfen',
+      title: _('pages.help.reception.title'),
       settings: {}
     }, {
       route: 'help/video',
       name: 'help-video',
       moduleId: './pages/help/video',
       nav: true,
-      title: 'Video: Wie funktioniert eine Höranlage?',
+      title: _('pages.help.video.title'),
       settings: {}
     }, {
       route: 'help/symbols',
       name: 'help-symbols',
       moduleId: './pages/help/symbols',
       nav: true,
-      title: 'Informationen zu Höranlagen',
+      title: _('pages.help.symbols.title'),
       settings: {}
     }, {
       route: 'add-system',
       name: 'add-system',
       moduleId: './pages/system/add',
-      title: 'Neue Höranlage melden',
+      title: _('pages.add-system.title'),
       nav: true,
       settings: {}
     }, {
@@ -64,14 +65,14 @@ export class App {
       name: 'sponsors',
       moduleId: './pages/sponsors',
       nav: true,
-      title: 'Sponsoren',
+      title: _('pages.sponsors.title'),
       settings: {}
     }, {
       route: 'impressum',
       name: 'impressum',
       moduleId: './pages/impressum',
       nav: true,
-      title: 'Impressum',
+      title: _('pages.legal-notice.title'),
       settings: {}
     }, {
       route: 'system/:id',

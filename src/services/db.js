@@ -8,6 +8,9 @@ import {Organisation} from '../models/organisation';
 import {RoomType} from '../models/room-type';
 import {System} from '../models/system';
 import {Technology} from '../models/technology';
+import {Rating} from '../models/rating';
+import {Lang} from '../models/lang';
+import {_} from '../plugins/aurelia-messageformat';
 
 @inject(Config)
 export class Database {
@@ -29,7 +32,7 @@ export class Database {
   }
 
   load() {
-    let models = [Canton, RoomType, System, Technology];
+    let models = [Canton, RoomType, System, Technology, Lang];
     this.reset();
     return Promise.all(models.map(Model => {
       let tablename = Model.tablename;
@@ -64,18 +67,36 @@ export class Database {
 
   process() {
     let systems = this.getIndex(System);
+    let roomTypes = this.getIndex(RoomType);
     let buildings = this.createIndex(Building);
     let organisations = this.createIndex(Organisation);
     let locations = this.createIndex(Location);
+    let ratings = this.createIndex(Rating);
+
+    for (let [, roomType] of roomTypes.entries()) {
+      roomType.name = _(`data.${RoomType.tablename}.${roomType.id}.title`);
+    }
 
     for (let [, system] of systems.entries()) {
       system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
       system.organisationId = `${system.organisation}`;
       system.locationId = system.ort.trim();
+      system.lang = this.query(Lang).getById(system.langID);
+
+      switch (system.bewertung) {
+        case 1:
+        case 2:
+          system.ratingId = system.bewertung;
+          break;
+        default:
+          system.ratingId = 3;
+          break;
+      }
 
       let building = buildings.get(system.buildingId);
       let organisation = organisations.get(system.organisationId);
       let location = locations.get(system.locationId);
+      let rating = ratings.get(system.ratingId);
 
       if (!building) {
         building = new Building({
@@ -110,8 +131,27 @@ export class Database {
         organisations.set(organisation.id, organisation);
       }
 
+      if (!rating) {
+        rating = new Rating({
+          id: system.ratingId
+        });
+        switch (rating.id) {
+          case 1:
+            rating.icon = 'r32_green.png';
+            break;
+          case 2:
+            rating.icon = 'r32_yellow.png';
+            break;
+          default:
+            rating.icon = 'r32_white.png';
+            break;
+        }
+        ratings.set(rating.id, rating);
+      }
+
       system.organisation = organisation;
       system.building = building;
+      system.rating = rating;
 
       location.bounds.extend(L.latLng(system.lat, system.lng));
 

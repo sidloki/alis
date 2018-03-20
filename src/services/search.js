@@ -90,7 +90,7 @@ export class Search {
         let searchString =
           `${building.name} ${building.strasse_nr}
           ${building.ort} ${building.plz} ${building.canton.kantonkuerzel}
-          ${organisation.name} ${system.roomtype.typ}`;
+          ${organisation.name} ${system.roomtype.name}`;
         searchString = searchString.toLowerCase();
         for (let i = 0; i < text.length; i++) {
           let word = text[i];

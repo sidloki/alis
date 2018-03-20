@@ -9,7 +9,7 @@
       </div>
     </ons-toolbar>
     <ons-list>
-      <ons-list-header>Technologien</ons-list-header>
+      <ons-list-header i18n="technologies"></ons-list-header>
       <ons-list-item repeat.for="technology of technologies">
         <span class="left" style="align-self:flex-start;">
           <img src="${technology.imageUrl}" alt="" style="width:1.28571429em;"/>
@@ -21,10 +21,10 @@
       </ons-list-item>
     </ons-list>
     <ons-list>
-      <ons-list-header>Bewertungen</ons-list-header>
+      <ons-list-header i18n="ratings"></ons-list-header>
       <ons-list-item repeat.for="rating of ratings">
         <span class="left" style="align-self:flex-start;">
-          <img src="${rating.image}" alt="" style="width:1.28571429em;"/>
+          <img src="${rating.imageUrl}" alt="" style="width:1.28571429em;"/>
         </span>
         <span class="center">
           <span class="list-item__title">${rating.title}</span>

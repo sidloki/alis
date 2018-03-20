@@ -1,3 +1,5 @@
+import {_} from '../plugins/aurelia-messageformat';
+
 export class Config {
 
   baseUrl = 'https://hoeranlagen.ch';
@@ -5,7 +7,7 @@ export class Config {
   basemaps = [{
     type: 'google',
     id: 'roadmap',
-    title: 'Standard',
+    title: _('default'),
     config: {
       type: 'roadmap', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
       styles: [{
@@ -17,7 +19,7 @@ export class Config {
   }, {
     type: 'google',
     id: 'satellite',
-    title: 'Satellit',
+    title: _('satellite'),
     config: {
       type: 'satellite' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
     }

@@ -5,6 +5,7 @@ import * as ons from 'onsenui';
 import {Config} from '../../services/config';
 import {Database} from '../../services/db';
 import {Canton} from '../../models/canton';
+import {_} from '../../plugins/aurelia-messageformat';
 
 @inject(History, Config, Database)
 export class Add {
@@ -90,8 +91,8 @@ export class Add {
             this.loadPlaceDetail(result.place_id);
           })
           .catch(error => {
-            ons.notification.alert('Nichts gefunden.', {
-              title: 'Für die gewählte Position konnte keine Adresse gefunden werden.'
+            ons.notification.alert(_('pages.add-system.search.no-results.message'), {
+              title: _('pages.add-system.search.no-results.title')
             });
           });
       });
@@ -315,13 +316,13 @@ export class Add {
 
   showInvalidAlert(msg) {
     ons.notification.alert(msg, {
-      title: 'Fehlende Anlage melden'
+      title: _('pages.add-system.submit.error.title')
     });
   }
 
   showSuccessMessage() {
-    ons.notification.alert('Ihre Daten wurden gesendet und werden überprüft.', {
-      title: 'Vielen Dank',
+    ons.notification.alert(_('pages.add-system.submit.success.message'), {
+      title: _('pages.add-system.submit.success.title'),
       callback: () => {
         this.history.navigateBack();
       }
