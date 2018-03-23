@@ -80,9 +80,9 @@
   padding-top:5px;
   font-size:13px;
   max-width:100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
   color: #666;
 }
 

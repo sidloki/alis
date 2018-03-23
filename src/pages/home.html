@@ -30,7 +30,7 @@
               <ons-button css="width:48px;height:48px;border-radius:100%;line-height:48px;padding:0;background-color:${category.icon.color};">
                 <span class="category ons-icon ${category.icon.prefix} ${category.icon.prefix}-${category.icon.name}"></span>
               </ons-button>
-              <div class="category-label">${category.name}</div>
+              <div class="category-label" innerhtml.bind="category.name"></div>
             </div>
           </div>
         </div>

@@ -36,19 +36,19 @@ links:
 data:
   roomtypes:
     1:
-      title: Mehrzweckraum
+      title: Mehrzweck&shy;raum
     2:
-      title: Unterrichtsraum
+      title: Unterrichts&shy;raum
     3:
-      title: Kultusraum
+      title: Kultus&shy;rraum
     4:
-      title: Kulturraum
+      title: Kultur&shy;rraum
     5:
-      title: Amtsraum
+      title: Amts&shy;rraum
     6:
-      title: Kundenschalter
+      title: Kunden&shy;schalter
     7:
-      title: Allgemeinraum
+      title: Allgemein&shy;raum
     8:
       title: Kino
     9:
