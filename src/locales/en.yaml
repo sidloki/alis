@@ -3,28 +3,28 @@ map-type: Map type
 default: Default
 satellite: Satellite
 address: Address
-technologies: Technologien
-ratings: Bewertungen
-hearing-assistance-system: Hearing Assistance System
-floor-plans: Floor plans
-no-floor-plans: No floor plans available
+technologies: Technologies
+ratings: Evaluations
+hearing-assistance-system: Hearing assistance system
+room-plans: Room plans
+no-room-plans: No room plans available
 website: Website
 photo: Photo
 delete: Delete
-annotation: Annotations
+annotation: Notes
 your-contact-info: Your contact details
 full-name: Full name
 email-address: E-mail address
 
 error:
   geolocation:
-    title: Geolocation failed
+    title: Location failed
     message:
-      "Is geolocation enabled and is the app authorized to access it?"
+      "Is tracking enabled and does the app have permission to access it?"
 
 search:
-  placeholder: "Search Hearing Assistance System..."
-  no-results: Nothing was found for the entered search term.
+  placeholder: "Search for hearing assistance system..."
+  no-results: "Nothing was found for the entered search term."
 
 links:
   metas:
@@ -36,27 +36,27 @@ links:
 data:
   roomtypes:
     1:
-      title: Mehrzweckraum
+      title: Multi-purpose room
     2:
-      title: Unterrichtsraum
+      title: Classroom
     3:
-      title: Kultusraum
+      title: Place of worship
     4:
-      title: Kulturraum
+      title: Cultural meeting place
     5:
-      title: Amtsraum
+      title: Office
     6:
-      title: Kundenschalter
+      title: Customer counter
     7:
-      title: Allgemeinraum
+      title: Room for general use
     8:
-      title: Kino
+      title: Cinema
     9:
-      title: Theater
+      title: Theatre
 
   technologies:
     1:
-      title: Induction loop
+      title: Induction
       description:
         "T-mode is the most common icon. Inductive reception of sound directly
         via hearing aids which have been switched to T-mode by pressing a
@@ -68,7 +68,7 @@ data:
         a small portable device with an inductive neck loop. This receiver is
         available at the reception or in the checkout area."
     3:
-      title: Radio
+      title: FM
       description:
         "This requires a small portable device that can be requested at the
         reception or in the checkout area. An inductive neck loop is attached
@@ -138,7 +138,7 @@ pages:
 
   add-system:
     title: Report a new hearing assistance system
-    mark-position: Mark location on map
+    mark-position: Mark position on the map
     search:
       placeholder: "Search or tap on the map..."
       no-results:
@@ -146,8 +146,8 @@ pages:
         message: "No address could be found for the selected position."
     submit:
       success:
-        title: Thanks
-        message: "The data has been sent and will be reviewed."
+        title: Many thanks
+        message: "The data has been sent and will be checked."
       error:
         title: Error
 

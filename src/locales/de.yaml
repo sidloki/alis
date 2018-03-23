@@ -6,12 +6,12 @@ address: Adresse
 technologies: Technologien
 ratings: Bewertungen
 hearing-assistance-system: Höranlage
-floor-plans: Raumpläne
-no-floor-plans: Keine Raumpläne verfügbar
-website: Website
+room-plans: Raumpläne
+no-room-plans: Keine Raumpläne verfügbar
+website: Webseite
 photo: Foto
 delete: Löschen
-annotation: Bemerkungen
+annotation: Hinweise
 your-contact-info: Ihre Kontaktdaten
 full-name: Vollständiger Name
 email-address: E-Mail-Adresse
@@ -24,7 +24,7 @@ error:
 
 search:
   placeholder: "Höranlage suchen..."
-  no-results: Für den eingegebenen Suchbegriff wurde nichts gefunden.
+  no-results: "Für den eingegebenen Suchbegriff wurde nichts gefunden."
 
 links:
   metas:

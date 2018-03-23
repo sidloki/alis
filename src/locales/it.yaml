@@ -3,27 +3,28 @@ map-type: Tipo di mappa
 default: Predefinita
 satellite: Satellite
 address: Indirizzo
-technologies: 
-ratings: 
-hearing-assistance-system:
-floor-plans: 
-no-floor-plans: 
-website: 
-photo: 
-delete: 
-annotation: 
-your-contact-info: 
-full-name: 
-email-address: 
+technologies: Tecnologie
+ratings: Valutazioni
+hearing-assistance-system: Sistema di ascolto
+room-plans: Planimetrie
+no-room-plans: Nessuna planimetria disponibile
+website: Sito web
+photo: Foto
+delete: Cancella
+annotation: Osservazioni
+your-contact-info: I tuoi dati di contatto
+full-name: Nome e cognome completi
+email-address: Indirizzo e-mail
 
 error:
   geolocation:
-    title: 
+    title: Localizzazione non riuscita
     message:
+      "La localizzazione è abilitata e l'app ha il permesso di accedervi?"
 
 search:
-  placeholder: 
-  no-results: 
+  placeholder: "Cerca un sistema di ascolto..."
+  no-results: "Non è stato trovato nulla per il termine di ricerca inserito."
 
 links:
   metas:
@@ -35,39 +36,39 @@ links:
 data:
   roomtypes:
     1:
-      title: 
+      title: Sala polivalente
     2:
-      title: 
+      title: Aula didattica
     3:
-      title: 
+      title: Spazio di culto
     4:
-      title: 
+      title: Spazio culturale
     5:
-      title: 
+      title: Ufficio amministrativo
     6:
-      title: 
+      title: Sportello clienti
     7:
-      title: 
+      title: Spazio comune
     8:
-      title: 
+      title: Cinema
     9:
-      title: 
+      title: Teatro
 
   technologies:
     1:
-      title:
+      title: Induzione
       description:
         "La modalità T è il pittogramma più comune. Ricezione induttiva del
         tono diretto tramite apparecchi acustici, commutati in modalità T
         mediante un pulsante di programma presente sull'apparecchio acustico."
     2:
-      title:
+      title: Infrarossi
       description:
         "Raramente, il tono diretto viene trasmesso tramite infrarossi a un
         piccolo dispositivo portatile con collare induttivo. Questo ricevitore
         è disponibile alla reception o alla cassa."
     3:
-      title:
+      title: FM
       description:
         "Per la ricezione induttiva è disponibile un piccolo dispositivo
         portatile presso la reception o alla cassa. Al dispositivo piccolo è
@@ -142,18 +143,20 @@ pages:
 
   add-system:
     title: Segnala un nuovo sistema di ascolto
-    mark-position: 
+    mark-position: Segna la posizione sulla mappa
     search:
-      placeholder: 
+      placeholder: Cerca o tocca sulla mappa...
       no-results:
-        title: 
+        title: Non è stato trovato nulla.
         message: 
+          "Per la posizione selezionata non è stato possibile trovare nessun
+          indirizzo."
     submit:
       success:
-        title: 
-        message: 
+        title: Grazie mille
+        message: I dati sono stati inviati e vengono verificati.
       error:
-        title: 
+        title: Errore
 
   sponsors:
     title: Sponsor

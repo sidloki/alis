@@ -3,27 +3,29 @@ map-type: Type de carte
 default: Par défault
 satellite: Satellite
 address: Adresse
-technologies: 
-ratings: 
-hearing-assistance-system:
-floor-plans: 
-no-floor-plans: 
-website: 
-photo: 
-delete: 
-annotation: 
-your-contact-info: 
-full-name: 
-email-address: 
+technologies: Technologies
+ratings: Évaluations
+hearing-assistance-system: Système d'écoute
+room-plans: Plans d'aménagement
+no-room-plans: Aucun plan d'aménagement n'est disponible
+website: Site web
+photo: Photo
+delete: Supprimer
+annotation: Remarques
+your-contact-info: Vos coordonnées
+full-name: Nom complet
+email-address: Adresse e-mail
 
 error:
   geolocation:
-    title: 
+    title: Localisation échouée
     message:
+      "La localisation est-elle activée et l'application a la permission
+      d'y accéder?"
 
 search:
-  placeholder: 
-  no-results: 
+  placeholder: "Rechercher un système d'écoute..."
+  no-results: "Rien n'a été trouvé pour le terme de recherche entré."
 
 links:
   metas:
@@ -35,39 +37,39 @@ links:
 data:
   roomtypes:
     1:
-      title: 
+      title: Salle polyvalente
     2:
-      title: 
+      title: Salle de classe
     3:
-      title: 
+      title: Lieu de culte
     4:
-      title: 
+      title: Chambre de culture
     5:
-      title: 
+      title: Bureaux administratifs
     6:
-      title: 
+      title: Guichet
     7:
-      title: 
+      title: Salle commune
     8:
-      title: 
+      title: Cinéma
     9:
-      title: 
+      title: Théâtre
 
   technologies:
     1:
-      title:
+      title: Induction
       description:
         "Le mode T est le pictogramme le plus courant. Réception inductive de
         la tonalité directe via les aides auditives qui ont été commutées en
         mode T sur l'appareil auditif via une touche de programme."
     2:
-      title:
+      title: Infrarouge
       description:
         "Dans de rares cas, la tonalité directe est transmise par infrarouge à
         un petit appareil portatif, équipé d'un collier inductif. Ce récepteur
         est disponible à la réception ou à la caisse."
     3:
-      title:
+      title: FM
       description:
         "Pour la réception inductive, un petit appareil portatif est disponible
         à la réception ou à la caisse. Un collier inductif est connecté au
@@ -140,18 +142,19 @@ pages:
 
   add-system:
     title: Signaler un nouveau système d'écoute
-    mark-position: 
+    mark-position: Marquer la position sur la carte
     search:
-      placeholder: 
+      placeholder: Recherchez ou tapez sur la carte.....
       no-results:
-        title: 
-        message: 
+        title: Aucun résultat.
+        message:
+          "Aucune adresse n'a pu être trouvée pour la position sélectionnée."
     submit:
       success:
-        title: 
-        message: 
+        title: Merci beaucoup.
+        message: Les données ont été envoyées et vérifiées.
       error:
-        title: 
+        title: Erreur
 
   sponsors:
     title: Sponsors

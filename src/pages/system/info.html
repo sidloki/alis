@@ -45,7 +45,7 @@
       <ons-list-item if.bind="data.annotation">
         ${data.annotation}
       </ons-list-item>
-      <ons-list-header i18n="floor-plans">
+      <ons-list-header i18n="room-plans">
       </ons-list-header>
       <ons-list class="room-plan-list" if.bind="data.roomPlans.length > 0">
         <ons-list-item modifier="nodivider" repeat.for="roomPlan of data.roomPlans"
@@ -56,7 +56,7 @@
         </ons-list-item>
       </ons-list>
       <ons-list-item if.bind="data.roomPlans.length == 0">
-        <div class="center" i18n="no-floor-plans"></div>
+        <div class="center" i18n="no-room-plans"></div>
       </ons-list-item>
     </ons-list>
   </ons-page>
