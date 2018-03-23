@@ -72,16 +72,49 @@
     <div id="splash-container">
       <div id="splash-container-inner">
         <div id="splash-text">
-          <div>Klarer</div>
-          <div>hören</div>
-          <div>und</div>
-          <div>verstehen</div>
+
         </div>
         <div id="splash-spinner-container">
           <div id="splash-spinner"></div>
         </div>
       </div>
     </div>
+    <script>
+      function parseQueryString(query) {
+        var vars = query.split('&');
+        var queryString = {};
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split('=');
+          // If first entry with this name
+          if (typeof queryString[pair[0]] === 'undefined') {
+            queryString[pair[0]] = decodeURIComponent(pair[1]);
+            // If second entry with this name
+          } else if (typeof queryString[pair[0]] === 'string') {
+            var arr = [queryString[pair[0]], decodeURIComponent(pair[1])];
+            queryString[pair[0]] = arr;
+            // If third or later entry with this name
+          } else {
+            queryString[pair[0]].push(decodeURIComponent(pair[1]));
+          }
+        }
+        return queryString;
+      }
+
+      var texts = {
+        de: "<div>Klarer</div><div>hören</div><div>und</div><div>verstehen</div>",
+        en: "<div>Listen and</div><div>understand</div><div>more</div><div>clearly</div>",
+        fr: "<div>Écouter et</div><div>entendre</div><div>plus</div><div>clairement</div>",
+        it: "<div>Ascoltare</div><div>e capire</div><div>in modo</div><div>chiare</div>",
+      }
+      var params = parseQueryString(location.search.substring(1));
+      var locale = params.lang || (navigator.language ? navigator.language.split("-")[0] : "en");
+      var text = texts[locale];
+      if (!text) {
+        text = texts["en"]
+      }
+      var textEl = document.getElementById("splash-text");
+      textEl.innerHTML = text;
+    </script>
     $bundles
   </body>
 </html>
