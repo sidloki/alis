@@ -160,6 +160,9 @@ pages:
 
   sponsors:
     title: Sponsor
+    intro: 
+      "Vorremmo ringraziare i seguenti sponsor per il loro sostegno
+      finanziario:"
 
   legal-notice:
     title: Impressum

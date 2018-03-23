@@ -9,13 +9,27 @@
         ${title}
       </div>
     </ons-toolbar>
-    <div style="margin: 0 10px">
+    <div style="margin: 0 16px">
       <h1 class="paragraph" i18n="address"></h1>
       <p i18n="pages.legal-notice.responsability"></p>
       <p>IGGH Interessengemeinschaft Gehörlose und Hörbehinderte<br/>
       Belpstrasse 24<br/>
       3007 Bern</p>
+    </div>
+    <div style="margin: 0 16px 12px; padding-top:8px;">
+      <h1 class="paragraph" i18n="pages.sponsors.title"></h1>
+      <div i18n="pages.sponsors.intro"></div>
+    </div>
+    <ons-list modifier="noborder" class="list-with-border">
+      <ons-list-item repeat.for="sponsor of sponsors" modifier="longdivider tappable" click.delegate="openWebsite(sponsor)">
+        <span class="center" style="padding-right:14px;">
+          <img if.bind="sponsor.logo" src="${sponsor.logo}" alt="${sponsor.title}" style="max-width:100%;max-height:120px;">
+          <span if.bind="!sponsor.logo" class="list-item__title">${sponsor.title}</span>
+        </span>
+      </ons-list-item>
+    </ons-list>
 
+    <div style="margin: 0 16px;padding-top:32px;">
       <h1 class="paragraph" i18n="pages.legal-notice.warrenty.title"></h1>
       <p i18n="pages.legal-notice.warrenty.content"></p>
 

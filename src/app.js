@@ -61,13 +61,6 @@ export class App {
       nav: true,
       settings: {}
     }, {
-      route: 'sponsors',
-      name: 'sponsors',
-      moduleId: './pages/sponsors',
-      nav: true,
-      title: _('pages.sponsors.title'),
-      settings: {}
-    }, {
       route: 'impressum',
       name: 'impressum',
       moduleId: './pages/impressum',

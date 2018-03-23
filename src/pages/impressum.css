@@ -5,9 +5,22 @@
 h1.paragraph {
   font-size: 17px;
   font-weight: bold;
-  margin-bottom: 0;
+  margin-bottom: 4px;
 }
 h1.paragraph + p,
 h1.paragraph + div > p {
   margin-top: 0;
+}
+
+.list.list-with-border .list-item:first-child {
+  border-top: 1px solid #ccc;
+}
+.list.list-with-border .list-item:last-child {
+  border-bottom: 2px solid #ccc;
+}
+.list.list--material.list-with-border .list-item:first-child {
+  border-top: 1px solid #eee;
+}
+.list.list--material.list-with-border .list-item:last-child {
+  border-bottom: 2px solid #eee;
 }
