@@ -84,10 +84,6 @@
     <div id="splash-container">
       <div id="splash-container-inner">
         <div id="splash-text">
-          <div>Klarer</div>
-          <div>hören</div>
-          <div>und</div>
-          <div>verstehen</div>
         </div>
         <div id="splash-spinner-container">
           <div id="splash-spinner"></div>
@@ -98,12 +94,25 @@
     <script>
       document.addEventListener("deviceready", onDeviceReady, false);
       function onDeviceReady() {
+        var texts = {
+          de: "<div>Klarer</div><div>hören</div><div>und</div><div>verstehen</div>",
+          en: "<div>Listen and</div><div>understand</div><div>more</div><div>clearly</div>",
+          fr: "<div>Écouter et</div><div>entendre</div><div>plus</div><div>clairement</div>",
+          it: "<div>Ascoltare</div><div>e capire</div><div>in modo</div><div>chiare</div>",
+        }
+        var locale = navigator.language ? navigator.language.split("-")[0] : "en";
+        var text = texts[locale];
+        if (!text) {
+          text = texts["en"]
+        }
+        var textEl = document.getElementById("splash-text");
+        textEl.innerHTML = text;
         if (navigator.splashscreen) {
           navigator.splashscreen.hide();
         }
       }
     </script>
     <script  type="text/javascript" src="a823fcc8-vendor.js"></script>
-<script  type="text/javascript" src="59126cbd-app.js"></script>
+<script  type="text/javascript" src="71927937-app.js"></script>
   </body>
 </html>
