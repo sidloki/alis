@@ -1,5 +1,9 @@
 import 'whatwg-fetch';
 import {PLATFORM} from 'aurelia-pal';
+import de from './locales/de';
+import en from './locales/en';
+import fr from './locales/fr';
+import it from './locales/it';
 
 export function configure(aurelia) {
   const params = parseQueryString(location.search.substring(1));
@@ -9,6 +13,12 @@ export function configure(aurelia) {
     .plugin(PLATFORM.moduleName('./plugins/aurelia-messageformat'), {
       language: params.lang || navigator.language || 'en',
       languages: ['en', 'de', 'fr', 'it'],
+      catalogs: {
+        de: de,
+        en: en,
+        fr: fr,
+        it: it
+      },
       fallbackLanguage: 'en'
     })
     .plugin('aurelia-onsenui')

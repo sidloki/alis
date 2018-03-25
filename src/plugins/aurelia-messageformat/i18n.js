@@ -14,6 +14,7 @@ export class I18N {
     language: 'en',
     loadPath: './locales/',
     languages: [],
+    catalogs: {},
     fallbackLanguage: 'en',
     keySeparator: '.',
     defaultContext: '',
@@ -38,11 +39,8 @@ export class I18N {
 
   loadCatalog(language) {
     return new Promise((resolve, reject) => {
-      let path = PLATFORM.moduleName(`${this.options.loadPath}${language}.js`);
-      FuseBox.import(path, (m) => {
-        this.catalogs[language] = m;
-        resolve();
-      });
+      this.catalogs[language] = this.options.catalogs[language];
+      resolve();
     });
   }
 

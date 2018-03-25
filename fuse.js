@@ -68,34 +68,35 @@ Sparky.task('copy', () => {
 });
 
 Sparky.task('compile:translations', () => {
-  return Sparky.src("**/*.yaml", {base: "./src/locales"})
-        .file("*", async (file) => {
-          file.read();
+  const compile = (file) => {
+    file.read();
 
-          const lang = path.basename(file.name, path.extname(file.name));
-          try {
-            const translations = yaml.safeLoad(file.contents);
-            const mf = new MessageFormat(lang);
-            let source = mf.compile(translations).toString('module.exports');
-  
-            if (production) {
-              const result = UglifyJS.minify(source, {});
+    const lang = path.basename(file.name, path.extname(file.name));
+    try {
+      const translations = yaml.safeLoad(file.contents);
+      const mf = new MessageFormat(lang);
+      let source = mf.compile(translations).toString('export default');
+      
+      file.setContent(source);
+      file.ext('js');
+    } catch (e) {
+      console.error(`Error parsing YAML file: ${file.name}`);
+    }
+  };
+  if (!production) {
+    return Sparky.watch("locales/**/*.yaml")
+          .file("*", async (file) => {
+            compile(file);
+          })
+          .dest(`./src`).exec();
 
-              if (result.error) {
-                const message = `UglifyJSPlugin - ${result.error.message}`;
-                console.error(message);
-              } else {
-                source = result.code;
-              }
-            }
-            
-            file.setContent(source);
-            file.ext('js');
-          } catch (e) {
-            console.error(`Error parsing YAML file: ${file.name}`);
-          }
-        })
-        .dest(`./${outDir}/locales`).exec();
+  } else {
+    return Sparky.src("locales/**/*.yaml")
+          .file("*", async (file) => {
+            compile(file);
+          })
+          .dest(`./src`).exec();
+  }
 });
 
 Sparky.task('build', ['compile:translations'], () => {
@@ -174,7 +175,6 @@ Sparky.task('build', ['compile:translations'], () => {
   if (!production) {
     let watcher = app.watch()
       .completed(() => {
-        Sparky.exec('compile:translations');
         bs.reload();
       }).sourceMaps(true);
   }
