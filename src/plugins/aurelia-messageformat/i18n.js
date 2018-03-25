@@ -1,7 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DOM, PLATFORM } from 'aurelia-pal';
-import { negotiateLanguages, getProp, normalize } from './utils';
+import { negotiateLanguages, getProp } from './utils';
 
 const isHtml = /<|&#?\w+;/;
 

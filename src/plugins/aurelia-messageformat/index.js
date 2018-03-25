@@ -7,7 +7,6 @@ import {ViewResources} from 'aurelia-templating';
 import {BindingSignaler} from 'aurelia-templating-resources';
 
 import {I18N} from './i18n';
-import {normalize} from './utils';
 
 async function configure(aurelia, options) {
   const instance = new I18N(aurelia.container.get(EventAggregator), aurelia.container.get(BindingSignaler));
@@ -26,6 +25,5 @@ function _(msg, params = null) {
 export {
   configure,
   I18N,
-  _,
-  normalize
+  _
 };
