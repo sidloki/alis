@@ -5,28 +5,25 @@ export function  negotiateLanguages(
 ) {
 
   const supportedLocales = [];
-  const additionalLocales = [];
+  const locales = [];
 
   for (let requestedLocale of requestedLocales) {
-    if (requestedLocale.indexOf('-') > 0) {
-      const locale = requestedLocale.split('-')[0];
-      if (requestedLocales.indexOf(locale) < 0) {
-        additionalLocales.push(locale);
+    let locale = requestedLocale;
+    if (locales.indexOf(locale) < 0) {
+      locales.push(locale);
+    }
+    if (locale.indexOf('-') > 0) {
+      let additionalLocale = locale.split('-')[0];
+      if (locales.indexOf(additionalLocale) < 0) {
+        locales.push(additionalLocale);
       }
     }
   }
 
-  for (let requestedLocale of requestedLocales) {
-    if (availableLocales.indexOf(requestedLocale) > -1
-        && supportedLocales.indexOf(requestedLocale) < 0) {
-      supportedLocales.push(requestedLocale);
-    }
-  }
-
-  for (let additionalLocale of additionalLocales) {
-    if (availableLocales.indexOf(additionalLocale) > -1
-        && supportedLocales.indexOf(additionalLocale) < 0) {
-      supportedLocales.push(additionalLocale);
+  for (let locale of locales) {
+    if (availableLocales.indexOf(locale) > -1
+        && supportedLocales.indexOf(locale) < 0) {
+      supportedLocales.push(locale);
     }
   }
 
