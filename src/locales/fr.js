@@ -36,31 +36,40 @@ export default {
   data: {
     roomtypes: {
       "1": {
-        title: function(d) { return "Salle polyvalente"; }
+        title: function(d) { return "Salle polyvalente"; },
+        "title-hyphens": function(d) { return "Salle polyvalente"; }
       },
       "2": {
-        title: function(d) { return "Salle de classe"; }
+        title: function(d) { return "Salle de classe"; },
+        "title-hyphens": function(d) { return "Salle de classe"; }
       },
       "3": {
-        title: function(d) { return "Lieu de culte"; }
+        title: function(d) { return "Lieu de culte"; },
+        "title-hyphens": function(d) { return "Lieu de culte"; }
       },
       "4": {
-        title: function(d) { return "Chambre de culture"; }
+        title: function(d) { return "Chambre de culture"; },
+        "title-hyphens": function(d) { return "Chambre de culture"; }
       },
       "5": {
-        title: function(d) { return "Bureaux administratifs"; }
+        title: function(d) { return "Bureaux administratifs"; },
+        "title-hyphens": function(d) { return "Bureaux administratifs"; }
       },
       "6": {
-        title: function(d) { return "Guichet"; }
+        title: function(d) { return "Guichet"; },
+        "title-hyphens": function(d) { return "Guichet"; }
       },
       "7": {
-        title: function(d) { return "Salle commune"; }
+        title: function(d) { return "Salle commune"; },
+        "title-hyphens": function(d) { return "Salle commune"; }
       },
       "8": {
-        title: function(d) { return "Cinéma"; }
+        title: function(d) { return "Cinéma"; },
+        "title-hyphens": function(d) { return "Cinéma"; }
       },
       "9": {
-        title: function(d) { return "Théâtre"; }
+        title: function(d) { return "Théâtre"; },
+        "title-hyphens": function(d) { return "Théâtre"; }
       }
     },
     technologies: {

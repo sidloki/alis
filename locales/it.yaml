@@ -37,22 +37,31 @@ data:
   roomtypes:
     1:
       title: Sala polivalente
+      title-hyphens: Sala polivalente
     2:
       title: Aula didattica
+      title-hyphens: Aula didattica
     3:
       title: Spazio di culto
+      title-hyphens: Spazio di culto
     4:
       title: Spazio culturale
+      title-hyphens: Spazio culturale
     5:
       title: Ufficio amministrativo
+      title-hyphens: Ufficio amministrativo
     6:
       title: Sportello clienti
+      title-hyphens: Sportello clienti
     7:
       title: Spazio comune
+      title-hyphens: Spazio comune
     8:
       title: Cinema
+      title-hyphens: Cinema
     9:
       title: Teatro
+      title-hyphens: Teatro
 
   technologies:
     1:

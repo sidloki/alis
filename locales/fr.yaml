@@ -38,22 +38,31 @@ data:
   roomtypes:
     1:
       title: Salle polyvalente
+      title-hyphens: Salle polyvalente
     2:
       title: Salle de classe
+      title-hyphens: Salle de classe
     3:
       title: Lieu de culte
+      title-hyphens: Lieu de culte
     4:
       title: Chambre de culture
+      title-hyphens: Chambre de culture
     5:
       title: Bureaux administratifs
+      title-hyphens: Bureaux administratifs
     6:
       title: Guichet
+      title-hyphens: Guichet
     7:
       title: Salle commune
+      title-hyphens: Salle commune
     8:
       title: Cinéma
+      title-hyphens: Cinéma
     9:
       title: Théâtre
+      title-hyphens: Théâtre
 
   technologies:
     1:

@@ -36,23 +36,32 @@ links:
 data:
   roomtypes:
     1:
-      title: Mehrzweck&shy;raum
+      title: Mehrzweckraum
+      title-hyphens: Mehrzweck&shy;raum
     2:
-      title: Unterrichts&shy;raum
+      title: Unterrichtsraum
+      title-hyphens: Unterrichts&shy;raum
     3:
-      title: Kultus&shy;rraum
+      title: Kultusraum
+      title-hyphens: Kultus&shy;raum
     4:
-      title: Kultur&shy;rraum
+      title: Kulturraum
+      title-hyphens: Kultur&shy;raum
     5:
-      title: Amts&shy;rraum
+      title: Amtsraum
+      title-hyphens: Amts&shy;raum
     6:
-      title: Kunden&shy;schalter
+      title: Kundenschalter
+      title-hyphens: Kunden&shy;schalter
     7:
-      title: Allgemein&shy;raum
+      title: Allgemeinraum
+      title-hyphens: Allgemein&shy;raum
     8:
       title: Kino
+      title-hyphens: Kino
     9:
       title: Theater
+      title-hyphens: Theater
 
   technologies:
     1:

@@ -36,31 +36,40 @@ export default {
   data: {
     roomtypes: {
       "1": {
-        title: function(d) { return "Multi-purpose room"; }
+        title: function(d) { return "Multi-purpose room"; },
+        "title-hyphens": function(d) { return "Multi-purpose room"; }
       },
       "2": {
-        title: function(d) { return "Classroom"; }
+        title: function(d) { return "Classroom"; },
+        "title-hyphens": function(d) { return "Classroom"; }
       },
       "3": {
-        title: function(d) { return "Place of worship"; }
+        title: function(d) { return "Place of worship"; },
+        "title-hyphens": function(d) { return "Place of worship"; }
       },
       "4": {
-        title: function(d) { return "Cultural meeting place"; }
+        title: function(d) { return "Cultural meeting place"; },
+        "title-hyphens": function(d) { return "Cultural meeting place"; }
       },
       "5": {
-        title: function(d) { return "Office"; }
+        title: function(d) { return "Office"; },
+        "title-hyphens": function(d) { return "Office"; }
       },
       "6": {
-        title: function(d) { return "Customer counter"; }
+        title: function(d) { return "Customer counter"; },
+        "title-hyphens": function(d) { return "Customer counter"; }
       },
       "7": {
-        title: function(d) { return "Room for general use"; }
+        title: function(d) { return "Room for general use"; },
+        "title-hyphens": function(d) { return "Room for general use"; }
       },
       "8": {
-        title: function(d) { return "Cinema"; }
+        title: function(d) { return "Cinema"; },
+        "title-hyphens": function(d) { return "Cinema"; }
       },
       "9": {
-        title: function(d) { return "Theatre"; }
+        title: function(d) { return "Theatre"; },
+        "title-hyphens": function(d) { return "Theatre"; }
       }
     },
     technologies: {

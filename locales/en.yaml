@@ -37,22 +37,31 @@ data:
   roomtypes:
     1:
       title: Multi-purpose room
+      title-hyphens: Multi-purpose room
     2:
       title: Classroom
+      title-hyphens: Classroom
     3:
       title: Place of worship
+      title-hyphens: Place of worship
     4:
       title: Cultural meeting place
+      title-hyphens: Cultural meeting place
     5:
       title: Office
+      title-hyphens: Office
     6:
       title: Customer counter
+      title-hyphens: Customer counter
     7:
       title: Room for general use
+      title-hyphens: Room for general use
     8:
       title: Cinema
+      title-hyphens: Cinema
     9:
       title: Theatre
+      title-hyphens: Theatre
 
   technologies:
     1:

@@ -75,6 +75,7 @@ export class Database {
 
     for (let [, roomType] of roomTypes.entries()) {
       roomType.name = _(`data.${RoomType.tablename}.${roomType.id}.title`);
+      roomType.nameHyphens = _(`data.${RoomType.tablename}.${roomType.id}.title-hyphens`);
     }
 
     for (let [, system] of systems.entries()) {

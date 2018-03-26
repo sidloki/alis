@@ -36,31 +36,40 @@ export default {
   data: {
     roomtypes: {
       "1": {
-        title: function(d) { return "Mehrzweck&shy;raum"; }
+        title: function(d) { return "Mehrzweckraum"; },
+        "title-hyphens": function(d) { return "Mehrzweck&shy;raum"; }
       },
       "2": {
-        title: function(d) { return "Unterrichts&shy;raum"; }
+        title: function(d) { return "Unterrichtsraum"; },
+        "title-hyphens": function(d) { return "Unterrichts&shy;raum"; }
       },
       "3": {
-        title: function(d) { return "Kultus&shy;rraum"; }
+        title: function(d) { return "Kultusraum"; },
+        "title-hyphens": function(d) { return "Kultus&shy;raum"; }
       },
       "4": {
-        title: function(d) { return "Kultur&shy;rraum"; }
+        title: function(d) { return "Kulturraum"; },
+        "title-hyphens": function(d) { return "Kultur&shy;raum"; }
       },
       "5": {
-        title: function(d) { return "Amts&shy;rraum"; }
+        title: function(d) { return "Amtsraum"; },
+        "title-hyphens": function(d) { return "Amts&shy;raum"; }
       },
       "6": {
-        title: function(d) { return "Kunden&shy;schalter"; }
+        title: function(d) { return "Kundenschalter"; },
+        "title-hyphens": function(d) { return "Kunden&shy;schalter"; }
       },
       "7": {
-        title: function(d) { return "Allgemein&shy;raum"; }
+        title: function(d) { return "Allgemeinraum"; },
+        "title-hyphens": function(d) { return "Allgemein&shy;raum"; }
       },
       "8": {
-        title: function(d) { return "Kino"; }
+        title: function(d) { return "Kino"; },
+        "title-hyphens": function(d) { return "Kino"; }
       },
       "9": {
-        title: function(d) { return "Theater"; }
+        title: function(d) { return "Theater"; },
+        "title-hyphens": function(d) { return "Theater"; }
       }
     },
     technologies: {
