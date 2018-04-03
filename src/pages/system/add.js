@@ -281,6 +281,7 @@ export class Add {
     URL.revokeObjectURL(this.imageUrl);
     this.imageUrl = null;
     this.image = null;
+    this.imageInputEl.value = null;
   }
 
   commit() {
