@@ -10,12 +10,27 @@ export class App {
   }
 
   activate() {
-    return this.db.load()
-      .then(() => {
-        // data loaded
+    return new Promise((resolve, reject) => {
+      let dataLoaded = false;
+      let timer = setTimeout(() => {
+        timer = null;
+        if (dataLoaded) {
+          resolve();
+        }
+      }, 4000);
+
+      this.db.load().then(() => {
+        dataLoaded = true;
+        if (!timer) {
+          resolve();
+        }
       }).catch(() => {
-        return;
+        dataLoaded = true;
+        if (!timer) {
+          resolve();
+        }
       });
+    });
   }
 
   configureRouter(config, router) {
