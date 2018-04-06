@@ -170,11 +170,14 @@ export class Home {
   }
 
   updateMapView(evt) {
-    let bounds = evt.target.getBounds();
-    this.storage.setItem('mapbounds', [
-      [bounds.getSouth(), bounds.getWest()],
-      [bounds.getNorth(), bounds.getEast()]
-    ]);
+    let mapSize = evt.target.getSize();
+    if (mapSize.x !== 0 && mapSize.y !== 0) {
+      let bounds = evt.target.getBounds();
+      this.storage.setItem('mapbounds', [
+        [bounds.getSouth(), bounds.getWest()],
+        [bounds.getNorth(), bounds.getEast()]
+      ]);
+    }
   }
 
   showMenu() {
@@ -320,10 +323,12 @@ export class Home {
 
   resizeMap() {
     if (this.selection) {
-      this.map.once('moveend', () => {
-        let marker = this.overlays.get('marker');
-        this.panToSelection({animate: true});
-        marker._bringToFront();
+      this.map.once('resize', e => {
+        if (e.oldSize.x !== 0 && e.oldSize.y !== 0 && e.newSize.x !== 0 && e.newSize.y !== 0) {
+          let marker = this.overlays.get('marker');
+          this.panToSelection({animate: true});
+          marker._bringToFront();
+        }
       });
     }
     this.map.invalidateSize({pan: false});
