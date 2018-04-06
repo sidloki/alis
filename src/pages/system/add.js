@@ -124,6 +124,10 @@ export class Add {
     this.showAddressList();
   }
 
+  clearAddressSearch() {
+    // TODD
+  }
+
   onAddressListItemClick(item) {
     this.loadPlaceDetail(item.place_id)
       .then(place => {

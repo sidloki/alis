@@ -105,13 +105,23 @@
         </ons-toolbar-button>
       </div>
     </ons-toolbar>
-    <ons-list modifier="noborder" style="display:flex;flex-direction:column;height:100%;">
-      <ons-list-item modifier="nodivier">
-        <div class="center">
-          <ons-input input-id="address" type="text" value.one-way="place.name" modifier="underbar" style="width:100%;"
-                     ref="addressInputEl" input.trigger="onAddressChange($event) & debounce" blur.trigger="onAddressBlur() & debounce"
-                     focus.trigger="onAddressFocus()" i18n-attrs="placeholder:pages.add-system.search.placeholder">
-          </ons-input>
+    <ons-list modifier="" style="display:flex;flex-direction:column;height:100%;">
+      <ons-list-item modifier="" style="padding:0;">
+        <div class="center" style="padding:0;">
+          <ons-toolbar inline class="searchbar">
+            <div class="left">
+            </div>
+            <div class="center">
+              <input id="address" type="search" value.one-way="place.name" class="search-input"
+                ref="addressInputEl" input.trigger="onAddressChange($event) & debounce" blur.trigger="onAddressBlur() & debounce"
+                focus.trigger="onAddressFocus()" i18n i18n-attrs="placeholder:pages.add-system.search.placeholder" />
+              <!-- <ons-toolbar-button>
+                  <ons-icon icon="ion-ios-close-empty, material:md-close" click.delegate="clearAddressSearch()"></ons-icon>
+              </ons-toolbar-button> -->
+            </div>
+            <div class="right">
+            </div>
+          </ons-toolbar>
           <div style="position:relative;width:100%;">
             <div style="position:absolute;top:0;right:0;left:0;z-index:20000;" class="popover--material__content" if.bind="addressListVisible">
               <ons-list modifier="noborder" class="address-list">
