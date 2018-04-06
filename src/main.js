@@ -8,8 +8,7 @@ import it from './locales/it';
 export function configure(aurelia) {
   const params = parseQueryString(location.search.substring(1));
   aurelia.use
-    .basicConfiguration()
-    .history()
+    .standardConfiguration()
     .plugin(PLATFORM.moduleName('./plugins/aurelia-messageformat'), {
       language: params.lang || navigator.language || 'en',
       languages: ['en', 'de', 'fr', 'it'],
