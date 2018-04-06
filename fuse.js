@@ -75,7 +75,7 @@ Sparky.task('compile:translations', () => {
     try {
       const translations = yaml.safeLoad(file.contents);
       const mf = new MessageFormat(lang);
-      let source = mf.compile(translations).toString('export default');
+      let source = mf.compile(translations).toString();
       
       file.setContent(source);
       file.ext('js');
