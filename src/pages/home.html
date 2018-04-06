@@ -22,8 +22,8 @@
       </div>
     </ons-toolbar>
     <!-- search sheet overlay -->
-    <div show.bind="isSearching" style="z-index:11000;background-color:#fff;position:absolute;top:0;right:0;left:0;bottom:0;" ref="_searchoverlay">
-      <div class="card" show.bind="!searchText">
+    <ons-page show.bind="isSearching" style="z-index:11000;position:absolute;top:0;right:0;left:0;bottom:0;" ref="_searchoverlay">
+      <ons-card style="padding:8px;" show.bind="!searchText">
         <div style="display:flex;flex-wrap:wrap;align-items:flex-start;">
           <div class="category-item" repeat.for="category of categories">
             <div style="padding:10px 5px;" click.delegate="searchCategory(category)">
@@ -34,12 +34,12 @@
             </div>
           </div>
         </div>
+      </ons-card>
+      <div style="margin:10px;" show.bind="searchText && searchResults.locations.length === 0 && searchResults.systems.length === 0">
+        <div i18n="search.no-results"></div>
       </div>
-      <div style="padding:0 10px;" show.bind="searchText && searchResults.locations.length === 0 && searchResults.systems.length === 0">
-        <p i18n="search.no-results"></p>
-      </div>
-      <div class="card" style="padding:0;" show.bind="searchText">
-        <ons-list>
+      <ons-card style="padding:0;" show.bind="searchText && (searchResults.locations.length !== 0 || searchResults.systems.length !== 0)">
+        <ons-list modifier="noborder" style="background-color:transparent;">
           <ons-list-item repeat.for="location of searchResults.locations" tappable modifier="longdivider" click.delegate="onLocationResultClick(location)">
             <div class="left"></div>
             <div class="center">
@@ -58,8 +58,9 @@
             </div>
           </ons-list-item>
         </ons-list>
-      </div>
-    </div>
+      </ons-card>
+    </ons-page>
+    <!-- map view -->
     <div style="display:flex;flex-direction:column;height:100%;">
       <div ref="_map" style="flex:1;width:100%;"></div>
       <leaflet-layer-control map.bind="map"></leaflet-layer-control>
