@@ -44,7 +44,7 @@ export class Home {
       maxClusterRadius: this.getMaxClusterRadius,
       iconCreateFunction: this.createClusterIcon
     }));
-    this.overlays.set('marker', L.marker());
+    this.overlays.set('marker', L.marker(null, { pane: 'selection' }));
 
     // init map controls
     this.controls = new Map();
@@ -81,6 +81,10 @@ export class Home {
     this.map = L.map(this._map, {
       attributionControl: false
     });
+
+    // create pane for selection marker
+    this.map.createPane('selection');
+    this.map.getPane('selection').style.zIndex = 625;
 
     this.map.addLayer(this.baseLayers.get(this.state.baseLayerId));
     this.map.addLayer(buildingsLayer);
