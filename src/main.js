@@ -21,7 +21,7 @@ export function configure(aurelia) {
       },
       fallbackLanguage: 'en'
     })
-    .plugin('aurelia-onsenui')
+    .plugin(PLATFORM.moduleName('./plugins/aurelia-onsenui'))
     .globalResources([
       PLATFORM.moduleName('./components/leaflet-layer-control'),
       PLATFORM.moduleName('./components/leaflet-map')

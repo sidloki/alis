@@ -128,7 +128,6 @@ Sparky.task('build', ['compile:translations'], () => {
       + aurelia-framework
       + aurelia-history-browser
       + aurelia-logging-console
-      + aurelia-onsenui
       + aurelia-pal-browser
       + aurelia-templating-binding
       + aurelia-templating-resources
