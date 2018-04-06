@@ -1,4 +1,4 @@
-import ons from 'onsenui';
+import * as ons from 'onsenui';
 import {Container, inject} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {

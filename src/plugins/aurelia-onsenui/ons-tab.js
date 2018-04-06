@@ -1,4 +1,4 @@
-import ons from 'onsenui';
+import * as ons from 'onsenui';
 import {inject, Container} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {ViewSlot, ViewResources, CompositionEngine, customElement, noView, bindable} from 'aurelia-templating';
