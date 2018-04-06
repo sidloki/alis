@@ -8,7 +8,6 @@ import {
 import {Router} from 'aurelia-router';
 import {RouterView} from 'aurelia-templating-router';
 
-
 @customElement('ons-navigator')
 @noView
 @inject(DOM.Element, Container, ViewSlot, Router, ViewLocator, CompositionTransaction, CompositionEngine)
@@ -24,7 +23,7 @@ export class OnsNavigator extends RouterView {
 
     this.element.pageLoader = new ons.PageLoader(this.load.bind(this), this.unload.bind(this));
 
-    this.view;
+    this.view = null;
     this.viewStack = [];
   }
 
@@ -34,10 +33,11 @@ export class OnsNavigator extends RouterView {
       let options = router.currentInstruction.previousInstruction.config.settings.navigator || {};
       options.data = viewPortInstruction;
       return this.element.popPage(options);
+    } else {
+      let options = router.currentInstruction.config.settings.navigator || {};
+      options.data = viewPortInstruction;
+      return this.element.pushPage(viewPortInstruction.moduleId, options);
     }
-    let options = router.currentInstruction.config.settings.navigator || {};
-    options.data = viewPortInstruction;
-    return this.element.pushPage(viewPortInstruction.moduleId, options);
   }
 
   load({page, parent, params}, done) {
