@@ -1,6 +1,5 @@
 export {OnsBackButton} from './ons-back-button';
 export {OnsIcon} from './ons-icon';
-export {OnsInput} from './ons-input';
 export {OnsNavigator} from './ons-navigator';
 export {OnsRange} from './ons-range';
 export {OnsSelect} from './ons-select';
@@ -15,7 +14,6 @@ export function configure(config) {
     .globalResources([
       PLATFORM.moduleName('./ons-back-button'),
       PLATFORM.moduleName('./ons-icon'),
-      PLATFORM.moduleName('./ons-input'),
       PLATFORM.moduleName('./ons-navigator'),
       PLATFORM.moduleName('./ons-range'),
       PLATFORM.moduleName('./ons-select'),
