@@ -20,12 +20,9 @@
       <h1 class="paragraph" i18n="pages.sponsors.title"></h1>
       <div i18n="pages.sponsors.intro"></div>
     </div>
-    <ons-list modifier="noborder" class="list-with-border">
-      <ons-list-item repeat.for="sponsor of sponsors" modifier="longdivider tappable" click.delegate="openWebsite(sponsor)">
-        <span class="center" style="padding-right:14px;">
-          <img if.bind="sponsor.logo" src="${sponsor.logo}" alt="${sponsor.title}" style="max-width:100%;max-height:120px;">
-          <span if.bind="!sponsor.logo" class="list-item__title">${sponsor.title}</span>
-        </span>
+    <ons-list modifier="" class="list-with-border">
+      <ons-list-item repeat.for="sponsor of sponsors" modifier="tappable" click.delegate="openWebsite(sponsor)">
+        ${sponsor.title}
       </ons-list-item>
     </ons-list>
 
