@@ -124,3 +124,13 @@ ons-select.no-underbar select.select-input--material {
 ons-button, ons-button.button, ons-toolbar-button, ons-list-item, ons-fab, ons-back-button {
   cursor: pointer;
 }
+
+/*
+  Toolbar z-index fix for popups/modals
+*/
+ons-toolbar:not([inline]) {
+  z-index: 2;
+}
+ons-page .page__content {
+  z-index: 2;
+}
