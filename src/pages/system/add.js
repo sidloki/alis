@@ -122,7 +122,7 @@ export class Add {
       this.positionPageVisible = false;
       this.coordinates = this.data.coordinates;
       this.place = this.data.place;
-      this.hideAddressList();
+      this.clearAddressSearch();
     }
   }
 
