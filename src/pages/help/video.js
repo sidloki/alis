@@ -7,7 +7,7 @@ export class Video {
   constructor(i18n) {
     this.i18n = i18n;
     this.locale = i18n.getLocale();
-    this.url = `https://www.youtube.com/embed/pOHBhKu7pO8?hl=${this.locale}&&cc_load_policy=1`;
+    this.url = `https://www.youtube.com/embed/pOHBhKu7pO8?hl=${this.locale}&rel=0&cc_load_policy=1`;
   }
 
   activate(params, routeConfig) {
