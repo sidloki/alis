@@ -141,7 +141,7 @@
           <leaflet-map mapclick.trigger="onPositionMapClick($event)" view-model.ref="leafletMap" bounds.bind="bounds" overlays.bind="overlays" center.bind="center" style="flex:1;"></leaflet-map>
         </div>
       </ons-list-item>
-      <ons-list-item show.bind="place" tappable click.trigger="onAcceptAddressClick()">
+      <ons-list-item if.bind="place" tappable click.trigger="onAcceptAddressClick()">
         <div class="center">
           ${place.formatted_address}
         </div>
