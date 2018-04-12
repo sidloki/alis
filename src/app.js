@@ -97,7 +97,8 @@ export class App {
   }
 
   navigateTo(item) {
-    this._menu.close();
-    this.router.navigateToRoute(item.config.name);
+    this._menu.close().then(() => {
+      this.router.navigateToRoute(item.config.name);
+    });
   }
 }
