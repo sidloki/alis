@@ -1,9 +1,14 @@
 import 'whatwg-fetch';
 import {PLATFORM} from 'aurelia-pal';
+import * as ons from 'onsenui';
 import de from './locales/de';
 import en from './locales/en';
 import fr from './locales/fr';
 import it from './locales/it';
+
+ons.ready(() => {
+  ons.disableDeviceBackButtonHandler();
+});
 
 export function configure(aurelia) {
   const params = parseQueryString(location.search.substring(1));
