@@ -6,9 +6,9 @@ import * as ons from 'onsenui';
 import {Config} from '../../services/config';
 import {Database} from '../../services/db';
 import {Canton} from '../../models/canton';
-import {_} from '../../plugins/aurelia-messageformat';
+import {_, I18N} from '../../plugins/aurelia-messageformat';
 
-@inject(Router, Config, Database)
+@inject(Router, I18N, Config, Database)
 export class Add {
 
   overlays = [];
@@ -48,15 +48,20 @@ export class Add {
     'post_office', 'school', 'stadium', 'synagogue', 'university'
   ];
 
-  constructor(router, config, db) {
+  constructor(router, i18n, config, db) {
     this.router = router;
+    this.i18n = i18n;
     this.config = config;
     this.db = db;
     this.httpClient = new HttpClient();
     this.httpClient.configure(cfg => {
       cfg.useStandardConfiguration()
          .withBaseUrl(`${this.config.baseUrl}/db_add_system.php`)
-         .withDefaults();
+         .withDefaults({
+           headers: {
+             'Accept-Language': this.i18n.getLocale()
+           }
+         });
     });
 
     this.autocompleteService = new google.maps.places.AutocompleteService();
