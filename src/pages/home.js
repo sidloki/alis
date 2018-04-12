@@ -2,6 +2,7 @@ import * as ResizeObserver from 'resize-observer-polyfill';
 import * as ons from 'onsenui';
 import {Router} from 'aurelia-router';
 import {inject, bindable} from 'aurelia-framework';
+import {PLATFORM} from 'aurelia-pal';
 import {Config} from '../services/config';
 import {Database} from '../services/db';
 import {State} from '../services/state';
@@ -16,6 +17,7 @@ import {_} from '../plugins/aurelia-messageformat';
 export class Home {
   searchText;
   searchResults;
+  @bindable()
   isSearching = false;
   categories;
 
@@ -68,6 +70,8 @@ export class Home {
     locateControl.setView = this.setGeolocationView.bind(this);
 
     this.controls.set('locate', locateControl);
+
+    this.onPopState = this._onPopState.bind(this);
   }
 
   attached() {
@@ -106,6 +110,38 @@ export class Home {
     this.buildings = this.db.query(System).groupByRelation(Building).all();
     this.categories = this.db.query(RoomType).all();
     this.db.sortByDistance(this.map.getCenter());
+
+    PLATFORM.addEventListener('popstate', this.onPopState);
+    if (this.router.history.getState('SearchOverlay') && this.router.isNavigatingRefresh) {
+      this.router.history.navigateBack();
+    }
+  }
+
+  detached() {
+    PLATFORM.removeEventListener('popstate', this.onPopState);
+  }
+
+  _onPopState(e) {
+    console.log("popstate: home", e.state);
+    if (!e.state) {
+      return;
+    }
+    if (this.router.history.getState('SearchOverlay') && !this.isSearching) {
+      console.log("Show search");
+      this.showSearch();
+    } else if (!this.router.history.getState('SearchOverlay') && this.isSearching) {
+      console.log("Cancel search");
+      this._searchinput.blur();
+      this.cancelSearch();
+    }
+  }
+
+  isSearchingChanged(newValue, oldValue) {
+    if (newValue && !this.router.history.getState('SearchOverlay')) {
+      this.router.history.pushState('SearchOverlay', new Date().getTime());
+    } else if (!newValue && this.router.history.getState('SearchOverlay')) {
+      this.router.history.navigateBack();
+    }
   }
 
   onBuildingClick(e) {
