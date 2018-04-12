@@ -133,6 +133,14 @@ export class Home {
     }
   }
 
+  onToolbarClick(e) {
+    if (this.router.history.getState('PopoverTracker')) {
+      e.stopPropagation();
+      this._searchinput.blur();
+      this.router.history.navigateBack();
+    }
+  }
+
   isSearchingChanged(newValue, oldValue) {
     if (newValue && !this.router.history.getState('SearchOverlay')) {
       this.router.history.pushState('SearchOverlay', new Date().getTime());

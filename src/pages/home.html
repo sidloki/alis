@@ -1,7 +1,7 @@
 <template>
   <require from="./home.css"></require>
   <ons-page>
-    <ons-toolbar modifier="" class="searchbar ${isSearching ? 'toolbar--transparent' : ''}">
+    <ons-toolbar modifier="" class="searchbar ${isSearching ? 'toolbar--transparent' : ''}" click.capture="onToolbarClick($event)">
       <div class="left">
       </div>
       <div class="center">

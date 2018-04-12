@@ -97,6 +97,13 @@ export class Add {
     }
   }
 
+  onToolbarClick(e) {
+    if (this.router.history.getState('PopoverTracker')) {
+      e.stopPropagation();
+      this.router.history.navigateBack();
+    }
+  }
+
   onPopState(e) {
     if (!window.history.state || window.history.state.PopoverTracker) {
       return;

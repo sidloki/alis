@@ -94,7 +94,7 @@
   </ons-page>
   <!-- Position page overlay -->
   <ons-page if.bind="positionPageVisible">
-    <ons-toolbar>
+    <ons-toolbar click.capture="onToolbarClick($event)">
       <div class="left">
         <ons-back-button click.trigger="cancelPositionPage()"></ons-back-button>
       </div>
