@@ -15,6 +15,7 @@ annotation: Remarques
 your-contact-info: Vos coordonnées
 full-name: Nom complet
 email-address: Adresse e-mail
+submit: Valider
 
 error:
   geolocation:

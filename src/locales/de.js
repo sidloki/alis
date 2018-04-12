@@ -17,6 +17,7 @@ export default {
   "your-contact-info": function(d) { return "Ihre Kontaktdaten"; },
   "full-name": function(d) { return "Vollständiger Name"; },
   "email-address": function(d) { return "E-Mail-Adresse"; },
+  submit: function(d) { return "Senden"; },
   error: {
     geolocation: {
       title: function(d) { return "Ortung fehlgeschlagen"; },

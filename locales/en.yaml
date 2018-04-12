@@ -15,6 +15,7 @@ annotation: Notes
 your-contact-info: Your contact details
 full-name: Full name
 email-address: E-mail address
+submit: Submit
 
 error:
   geolocation:

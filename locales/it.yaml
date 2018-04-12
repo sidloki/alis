@@ -15,6 +15,7 @@ annotation: Osservazioni
 your-contact-info: I tuoi dati di contatto
 full-name: Nome e cognome completi
 email-address: Indirizzo e-mail
+submit: Invia
 
 error:
   geolocation:
