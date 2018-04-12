@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-dependency-injection';
 import {DOM, PLATFORM} from 'aurelia-pal';
-import {customElement, noView} from 'aurelia-templating';
+import {customElement, noView, bindable} from 'aurelia-templating';
 import {BrowserHistory} from 'aurelia-history-browser';
 
 const HISTORY_STATE_KEY = 'PopoverTracker';
@@ -9,6 +9,7 @@ const HISTORY_STATE_KEY = 'PopoverTracker';
 @noView
 @inject(DOM.Element, BrowserHistory)
 export class OnsPopover {
+  @bindable target;
   historyStateValue;
 
   constructor(element, history) {

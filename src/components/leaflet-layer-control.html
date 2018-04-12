@@ -1,7 +1,7 @@
 <template>
   <require from="./leaflet-layer-control.css"></require>
 
-  <ons-popover ref="layerControlEl" direction="down" cover-target cancelable modifier="material">
+  <ons-popover ref="layerControlEl" direction="down" target.bind="popoverTarget" cover-target cancelable modifier="material">
     <ons-list>
       <ons-list-header style="display:flex;flex-direction:row;align-items:center;padding-right:0;">
         <span style="flex:1;" i18n="map-type"></span>

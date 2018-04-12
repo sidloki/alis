@@ -29,11 +29,12 @@ export class LeafletLayerControlCustomElement {
   mapChanged(newValue) {
     if (this.map) {
       this.button.addTo(this.map);
+      this.popoverTarget = this.button.getContainer());
     }
   }
 
   showLayerControl() {
-    this.layerControlEl.show(this.button.getContainer());
+    this.layerControlEl.show(this.popoverTarget);
   }
 
   hideLayerControl() {
