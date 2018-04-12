@@ -1,5 +1,6 @@
 import {inject, bindable} from 'aurelia-framework';
-import {History} from 'aurelia-history';
+import {Router} from 'aurelia-router';
+import {PLATFORM} from 'aurelia-pal';
 import {HttpClient} from 'aurelia-fetch-client';
 import * as ons from 'onsenui';
 import {Config} from '../../services/config';
@@ -7,15 +8,16 @@ import {Database} from '../../services/db';
 import {Canton} from '../../models/canton';
 import {_} from '../../plugins/aurelia-messageformat';
 
-@inject(History, Config, Database)
+@inject(Router, Config, Database)
 export class Add {
 
   overlays = [];
-  positionPageVisible = false;
+  @bindable() positionPageVisible = false;
   addressListVisible = false;
   @bindable() coordinates;
   @bindable() bounds;
   @bindable() imageUrl;
+  addressSearchText;
   image = null;
 
   @bindable place = null;
@@ -46,8 +48,8 @@ export class Add {
     'post_office', 'school', 'stadium', 'synagogue', 'university'
   ];
 
-  constructor(history, config, db) {
-    this.history = history;
+  constructor(router, config, db) {
+    this.router = router;
     this.config = config;
     this.db = db;
     this.httpClient = new HttpClient();
@@ -60,25 +62,77 @@ export class Add {
     this.autocompleteService = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
     this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
+
+    this.onPopState = this._onPopState.bind(this);
   }
 
   activate(params, routeConfig) {
     this.title = routeConfig.title;
   }
 
-  showPositionPage() {
-    this.history.history.pushState({}, '', '');
-    this.positionPageVisible = true;
-    window.addEventListener('popstate', this.onPositionPageBack.bind(this));
+  attached() {
+    PLATFORM.addEventListener('popstate', this.onPopState);
+    if (this.router.history.getState('PositionOverlay')) {
+      this.router.history.navigateBack();
+    }
   }
 
-  onPositionPageBack() {
-    this.positionPageVisible = false;
-    this.coordinates = this.data.coordinates;
-    window.removeEventListener('popstate', this.onPositionPageBack.bind(this));
+  detached() {
+    PLATFORM.removeEventListener('popstate', this.onPopState);
+  }
+
+  _onPopState(e) {
+    console.log("popstate: position page", e.state);
+    if (!e.state) {
+      return;
+    }
+    if (this.router.history.getState('PositionOverlay') && !this.positionPageVisible) {
+      console.log("Show position page");
+      this.showPositionPage();
+    } else if (!this.router.history.getState('PositionOverlay') && this.positionPageVisible) {
+      console.log("Cancel position page");
+      this.cancelPositionPage();
+    }
+  }
+
+  onPopState(e) {
+    if (!window.history.state || window.history.state.PopoverTracker) {
+      return;
+    }
+    if (this.positionPageVisible) {
+      this.cancelPositionPage();
+    } else if (window.history.state.PositionOverlay) {
+      this.showPositionPage();
+    }
+  }
+
+  positionPageVisibleChanged(newValue, oldValue) {
+    if (newValue && !this.router.history.getState('PositionOverlay')) {
+      this.router.history.pushState('PositionOverlay', new Date().getTime());
+    } else if (!newValue && this.router.history.getState('PositionOverlay')) {
+      this.router.history.navigateBack();
+    }
+  }
+
+  showPositionPage() {
+    if (!this.positionPageVisible) {
+      this.positionPageVisible = true;
+    }
+  }
+
+  cancelPositionPage() {
+    if (this.positionPageVisible) {
+      this.positionPageVisible = false;
+      this.coordinates = this.data.coordinates;
+      this.place = this.data.place;
+      this.hideAddressList();
+    }
   }
 
   onPositionMapClick(e) {
+    if (this.addressListVisible) {
+      return;
+    }
     this.coordinates = e.detail.latlng;
     this.center = this.coordinates;
     this.searchNearBy(this.coordinates, 25)
@@ -91,6 +145,8 @@ export class Add {
             this.loadPlaceDetail(result.place_id);
           })
           .catch(error => {
+            this.coordinates = null;
+            this.place = null;
             ons.notification.alert(_('pages.add-system.search.no-results.message'), {
               title: _('pages.add-system.search.no-results.title')
             });
@@ -100,6 +156,7 @@ export class Add {
 
   onAddressChange(e) {
     let value = e.target.value;
+    this.addressSearchText = value;
     if (value.length >= 3) {
       this.queryAddressListItems(value)
         .then(() => {
@@ -114,9 +171,6 @@ export class Add {
   }
 
   onAddressBlur() {
-    if (this.place) {
-      this.addressInputEl.value = this.place.name;
-    }
     this.hideAddressList();
   }
 
@@ -125,7 +179,10 @@ export class Add {
   }
 
   clearAddressSearch() {
-    // TODD
+    this.addressInputEl.value = '';
+    this.addressSearchText = '';
+    this.addressList = [];
+    this.hideAddressList();
   }
 
   onAddressListItemClick(item) {
@@ -148,12 +205,6 @@ export class Add {
 
   hideAddressList() {
     this.addressListVisible = false;
-  }
-
-  placeChanged(newValue) {
-    if (newValue) {
-      this.queryAddressListItems(newValue.name);
-    }
   }
 
   searchNearBy(location, radius) {
@@ -240,6 +291,7 @@ export class Add {
   onAcceptAddressClick() {
     let bounds = this.place.geometry.viewport.toJSON();
     this.data.coordinates = this.coordinates;
+    this.data.place = this.place;
     this.data.name = this.place.name || '';
     this.data.formatted_address = this.place.formatted_address;
     this.data.lat = this.coordinates.lat;
@@ -263,7 +315,7 @@ export class Add {
       [bounds.south, bounds.west]
     ];
     this.errors.address = null;
-    this.history.history.back();
+    this.cancelPositionPage();
   }
 
   uploadImageClick() {
@@ -329,7 +381,7 @@ export class Add {
     ons.notification.alert(_('pages.add-system.submit.success.message'), {
       title: _('pages.add-system.submit.success.title'),
       callback: () => {
-        this.history.navigateBack();
+        this.router.navigateBack();
       }
     });
   }

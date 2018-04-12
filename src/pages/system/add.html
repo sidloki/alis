@@ -96,11 +96,11 @@
   <ons-page if.bind="positionPageVisible">
     <ons-toolbar>
       <div class="left">
-        <ons-back-button></ons-back-button>
+        <ons-back-button click.trigger="cancelPositionPage()"></ons-back-button>
       </div>
       <div class="center" i18n="address"></div>
       <div class="right">
-        <ons-toolbar-button disabled.bind="!place" click.trigger="onAcceptAddressClick()">
+        <ons-toolbar-button disabled.bind="!coordinates" click.trigger="onAcceptAddressClick()">
           <ons-icon icon="md-check"></ons-icon>
         </ons-toolbar-button>
       </div>
@@ -112,12 +112,12 @@
             <div class="left">
             </div>
             <div class="center">
-              <input id="address" type="search" value.one-way="place.name" class="search-input"
+              <input id="address" type="search" class="search-input"
                 ref="addressInputEl" input.trigger="onAddressChange($event) & debounce" blur.trigger="onAddressBlur() & debounce"
                 focus.trigger="onAddressFocus()" i18n i18n-attrs="placeholder:pages.add-system.search.placeholder" />
-              <!-- <ons-toolbar-button>
+              <ons-toolbar-button show.bind="addressSearchText">
                   <ons-icon icon="ion-ios-close-empty, material:md-close" click.delegate="clearAddressSearch()"></ons-icon>
-              </ons-toolbar-button> -->
+              </ons-toolbar-button>
             </div>
             <div class="right">
             </div>
@@ -139,6 +139,13 @@
       <ons-list-item style="flex:1;padding:0;" modifier="nodivier">
         <div class="center" style="padding:0;">
           <leaflet-map mapclick.trigger="onPositionMapClick($event)" view-model.ref="leafletMap" bounds.bind="bounds" overlays.bind="overlays" center.bind="center" style="flex:1;"></leaflet-map>
+        </div>
+      </ons-list-item>
+      <ons-list-item show.bind="place" tappable click.trigger="onAcceptAddressClick()">
+        <div class="center">
+          ${place.formatted_address}
+        </div>
+        <div class="right">
         </div>
       </ons-list-item>
     </ons-list>
