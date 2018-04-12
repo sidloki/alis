@@ -82,15 +82,12 @@ export class Add {
   }
 
   _onPopState(e) {
-    console.log("popstate: position page", e.state);
     if (!e.state) {
       return;
     }
     if (this.router.history.getState('PositionOverlay') && !this.positionPageVisible) {
-      console.log("Show position page");
       this.showPositionPage();
     } else if (!this.router.history.getState('PositionOverlay') && this.positionPageVisible) {
-      console.log("Cancel position page");
       this.cancelPositionPage();
     }
   }

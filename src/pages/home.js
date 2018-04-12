@@ -122,15 +122,12 @@ export class Home {
   }
 
   _onPopState(e) {
-    console.log("popstate: home", e.state);
     if (!e.state) {
       return;
     }
     if (this.router.history.getState('SearchOverlay') && !this.isSearching) {
-      console.log("Show search");
       this.showSearch();
     } else if (!this.router.history.getState('SearchOverlay') && this.isSearching) {
-      console.log("Cancel search");
       this._searchinput.blur();
       this.cancelSearch();
     }

@@ -29,7 +29,7 @@ export class LeafletLayerControlCustomElement {
   mapChanged(newValue) {
     if (this.map) {
       this.button.addTo(this.map);
-      this.popoverTarget = this.button.getContainer());
+      this.popoverTarget = this.button.getContainer();
     }
   }
 

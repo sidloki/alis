@@ -88,7 +88,7 @@ export class OnsNavigator extends RouterView {
   insert(index, viewPortInstruction) {
     return new Promise((resolve, reject) => {
       let currentView = this.view;
-  
+
       let work = () => {
         let pageElement = viewPortInstruction.controller.view.fragment.querySelector('ons-page');
         this.viewSlot.insert(index, viewPortInstruction.controller.view);
@@ -98,7 +98,7 @@ export class OnsNavigator extends RouterView {
         this._notify();
         resolve(pageElement);
       };
-  
+
       let ready = owningView => {
         viewPortInstruction.controller.automate(this.overrideContext, owningView);
         if (this.compositionTransactionOwnershipToken) {
@@ -107,10 +107,10 @@ export class OnsNavigator extends RouterView {
             work();
           });
         }
-  
+
         work();
       };
-  
+
       ready(this.owningView);
     });
   }
