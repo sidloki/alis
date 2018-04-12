@@ -30,9 +30,17 @@ export class OnsNavigator extends RouterView {
   swap(viewPortInstruction) {
     let router = this.router;
     if (router.isNavigatingBack) {
-      let options = router.currentInstruction.previousInstruction.config.settings.navigator || {};
-      options.data = viewPortInstruction;
-      return this.element.popPage(options);
+      if (this.viewStack.length > 0) {
+        let options = router.currentInstruction.previousInstruction.config.settings.navigator || {};
+        options.data = viewPortInstruction;
+        return this.element.popPage(options);
+      } else {
+        return this.insert(0, viewPortInstruction).then(() => {
+          let options = router.currentInstruction.previousInstruction.config.settings.navigator || {};
+          options.data = viewPortInstruction;
+          return this.element.popPage(options);
+        });
+      }
     } else {
       let options = router.currentInstruction.config.settings.navigator || {};
       options.data = viewPortInstruction;
@@ -75,5 +83,35 @@ export class OnsNavigator extends RouterView {
     this.viewSlot.remove(this.view);
     this.view.unbind();
     this.view = this.viewStack.pop();
+  }
+
+  insert(index, viewPortInstruction) {
+    return new Promise((resolve, reject) => {
+      let currentView = this.view;
+  
+      let work = () => {
+        let pageElement = viewPortInstruction.controller.view.fragment.querySelector('ons-page');
+        this.viewSlot.insert(index, viewPortInstruction.controller.view);
+        if (currentView) {
+          this.viewStack.splice(index, 0, currentView);
+        }
+        this._notify();
+        resolve(pageElement);
+      };
+  
+      let ready = owningView => {
+        viewPortInstruction.controller.automate(this.overrideContext, owningView);
+        if (this.compositionTransactionOwnershipToken) {
+          this.compositionTransactionOwnershipToken.waitForCompositionComplete().then(() => {
+            this.compositionTransactionOwnershipToken = null;
+            work();
+          });
+        }
+  
+        work();
+      };
+  
+      ready(this.owningView);
+    });
   }
 }

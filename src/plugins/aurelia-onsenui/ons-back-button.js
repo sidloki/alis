@@ -12,6 +12,7 @@ export class OnsBackButton {
     this.router = router;
     this.element = element;
     this.element.onClick = this.onClick.bind(this);
+    this.element.hide = () => {};
   }
 
   onClick() {
