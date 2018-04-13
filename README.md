@@ -53,15 +53,26 @@ yarn lint
 ```
 
 
-## Export a production version
+## Create production version
+
+### For webserver
+
+Run a production build and copy all files of `dist` folder to the webserver:
+
+```bash
+yarn build
+```
+
+### For Cordova/PhoneGap
 
 There's a script to export all the required files to a separate folder `www`:
 
 ```bash
-yarn export
+yarn phonegap
 ```
 
-The exported files can be used on a webserver or to create a hybrid application on your own machine useing [Cordova](https://cordova.apache.org/) or with the [Phonegap Build Service](https://build.phonegap.com/).
+The exported files can be used to create a hybrid application on your own machine using [Cordova](https://cordova.apache.org/) or with the [Phonegap Build Service](https://build.phonegap.com/).
+
 
 
 [travis-url]: https://travis-ci.org/sidloki/alis
