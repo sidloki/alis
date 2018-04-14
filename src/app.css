@@ -124,3 +124,28 @@ ons-select.no-underbar select.select-input--material {
 ons-button, ons-button.button, ons-toolbar-button, ons-list-item, ons-fab, ons-back-button {
   cursor: pointer;
 }
+
+/*
+  iOS toolbar fix
+*/
+.toolbar__left, .toolbar__right {
+  min-width: 49px;
+  width: auto;
+}
+.toolbar--material__left, .toolbar--material__right {
+  min-width: 72px;
+}
+.toolbar__center {
+  width: auto;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.toolbar__center 
+.toolbar__left:empty, .toolbar__right:empty {
+  min-width: 14px;
+  width: auto;
+}
