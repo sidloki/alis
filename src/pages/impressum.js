@@ -14,10 +14,6 @@ export class Impressum {
       title: 'Irma Wigert Stiftung c/o pro audito schweiz',
       link: '',
     }, {
-      title: 'pro audito schweiz',
-      link: 'http://www.pro-audito.ch/',
-      logo: `${this.config.baseUrl}/pictures/logos/logo-pro-audito-schweiz.png`
-    }, {
       title: 'Reformierte Kirche Kanton Zug',
       link: 'http://www.ref-zug.ch/kanton-zug/',
       logo: `${this.config.baseUrl}/pictures/logos/logo-ref-kirche-kt-zug.png`
