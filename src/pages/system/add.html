@@ -47,7 +47,7 @@
             </ons-button>
             <div if.bind="imageUrl" class="upload-preview" css="background-image:url(${imageUrl});" click.trigger="uploadImageClick()">
             </div>
-            <input type="file" ref="imageInputEl" show.bind="false" change.trigger="onImageChange()" />
+            <input type="file" accept="image/*" ref="imageInputEl" show.bind="false" change.trigger="onImageChange()" />
           </div>
         </div>
         <div class="right"></div>
