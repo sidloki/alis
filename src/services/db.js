@@ -79,8 +79,8 @@ export class Database {
     }
 
     for (let [, system] of systems.entries()) {
-      system.buildingId = `${system.plz}-${system.strasse_nr}-${system.gebaeude}`;
-      system.organisationId = `${system.organisation}`;
+      system.buildingId = `${system.plz}-${system.strasse_nr.trim()}-${system.gebaeude.trim()}`;
+      system.organisationId = `${system.organisation.trim()}`;
       system.locationId = system.ort.trim();
       system.lang = this.query(Lang).getById(system.langID);
 
