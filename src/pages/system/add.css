@@ -8,7 +8,7 @@
   width: 100%;
 }
 
-ons-button.upload-button {
+.upload-button {
   border: 1px dashed #ccc;
   background-color: rgb(249, 249, 249);
   color: #333;
@@ -17,15 +17,24 @@ ons-button.upload-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
-.image-upload .upload-preview {
+.upload-preview {
   height: 140px;
   width: 100%;
-  position: relative;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.delete-button {
+  position: absolute;
+  right: 6px;
+  top: 0;
+}
+.delete-button.button--material {
+  top: 6px;
 }
 
 .form ons-list-item .left {

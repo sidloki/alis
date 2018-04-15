@@ -39,18 +39,18 @@
           <ons-icon icon="ion-camera,material:md-camera" fixed-width="true"></ons-icon>
         </div>
         <div class="center">
-          <label class="input-label" i18n="photo"></label>
-          <ons-button if.bind="imageUrl" click.trigger="deleteImage()" modifier="quiet" style="position:absolute;right:6px;top:7px;" i18n="delete"></ons-button>
-          <div class="image-upload">
-            <ons-button if.bind="!imageUrl" click.trigger="uploadImageClick()" modifier="quiet" class="upload-button">
-              <ons-icon icon="md-plus"></ons-icon>
-            </ons-button>
-            <div if.bind="imageUrl" class="upload-preview" css="background-image:url(${imageUrl});" click.trigger="uploadImageClick()">
+          <label for="image-upload" class="input-label" i18n="photo"></label>
+          <label class="image-upload">
+            <input id="image-upload" type="file" accept="image/*" ref="imageInputEl" style="display:none;" change.trigger="onImageChange()" />
+            <div if.bind="imageUrl" class="upload-preview" css="background-image:url(${imageUrl});"></div>
+            <div if.bind="!imageUrl" class="upload-button">
+              <ons-icon if.bind="!imageUrl" icon="md-plus"></ons-icon>
             </div>
-            <input type="file" accept="image/*" ref="imageInputEl" show.bind="false" change.trigger="onImageChange()" />
-          </div>
+          </label>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <ons-button if.bind="imageUrl" click.trigger="deleteImage()" modifier="quiet" class="delete-button" i18n="delete"></ons-button>
+        </div>
       </ons-list-item>
       <ons-list-item modifier="nodivider">
         <div class="left">
