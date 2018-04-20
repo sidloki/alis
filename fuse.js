@@ -83,7 +83,7 @@ Sparky.task('compile:translations', () => {
       console.error(`Error parsing YAML file: ${file.name}`);
     }
   };
-  if (!production) {
+  if (!production && server) {
     return Sparky.watch("locales/**/*.yaml")
           .file("*", async (file) => {
             compile(file);
@@ -171,7 +171,7 @@ Sparky.task('build', ['compile:translations'], () => {
       - index_cordova.html
     `);
 
-  if (!production) {
+  if (!production && server) {
     let watcher = app.watch()
       .completed(() => {
         bs.reload();

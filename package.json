@@ -11,6 +11,7 @@
     "prod": "cross-env NODE_ENV=production SERVER=true node fuse",
     "build": "cross-env NODE_ENV=production node fuse",
     "phonegap": "cross-env NODE_ENV=production OUT_DIR=www node fuse",
+    "phonegap-dev": "cross-env NODE_ENV=development OUT_DIR=www node fuse",
     "lint": "cross-env tslint --project tsconfig.json --exclude src/locales/**/*",
     "gh-pages": "git subtree push --prefix www origin gh-pages"
   },
