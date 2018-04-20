@@ -2,6 +2,7 @@ import {inject} from 'aurelia-dependency-injection';
 import {DOM, PLATFORM} from 'aurelia-pal';
 import {customElement, noView, bindable} from 'aurelia-templating';
 import {BrowserHistory} from 'aurelia-history-browser';
+import {fixIOSPageScrolling} from '../../utils';
 
 const HISTORY_STATE_KEY = 'PopoverTracker';
 
@@ -48,6 +49,7 @@ export class OnsPopover {
       this.history.navigateBack();
       this.historyStateValue = null;
     }
+    fixIOSPageScrolling();
   }
 
   _onPopState(e) {

@@ -149,3 +149,10 @@ ons-button, ons-button.button, ons-toolbar-button, ons-list-item, ons-fab, ons-b
   min-width: 14px;
   width: auto;
 }
+
+/*
+  iOS scroll fix
+*/
+.page__content.page__content__fix {
+  -webkit-overflow-scrolling: initial!important;
+}

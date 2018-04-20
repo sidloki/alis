@@ -7,6 +7,7 @@ import {Config} from '../../services/config';
 import {Database} from '../../services/db';
 import {Canton} from '../../models/canton';
 import {_, I18N} from '../../plugins/aurelia-messageformat';
+import {fixIOSPageScrolling} from '../../utils';
 
 @inject(Router, I18N, Config, Database)
 export class Add {
@@ -157,7 +158,10 @@ export class Add {
             this.coordinates = null;
             this.place = null;
             ons.notification.alert(_('pages.add-system.search.no-results.message'), {
-              title: _('pages.add-system.search.no-results.title')
+              title: _('pages.add-system.search.no-results.title'),
+              callback: () => {
+                fixIOSPageScrolling();
+              }
             });
           });
       });
@@ -382,7 +386,10 @@ export class Add {
 
   showInvalidAlert(msg) {
     ons.notification.alert(msg, {
-      title: _('pages.add-system.submit.error.title')
+      title: _('pages.add-system.submit.error.title'),
+      callback: () => {
+        fixIOSPageScrolling();
+      }
     });
   }
 
@@ -391,6 +398,7 @@ export class Add {
       title: _('pages.add-system.submit.success.title'),
       callback: () => {
         this.router.navigateBack();
+        fixIOSPageScrolling();
       }
     });
   }
