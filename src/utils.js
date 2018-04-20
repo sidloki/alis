@@ -1,4 +1,4 @@
-export function fixIOSPageScrolling () {  
+export function fixIOSPageScrolling() {
   document.querySelectorAll('.page__content').forEach(element => {
     element.classList.add('page__content__fix');
     setTimeout(() => {
