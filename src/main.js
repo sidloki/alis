@@ -6,6 +6,7 @@ import en from './locales/en';
 import fr from './locales/fr';
 import it from './locales/it';
 
+ons.disableAutoStatusBarFill();
 ons.ready(() => {
   ons.disableDeviceBackButtonHandler();
 });
