@@ -42,8 +42,10 @@
           <label for="image-upload" class="input-label" i18n="photo"></label>
           <label class="image-upload">
             <input id="image-upload" type="file" accept="image/*" ref="imageInputEl" style="display:none;" change.trigger="onImageChange()" />
-            <div if.bind="imageUrl" class="upload-preview" css="background-image:url(${imageUrl});"></div>
-            <div if.bind="!imageUrl" class="upload-button">
+            <div if.bind="imageUrl" class="upload-preview needsclick">
+              <img src.bind="imageUrl" alt="">
+            </div>
+            <div if.bind="!imageUrl" class="upload-button needsclick">
               <ons-icon if.bind="!imageUrl" icon="md-plus"></ons-icon>
             </div>
           </label>

@@ -23,9 +23,13 @@
 .upload-preview {
   height: 140px;
   width: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.upload-preview > img {
+  width: 100%;
 }
 
 .delete-button {
