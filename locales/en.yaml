@@ -147,7 +147,7 @@ pages:
       title: "Video: How does a Hearing Loop work?"
 
   add-system:
-    title: Report a new hearing assistance system
+    title: Report a new hearing assistance system or a problem
     mark-position: Mark position on the map
     search:
       placeholder: "Search or tap on the map..."

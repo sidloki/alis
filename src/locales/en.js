@@ -123,7 +123,7 @@ export default {
       }
     },
     "add-system": {
-      title: function(d) { return "Report a new hearing assistance system"; },
+      title: function(d) { return "Report a new hearing assistance system or a problem"; },
       "mark-position": function(d) { return "Mark position on the map"; },
       search: {
         placeholder: function(d) { return "Search or tap on the map..."; },

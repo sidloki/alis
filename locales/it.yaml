@@ -152,7 +152,7 @@ pages:
       title: "Video: come funziona un sistema di ascolto?"
 
   add-system:
-    title: Segnala un nuovo sistema di ascolto
+    title: Segnala un nuovo sistema di ascolto o un problema
     mark-position: Segna la posizione sulla mappa
     search:
       placeholder: Cerca o tocca sulla mappa...

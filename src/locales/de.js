@@ -123,7 +123,7 @@ export default {
       }
     },
     "add-system": {
-      title: function(d) { return "Neue Höranlage melden"; },
+      title: function(d) { return "Neue Höranlage oder ein Problem melden"; },
       "mark-position": function(d) { return "Position auf der Karte markieren"; },
       search: {
         placeholder: function(d) { return "Suchen oder auf die Karte tippen..."; },

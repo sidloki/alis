@@ -151,7 +151,7 @@ pages:
       title: "Vidéo: Comment fonctionne un système d'écoute?"
 
   add-system:
-    title: Signaler un nouveau système d'écoute
+    title: Signaler un nouveau système d'écoute ou un problème
     mark-position: Marquer la position sur la carte
     search:
       placeholder: Recherchez ou tapez sur la carte.....

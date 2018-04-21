@@ -150,7 +150,7 @@ pages:
       title: "Video: Wie funktioniert eine Höranlage?"
 
   add-system:
-    title: Neue Höranlage melden
+    title: Neue Höranlage oder ein Problem melden
     mark-position: Position auf der Karte markieren
     search:
       placeholder: "Suchen oder auf die Karte tippen..."

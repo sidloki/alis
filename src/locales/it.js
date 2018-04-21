@@ -126,7 +126,7 @@ export default {
       }
     },
     "add-system": {
-      title: function(d) { return "Segnala un nuovo sistema di ascolto"; },
+      title: function(d) { return "Segnala un nuovo sistema di ascolto o un problema"; },
       "mark-position": function(d) { return "Segna la posizione sulla mappa"; },
       search: {
         placeholder: function(d) { return "Cerca o tocca sulla mappa..."; },
